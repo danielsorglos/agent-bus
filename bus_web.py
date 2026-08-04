@@ -37,6 +37,16 @@ SCHLOSS = threading.RLock()
 ZUSTAND = {"letzter_sync": None, "sync_status": "noch nicht gelaufen", "fehler": None}
 
 
+def kuerze(zeile, laenge=60):
+    """Betreff aus dem Text ableiten, aber an der Wortgrenze — sonst steht in der
+    Inbox der Agenten ein mitten im Wort abgeschnittener Fetzen."""
+    zeile = zeile.strip()
+    if len(zeile) <= laenge:
+        return zeile
+    schnitt = zeile[:laenge].rsplit(" ", 1)[0]
+    return (schnitt or zeile[:laenge]) + "…"
+
+
 def mensch_default():
     ident = bus.lies_json(os.path.join(bus.REPO, "identity.json"), {}) or {}
     if ident.get("mensch_id"):
@@ -107,7 +117,7 @@ def api(pfad, koerper):
         text = (koerper.get("body") or "").strip()
         if not text:
             return 400, {"fehler": "Leere Nachricht."}
-        betreff = (koerper.get("subject") or "").strip() or text.split("\n")[0][:60]
+        betreff = (koerper.get("subject") or "").strip() or kuerze(text.split("\n")[0])
         with SCHLOSS:
             info = bus.t_send({"to": an, "subject": betreff, "body": text,
                                "thread": koerper.get("thread")})
@@ -146,8 +156,17 @@ def api(pfad, koerper):
         return 200, {"ok": True, "info": info}
 
     if pfad == "/api/note/read":
-        with SCHLOSS:
-            return 200, {"ok": True, "text": bus.t_note_read({"key": koerper.get("key")})}
+        # Direkt aus der Datei, nicht ueber t_note_read: der Daten-Hinweis ist eine
+        # Leitplanke fuer Agenten und waere hier bloss Rauschen vor den Augen
+        # des Menschen, dem die Notiz ohnehin gehoert.
+        key = (koerper.get("key") or "").strip().lower()
+        if not bus.ID_RE.match(key or ""):
+            return 400, {"fehler": "Ungueltiger Schluessel."}
+        ziel = bus.pfad("notes", f"{key}.md")
+        if not os.path.isfile(ziel):
+            return 404, {"fehler": "Notiz existiert nicht."}
+        with open(ziel, encoding="utf-8") as f:
+            return 200, {"ok": True, "text": f.read()}
 
     if pfad == "/api/sync":
         with SCHLOSS:

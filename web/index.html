@@ -236,25 +236,24 @@
 
 <!-- ------------------------------------------------------------- Dialoge -->
 <dialog id="dlgAuftrag">
-  <form method="dialog">
-    <div class="dlgkopf" id="dlgAuftragTitel">Auftrag an alle drei</div>
-    <div class="dlgkoerper">
-      <label>Titel
-        <input id="aTitel" placeholder="z.B. Ideen für Kunde Nr. 1 sammeln" autocomplete="off">
-      </label>
-      <label>Was genau zu tun ist
-        <textarea id="aBody" rows="5" placeholder="Kontext, Ziel, woran man merkt, dass es fertig ist."></textarea>
-      </label>
-      <div id="aWer">
-        <div class="fluestern" style="margin-bottom:7px">Bearbeiter</div>
-        <div class="kaestchen" id="aKaestchen"></div>
-      </div>
+  <div class="dlgkopf" id="dlgAuftragTitel">Auftrag an alle drei</div>
+  <div class="dlgkoerper">
+    <label>Titel
+      <input id="aTitel" placeholder="z.B. Ideen für Kunde Nr. 1 sammeln" autocomplete="off">
+    </label>
+    <label>Was genau zu tun ist
+      <textarea id="aBody" rows="5" placeholder="Kontext, Ziel, woran man merkt, dass es fertig ist."></textarea>
+    </label>
+    <div id="aWer">
+      <div class="fluestern" style="margin-bottom:7px">Bearbeiter</div>
+      <div class="kaestchen" id="aKaestchen"></div>
     </div>
-    <div class="dlgfuss">
-      <button class="knopf leise" value="abbrechen">Abbrechen</button>
-      <button class="knopf" id="aSenden" value="ok">Anlegen</button>
-    </div>
-  </form>
+    <div class="fluestern" id="aFehler" style="color:var(--rot)"></div>
+  </div>
+  <div class="dlgfuss">
+    <button type="button" class="knopf leise" id="aAbbrechen">Abbrechen</button>
+    <button type="button" class="knopf" id="aSenden">Anlegen</button>
+  </div>
 </dialog>
 
 <dialog id="dlgAufgabe">
@@ -357,7 +356,9 @@ function zeichneChat(){
     if(t !== letzterTag){ letzterTag = t; vorspann = `<div class="tagtrenner">${esc(t)}</div>`; }
     const anAlle = (m.to || []).includes("*");
     const ziel = anAlle ? "" : `<span class="anhaenger">an ${esc((m.to||[]).map(name).join(", "))}</span>`;
-    const zeigeBetreff = m.subject && !String(m.body || "").startsWith(m.subject);
+    // Betreffe, die nur der abgekuerzte Anfang des Textes sind, nicht doppelt zeigen.
+    const kern = String(m.subject || "").replace(/…$/, "");
+    const zeigeBetreff = kern && !String(m.body || "").startsWith(kern);
     return vorspann + `
       <div class="msg ${m.from === ZUSTAND.ich ? "ich" : ""} ${istMensch(m.from) ? "mensch" : ""}">
         <div class="avatar">${esc(initialen(m.from))}</div>
@@ -556,22 +557,37 @@ function oeffneAuftrag(modus){
     ? `<label><input type="checkbox" value="${esc(t.id)}" checked> ${esc(t.name)}</label>`
     : `<label><input type="radio" name="wer" value="${esc(t.id)}" ${i===0?"checked":""}> ${esc(t.name)}</label>`
   ).join("");
-  $("#aTitel").value = ""; $("#aBody").value = "";
+  $("#aTitel").value = ""; $("#aBody").value = ""; $("#aFehler").textContent = "";
   $("#dlgAuftrag").showModal();
   setTimeout(() => $("#aTitel").focus(), 50);
 }
 
-$("#dlgAuftrag").addEventListener("close", async () => {
-  if($("#dlgAuftrag").returnValue !== "ok") return;
+$("#aAbbrechen").addEventListener("click", () => $("#dlgAuftrag").close());
+
+// Bewusst ein eigener Klick-Handler statt des close-Ereignisses eines
+// <form method="dialog">: das Ereignis kam in der Praxis nicht zuverlaessig an,
+// und so laesst sich vor dem Schliessen pruefen.
+$("#aSenden").addEventListener("click", async () => {
   const titel = $("#aTitel").value.trim();
-  if(!titel) return;
-  const body = $("#aBody").value.trim();
   const gewaehlt = $$("#aKaestchen input:checked").map((i) => i.value);
-  if(!gewaehlt.length){ alert("Niemand ausgewählt."); return; }
-  if(auftragModus === "alle"){
-    await schreibe("/api/auftrag", {title:titel, body, an:gewaehlt});
-  } else {
-    await schreibe("/api/task", {title:titel, body, assign_to:gewaehlt[0]});
+  if(!titel){ $("#aFehler").textContent = "Ohne Titel geht es nicht."; return; }
+  if(!gewaehlt.length){ $("#aFehler").textContent = "Niemand ausgewählt."; return; }
+
+  const knopf = $("#aSenden");
+  knopf.disabled = true; knopf.textContent = "lege an…";
+  const body = $("#aBody").value.trim();
+  try{
+    if(auftragModus === "alle"){
+      await hole("/api/auftrag", {title:titel, body, an:gewaehlt});
+    } else {
+      await hole("/api/task", {title:titel, body, assign_to:gewaehlt[0]});
+    }
+    $("#dlgAuftrag").close();
+    await aktualisiere();
+  }catch(e){
+    $("#aFehler").textContent = "Hat nicht geklappt: " + e.message;
+  }finally{
+    knopf.disabled = false; knopf.textContent = "Anlegen";
   }
 });
 
