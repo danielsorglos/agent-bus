@@ -140,7 +140,12 @@ with io.open(ziel, "w", encoding="utf-8") as f:
     json.dump(d, f, ensure_ascii=False, indent=2)
 print("    eingetragen:", os.environ["AB_NAME"], "->", ziel)
 '@
-if ($LASTEXITCODE -ne 0) { throw 'MCP-Registrierung fehlgeschlagen.' }
+$RegDatei = Join-Path $env:TEMP 'agent-bus-registrieren.py'
+[System.IO.File]::WriteAllText($RegDatei, $RegSchnipsel)
+& $PythonPfad $RegDatei
+$RegExit = $LASTEXITCODE
+Remove-Item $RegDatei -ErrorAction SilentlyContinue
+if ($RegExit -ne 0) { throw 'MCP-Registrierung fehlgeschlagen.' }
 Remove-Item Env:AB_ZIEL, Env:AB_NAME, Env:AB_PY, Env:AB_SCRIPT, Env:AB_REPO, Env:AB_AGENT -ErrorAction SilentlyContinue
 
 # --- Selbsttest --------------------------------------------------------------
