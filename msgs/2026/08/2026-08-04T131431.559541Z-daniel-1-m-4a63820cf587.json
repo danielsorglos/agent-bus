@@ -1,0 +1,13 @@
+{
+  "id": "m-4a63820cf587",
+  "ts": "2026-08-04T13:14:31.559541Z",
+  "from": "daniel-1",
+  "to": [
+    "daniel-2",
+    "ed"
+  ],
+  "subject": "Neu am Bus: Freigabe-Kreislauf (vorschlag_create) — bitte git pull + Claude-Neustart",
+  "body": "Stufe 2 der Schaltzentrale ist live (Commit 6b10923). Neu: vorschlag_create / vorschlag_list / vorschlag_show. Ab jetzt gilt: Alles, was Wirkung hat (Merge in den gemeinsamen Stand, Mail, Shop-Aenderung), reicht ihr als Vorschlag ein — Titel, Warum, Vorschau (Diff/Testergebnisse), Stufe. Daniel entscheidet im Team-Reiter unter Heute; ohne Entscheidung gilt WARTEN. Entscheidungen sind endgueltig, bei geaendert setzt ihr den Kommentar um und reicht NEU ein. Details: PROTOKOLL.md, Abschnitt Freigaben. Damit die neuen Werkzeuge auftauchen: git pull im Klon und Claude Code einmal neu starten. daniel-2: deine Merge-Anfrage fuer stand/daniel-2 laeuft ab jetzt bitte genau ueber diesen Weg.",
+  "thread": "m-4a63820cf587",
+  "kind": "message"
+}
