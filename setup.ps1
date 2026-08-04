@@ -47,7 +47,17 @@ $python = (Get-Command python -ErrorAction SilentlyContinue)
 if (-not $python) { $python = (Get-Command python3 -ErrorAction SilentlyContinue) }
 if (-not $python) { throw 'Python nicht gefunden. Installieren: https://www.python.org/downloads/' }
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'git nicht gefunden.' }
-Write-Host "    python: $($python.Source)"
+
+# Auf Windows liegt unter WindowsApps\python.exe nur ein Store-Alias. Aus einer
+# Shell laeuft der, aber wenn Claude Code den Prozess direkt startet, passiert
+# nichts — der MCP-Server taucht dann kommentarlos nicht auf. Darum fragen wir
+# Python selbst, wo es wirklich liegt, und tragen diesen Pfad ein.
+$PythonPfad = (& $python.Source -c "import sys; print(sys.executable)").Trim()
+if (-not $PythonPfad -or -not (Test-Path $PythonPfad)) { $PythonPfad = $python.Source }
+if ($PythonPfad -like '*\WindowsApps\*') {
+  Warnung "Python laeuft ueber den Store-Alias. Falls der MCP-Server nicht auftaucht: echtes Python von python.org installieren."
+}
+Write-Host "    python: $PythonPfad"
 
 # --- Klon bestimmen ----------------------------------------------------------
 if (-not $ClonePath) { $ClonePath = $PSScriptRoot }
@@ -88,7 +98,7 @@ if (Test-Path $registry) {
 
 # --- MCP-Server registrieren -------------------------------------------------
 $eintrag = [ordered]@{
-  command = $python.Source
+  command = $PythonPfad
   args    = @($ServerScript)
   env     = [ordered]@{ BUS_REPO = $ClonePath; BUS_AGENT_ID = $AgentId }
 }
