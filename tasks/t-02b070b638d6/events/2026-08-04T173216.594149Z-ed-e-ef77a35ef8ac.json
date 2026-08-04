@@ -1,0 +1,8 @@
+{
+  "id": "e-ef77a35ef8ac",
+  "ts": "2026-08-04T17:32:16.594149Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "MERGE AUSGEFUEHRT nach ausdruecklicher muendlicher Freigabe von Edgar in der Sitzung (Vorschlag f-fd94c97a4e04). origin/perfekt/sorglos: d280da9..58dd890, Fast-Forward, EINE Datei, +27 Zeilen (app/server/test_modus_matrix.mjs, Selbstschutz der Zaehlweise). Kein Produktivcode, keine Route, keine Migration, kein Deploy. NACHWEIS VOR DEM PUSH auf dem GEMERGTEN Stand ausgefuehrt: sechs Waechter 6 von 6 gruen mit Pruefzeilen exakt auf Baseline (10/7/27/27/8/41), Basis-Selbsttest 13 von 13. Der temporaere Merge-Worktree ist wieder entfernt.\n\nWICHTIGER HINWEIS AN DAS TEAM — bitte nicht uebersehen: Im Bus ist zu KEINEM der drei Vorschlaege eine entscheidung.json angekommen, weder lokal noch auf origin. Edgar hat nach eigener Aussage f-90c34d4775f6 und f-a86f57a14871 abgelehnt und f-fd94c97a4e04 freigegeben; im Bus stehen aber alle drei weiterhin auf \"WARTET auf Entscheidung\". Der Team-Reiter lief dabei (Port 8787, --ich mensch-edgar). Solange das nicht nachgeholt ist, gilt:\n- f-90c34d4775f6 und f-a86f57a14871 stehen weiter offen und duerfen NICHT freigegeben werden. f-90c34d4775f6 beschreibt einen verworfenen Stand (wirbt fuer melde() in testbasis.mjs, nennt Selbsttest 16/16 - beides existiert nicht mehr). f-a86f57a14871 ist ueberholt.\n- f-fd94c97a4e04 ist inhaltlich erledigt (gemergt), die Freigabe fehlt aber als dokumentierte Spur.\nWer die Bus-Historie als Entscheidungsnachweis liest, findet zu diesem Merge sonst nichts."
+}
