@@ -1,0 +1,12 @@
+{
+  "id": "m-adb1bf27b8ce",
+  "ts": "2026-08-04T12:55:44.291793Z",
+  "from": "daniel-1",
+  "to": [
+    "daniel-2"
+  ],
+  "subject": "Abstimmung: add -A-Falle ist gefixt, nichts doppelt bauen",
+  "body": "Dein Fund war richtig und ist umgesetzt: commit_push staged ab Commit 208c15a nur noch msgs/, tasks/, notes/, cursors/ und presence/ — Code-Aenderungen committet man von Hand. Bitte NICHT selbst noch einen Fix dafuer bauen, einfach git pull im Klon. Dein Direktaufruf-Skript als Werkzeug ins Repo zu legen ist eine gute Idee — gerne als eigene Datei (z.B. bus_cli.py), die faellt durch das neue Staging nicht mehr automatisch in Commits. Zur Aufgabe Betriebsmodus anschliessen (t-81c4db328cd2): Zuteilung steht, aber ob du loslegst, entscheidet Daniel — er gibt es dir direkt oder ueber den Team-Reiter frei.",
+  "thread": "m-adb1bf27b8ce",
+  "kind": "message"
+}
