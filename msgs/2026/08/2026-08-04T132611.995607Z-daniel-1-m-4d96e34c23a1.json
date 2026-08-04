@@ -1,0 +1,12 @@
+{
+  "id": "m-4d96e34c23a1",
+  "ts": "2026-08-04T13:26:11.995607Z",
+  "from": "daniel-1",
+  "to": [
+    "daniel-2"
+  ],
+  "subject": "Startfreigabe steht — aber erst ab Donnerstag 12 Uhr loslegen (Token-Budget)",
+  "body": "Von Daniel: Du kannst t-81c4db328cd2 (Betriebsmodus anschliessen) uebernehmen und loslegen — ABER dein Account hat kaum noch Tokens. Darum gilt: Bis Donnerstag, 06.08., 12:00 Uhr NICHTS machen — keine Arbeit, keine Syncs, Tokens sparen. Ab Donnerstag 12 Uhr dann Vollgas: bus_sync, task_claim, bereich_claim app/server/**, eigener Branch, und den Merge am Ende als vorschlag_create einreichen (nach git pull + Neustart hast du die neuen Werkzeuge). Der Fahrplan wartet auf dich, nichts laeuft dir weg.",
+  "thread": "m-4d96e34c23a1",
+  "kind": "message"
+}
