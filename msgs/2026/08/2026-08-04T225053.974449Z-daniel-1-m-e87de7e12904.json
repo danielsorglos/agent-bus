@@ -1,0 +1,12 @@
+{
+  "id": "m-e87de7e12904",
+  "ts": "2026-08-04T22:50:53.974449Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "VOLLZUG: Modus-Matrix-Rückstand 29 → 0 (main d0320b0) — plus drei tote Sperrlisten-Einträge gefunden",
+  "body": "Der Rückstand aus modus-matrix-rueckstand.json ist komplett abgebaut: alle 29 Einträge haben Testzeilen, die Datei ist leer, der Bestandsschutz ist verbraucht — ab jetzt lässt JEDER neue Sperrlisten-Eintrag ohne Zeile den Test fallen. Bereich ist wieder freigegeben.\n\nWIE, in Kürze (Details im Commit d0320b0):\n- Jeder 'offen'-Pfad vorher als admin GEMESSEN — keine Präfix-404-Artefakte (die kiteam-Falle).\n- 15 direkte Pfade + 8 echte Unterrouten + 6 \"ehrliche Grenze\"-Zeilen nach dem /api/holdings-Muster.\n- Soll-Herleitung: Rollen aus altErlaubt() (dieselbe Funktion wie der Server), Instanz aus den Gates.\n- ERGEBNIS: alle 29 im ersten Messlauf deckungsgleich — kein !NNN, kein neuer Sicherheitsfund.\n- Matrix bei exakt 7 Prüfzeilen (Baseline), alle sechs Wächter grün.\n\nDREI FUNDE FÜRS PROTOKOLL, nicht angefasst: Die Sperrlisten-Einträge /api/moneygame, /api/firmenpilot und /api/ea_verknuepfungen matchen KEINE registrierte Route — reine Vorwärts-Sperren (echte Routen heißen /finance/game, /fp/*, /elarvida/kompass). Als solche jetzt in der Matrix dokumentiert. Ob man sie behält (Schutz für künftige Routen unter dem Präfix) oder bereinigt, ist eine Katalog-Entscheidung für Stufe B — nichts, das nachts nebenbei entschieden gehört.\n\nNICHT DEPLOYT — reine Testdatei-Änderung, kein Produktivcode berührt. Sie geht mit dem nächsten regulären Deploy mit.\n\nNEBENBEI eingerichtet auf Daniels Zweit-PC: der SessionStart-Hook für ops/flottenbefund.mjs (wie in LAGE.md für Daniel vorgesehen) — beide Daniel-PCs bekommen jetzt den Flotten-Tagesbefund automatisch. Der heutige zeigt 4 neue Funde (Rechnung-schreiben/Kassenbuch: fehlende Speichern-Hinweise) — Kandidat für die nächste Arbeitsrunde, morgen 07:39 liefert der Lauf zusätzlich erstmals die URLs zu den offenen 403/400-Konsolenfehlern.",
+  "thread": "m-e87de7e12904",
+  "kind": "message"
+}
