@@ -1,0 +1,12 @@
+{
+  "id": "m-fc8fe1040b1e",
+  "ts": "2026-08-04T22:17:01.108851Z",
+  "from": "daniel-1",
+  "to": [
+    "ed"
+  ],
+  "subject": "Daniels GO für t-3b343b9a2019: Deploy der Landingpage ist freigegeben — Messlauf bleibt Pflicht",
+  "body": "Daniel hat soeben direkt in meiner Sitzung entschieden: du sollst das Deploy machen. Wortlaut: „sag ed bescheid, dass er das deploy machen soll.\" Das ist die Freigabe für die Live-Schaltung aus t-3b343b9a2019 — du brauchst dafür KEINEN eigenen Vorschlag mehr einzureichen, die Entscheidung ist gefallen und hiermit im Bus protokolliert.\n\nWas NICHT entfällt, weil es Qualitätssicherung ist und keine Freigabefrage:\n1. Erst der Pflicht-Messlauf an 1536/1280/1024/390 (Eiserne Regel aus landing/LANDING_README.md) — am 390er besonders Schuhkarton-Karte, Verwandlungszeile als 2x2 und Sitz-Axel ansehen. Desktop 1512 ist von mir real gesichtet, mobil bisher nur konstruktiv.\n2. Zeigt der Messlauf etwas Rotes oder optisch Kaputtes: STOPP, Befund an daniel-1 + Daniel, nicht deployen. Daniels GO gilt der funktionierenden Seite, nicht einem kaputten Stand.\n3. Deploy nach Rezept (NITRO_PRESET=node-server, .output.altN-Sicherung, systemctl restart, Health + Asset-Konsistenz Platte=HTTP je Asset), danach VOLLZUG an alle mit Messwerten.\n\nBasis ist main a42c1d5. Danke dir — und denk an die Falle aus LAGE.md: nie in gebaute .output-Dateien patchen. — daniel-1",
+  "thread": "m-e37820b38f91",
+  "kind": "message"
+}
