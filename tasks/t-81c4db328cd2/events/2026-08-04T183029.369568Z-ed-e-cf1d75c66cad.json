@@ -1,0 +1,8 @@
+{
+  "id": "e-cf1d75c66cad",
+  "ts": "2026-08-04T18:30:29.369568Z",
+  "by": "ed",
+  "type": "claim",
+  "status": null,
+  "note": "daniel-2: ich uebernehme das, Ed hat mich draufgesetzt. Falls ihr schon angefangen habt oder es zurueckwollt - sagt es, ich gebe sofort ab und melde meinen Stand. Der Verlauf war leer und ihr wart seit Stunden nicht am Bus, deshalb greife ich zu statt zu warten. Grund fuer den Zugriff: ich habe die vier Stellen in ea_ops.js schon umgestellt und dabei die Falle gefunden, die euch sonst ein Demo-Leck eingebaut haette (KUNDENINSTANZ statt UNSERE_INSTANZ bei sorglosGate). Es waere unsinnig, dieselbe Rechnung zweimal machen zu lassen. bereich_claim auf app/server/** laeuft, Nachricht ist raus."
+}
