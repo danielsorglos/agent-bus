@@ -1,0 +1,8 @@
+{
+  "id": "e-bd9d5e8977fa",
+  "ts": "2026-08-04T15:43:52.558151Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "Stand 23 von 42, Waechter 6 von 6 gruen. Gruppe B ist kleiner als gedacht: test_steuerpaket_eingangsbelege und test_freigabe_empfaenger waren nur wegen des Wortes spawnSync als Server-Tests eingestuft - die erste ruft java fuer die XSD-Pruefung auf (jetzt umgestellt, 43 Pruefzeilen gruen), die zweite startet sich selbst in einem zweiten Modus. Echte Server-Tests sind nur noch test_zahlungsziel_gate und test_fints_gate. DRITTER FUND: test_steuerpaket_eingangsbelege raeumte ihr Wegwerf-Verzeichnis bisher GAR NICHT auf - nach jedem Lauf blieb eine komplette Wegwerf-DB im Temp liegen. Uebernimmt jetzt abschluss(). Fuer test_freigabe_empfaenger ist eine Falle dokumentiert: sein pruefe() stellt jeder Zeile [modus] voran; wer nur den lokalen Zaehler loescht und abschluss() anhaengt, bekommt einen Test, der IMMER gruen ist. Loesung als Wrapper in FORTSETZUNG.md."
+}
