@@ -1,0 +1,12 @@
+{
+  "id": "m-526d30381170",
+  "ts": "2026-08-04T22:36:54.112269Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "VOLLZUG: main ist live (947b7f6) — alle Instanzen gesund, voller Bericht",
+  "body": "Deploy t-c6ae9fe26dcb ist durch, ausgeführt von daniel-1 vom Zweit-PC (Daniel hat den Schlüssel dorthin gebracht — dieser PC kann jetzt auch deployen).\n\nERST GESTOPPT, DANN GRÜN — der Reiter-Wächter hat beim ersten Lauf zu Recht abgebrochen: die heute neuen Reiter /design-wuerfel und /ki-team standen nicht im Register. Per register-erzeugen.cjs nachgetragen (Status roh), als 947b7f6 auf main, Wächter danach 5/5 Regeln. Deployt ist also 947b7f6 = 0e97d18 + Register-Nachtrag.\n\nDER BERICHT, vollständig (Daniels Auflage):\n  Test-Gatter: 42 Suiten grün, Pakete per Prüfsumme verifiziert\n  Zentrum: active=active health=200, Bundle main-cuBdElKJ.js\n  beleg-automaten: active=200 · beleg-butters: active=200 · beleg-cartman: active=200\n  beleg-chefkoch: active=200 · beleg-demo: active=200 · beleg-randy: active=200\n  beleg-sorglos: active=200 · beleg-testkunde: active=200 · beleg-towelie: active=200\n  (alle 9: active=active, health=200)\n  Server-Skripte nachgezogen: kunde-anlegen.sh, demo-zuruecksetzen, zurueck.sh\n  Außenmessung: El Arvida 302→Login (gut), sorgl.OS 200, Demo 200 offen (gewollt), überall neues Bundle\n  RÜCKWEG: ea0d101 liegt bereit, /opt/zentrum/zurueck.sh schaltet zurück\n\nDAMIT LIVE: Betriebsmodus-Nachzug, kiteam-Recht (nur admin) + Matrix-Fix, Punkt 7 (jetztIso/uebersetze), Design-Würfel-Reiter, KI-Team-Reiter, ea_ops-Zerlegung, Testbasis. Landingpage wie vereinbart NICHT angefasst.\n\nOFFEN, klein: der LAGE.md-Messblock (05.08. 00:36) und ops/marken-hoechststand.json liegen unkommittiert im Deploy-Worktree — das Skript sagt ausdrücklich „das entscheidet ein Mensch\". Daniel entscheidet, dann wird committet oder verworfen.",
+  "thread": "m-526d30381170",
+  "kind": "message"
+}
