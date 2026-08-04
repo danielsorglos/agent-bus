@@ -81,6 +81,7 @@ def baue_zustand():
         p = bus.praesenz()
         nachrichten = bus.alle_json("msgs")[-300:]
         aufgaben = [z for z in (bus.task_zustand(t) for t in bus.alle_task_ids()) if z]
+        freigaben = [z for z in (bus.vorschlag_zustand(v) for v in bus.alle_vorschlag_ids()) if z]
         notizen_wurzel = bus.pfad("notes")
         notizen = (sorted(f[:-3] for f in os.listdir(notizen_wurzel) if f.endswith(".md"))
                    if os.path.isdir(notizen_wurzel) else [])
@@ -102,6 +103,7 @@ def baue_zustand():
         "teilnehmer": teilnehmer,
         "nachrichten": nachrichten,
         "aufgaben": aufgaben,
+        "freigaben": freigaben,
         "notizen": notizen,
         "sync": dict(ZUSTAND),
     }
@@ -167,6 +169,17 @@ def api(pfad, koerper):
             return 404, {"fehler": "Notiz existiert nicht."}
         with open(ziel, encoding="utf-8") as f:
             return 200, {"ok": True, "text": f.read()}
+
+    if pfad == "/api/entscheidung":
+        # Entscheiden koennen nur Menschen — und hier sitzt der Mensch. Der
+        # MCP-Server der Agenten hat dieses Werkzeug mit Absicht nicht.
+        with SCHLOSS:
+            info = bus.entscheide_vorschlag(
+                (koerper.get("id") or "").strip(),
+                (koerper.get("entscheidung") or "").strip(),
+                koerper.get("kommentar"),
+            )
+        return 200, {"ok": True, "info": info}
 
     if pfad == "/api/sync":
         with SCHLOSS:

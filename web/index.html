@@ -58,6 +58,55 @@
   .blatt{flex:1; display:none; overflow:hidden}
   .blatt.aktiv{display:flex}
 
+  /* ---------------------------------------------------------------- Heute */
+  #heute{flex-direction:column}
+  .heutefluss{flex:1; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:12px; max-width:920px}
+  .abschnittskopf{
+    font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+    margin:8px 0 2px; display:flex; align-items:center; gap:9px;
+  }
+  .abschnittskopf .anzahl{color:var(--text); font-weight:700}
+  .fkarte{
+    background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius);
+    padding:15px 17px;
+  }
+  .fkopf{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px}
+  .fkopf .wer{font-weight:600}
+  .fkopf .meta{color:var(--muted); font-size:12px}
+  .stufe{
+    margin-left:auto; font-size:11px; font-weight:700; letter-spacing:.04em;
+    border-radius:6px; padding:2px 9px;
+  }
+  .stufe.hoch{background:rgba(217,97,90,.16); color:var(--rot)}
+  .stufe.mittel{background:rgba(217,164,65,.16); color:var(--gelb)}
+  .stufe.niedrig{background:rgba(63,178,127,.14); color:var(--gruen)}
+  .fwarum{margin:2px 0 10px; white-space:pre-wrap; overflow-wrap:anywhere}
+  .fvorschau{
+    font:12.5px/1.5 ui-monospace,Consolas,monospace; background:var(--bg);
+    border:1px solid var(--linie); border-radius:9px; padding:11px 13px;
+    margin:0 0 12px; overflow-x:auto; white-space:pre; max-height:260px; overflow-y:auto;
+  }
+  .fzeile{display:flex; gap:9px; flex-wrap:wrap; align-items:center}
+  .fzeile input{
+    flex:1; min-width:180px; background:var(--gehoben); border:1px solid var(--linie);
+    border-radius:9px; padding:9px 12px;
+  }
+  .fzeile input:focus{outline:none; border-color:var(--akzent)}
+  .knopf.gruen{background:var(--gruen); border-color:var(--gruen)}
+  .knopf.gruen:hover{filter:brightness(1.1)}
+  .knopf.rot{background:none; border-color:var(--rot); color:var(--rot)}
+  .knopf.rot:hover{background:rgba(217,97,90,.12)}
+  .passiert{
+    display:flex; gap:10px; align-items:baseline; padding:9px 13px; font-size:13px;
+    background:var(--karte); border:1px solid var(--linie); border-radius:9px; color:var(--muted);
+  }
+  .passiert b{color:var(--text); font-weight:600}
+  .passiert .wie{font-weight:700}
+  .passiert .wie.freigegeben{color:var(--gruen)}
+  .passiert .wie.abgelehnt{color:var(--rot)}
+  .passiert .wie.geaendert{color:var(--gelb)}
+  nav .zaehler.rot{background:var(--rot)}
+
   /* ----------------------------------------------------------------- Chat */
   #chat{flex-direction:column}
   .verlauf{flex:1; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:14px}
@@ -191,13 +240,18 @@
 </header>
 
 <nav>
-  <button data-blatt="chat" class="aktiv">Chat<span class="zaehler" id="zChat" hidden></span></button>
+  <button data-blatt="heute" class="aktiv">Heute<span class="zaehler rot" id="zHeute" hidden></span></button>
+  <button data-blatt="chat">Chat<span class="zaehler" id="zChat" hidden></span></button>
   <button data-blatt="aufgaben">Aufgaben<span class="zaehler" id="zAufgaben" hidden></span></button>
   <button data-blatt="wissen">Wissen</button>
 </nav>
 
 <main>
-  <section class="blatt aktiv" id="chat">
+  <section class="blatt aktiv" id="heute">
+    <div class="heutefluss" id="heutefluss"></div>
+  </section>
+
+  <section class="blatt" id="chat">
     <div class="verlauf" id="verlauf"></div>
     <div class="verfassen">
       <div class="zeile">
@@ -346,6 +400,73 @@ function zeichnePraesenz(){
     </span>`).join("");
 }
 
+const STUFEN = {
+  hoch:    "wirkt nach außen",
+  mittel:  "gemeinsamer Stand",
+  niedrig: "geringes Risiko",
+};
+const ENTSCHIEDEN = {
+  freigegeben: "Freigegeben",
+  abgelehnt:   "Abgelehnt",
+  geaendert:   "Zurück zum Ändern",
+};
+
+function zeichneHeute(){
+  const alle = ZUSTAND.freigaben || [];
+  const offen = alle.filter((v) => !v.entscheidung);
+  const fertig = alle.filter((v) => v.entscheidung)
+    .sort((a,b) => String(b.entscheidung.ts).localeCompare(String(a.entscheidung.ts)))
+    .slice(0, 15);
+
+  $("#heutefluss").innerHTML =
+    `<div class="abschnittskopf">Wartet auf dich <span class="anzahl">${offen.length}</span></div>` +
+    (offen.map((v) => {
+      const stufe = STUFEN[v.stufe] ? v.stufe : "mittel";
+      return `
+      <div class="fkarte" data-id="${esc(v.id)}">
+        <div class="fkopf">
+          <span class="wer">${esc(name(v.by))}</span>
+          <span class="meta">bittet um Freigabe · ${esc(tag(v.ts))} ${esc(uhr(v.ts))}${v.task ? " · Aufgabe " + esc(v.task) : ""}</span>
+          <span class="stufe ${stufe}">${esc(STUFEN[stufe])}</span>
+        </div>
+        <div class="betreff">${esc(v.titel)}</div>
+        ${v.warum ? `<div class="fwarum">${esc(v.warum)}</div>` : ""}
+        ${v.vorschau ? `<pre class="fvorschau">${esc(v.vorschau)}</pre>` : ""}
+        <div class="fzeile">
+          <button class="knopf gruen" data-e="freigegeben">Freigeben</button>
+          <button class="knopf leise" data-e="geaendert">Ändern lassen</button>
+          <button class="knopf rot" data-e="abgelehnt">Ablehnen</button>
+          <input placeholder="Kommentar — bei „Ändern lassen“ Pflicht" aria-label="Kommentar zur Entscheidung">
+        </div>
+      </div>`;
+    }).join("") || `<div class="leer">Nichts wartet auf dich. Vorschläge reichen die Agenten mit <code>vorschlag_create</code> ein.</div>`) +
+    `<div class="abschnittskopf" style="margin-top:14px">Was passiert ist</div>` +
+    (fertig.map((v) => {
+      const e = v.entscheidung;
+      return `
+      <div class="passiert">
+        <span class="wie ${esc(e.entscheidung)}">${esc(ENTSCHIEDEN[e.entscheidung] || e.entscheidung)}</span>
+        <span><b>${esc(v.titel)}</b> von ${esc(name(v.by))} — entschieden von ${esc(name(e.by))},
+          ${esc(tag(e.ts))} ${esc(uhr(e.ts))}${e.kommentar ? " · „" + esc(e.kommentar) + "“" : ""}</span>
+      </div>`;
+    }).join("") || `<div class="leer">Noch keine Entscheidungen.</div>`);
+
+  $$("#heutefluss .fkarte").forEach((k) => {
+    const eingabe = k.querySelector("input");
+    k.querySelectorAll("button[data-e]").forEach((b) => b.addEventListener("click", async () => {
+      const kommentar = eingabe.value.trim();
+      if(b.dataset.e === "geaendert" && !kommentar){
+        eingabe.placeholder = "Was soll anders werden? Ohne Kommentar geht „Ändern lassen“ nicht.";
+        eingabe.focus();
+        return;
+      }
+      k.querySelectorAll("button").forEach((x) => x.disabled = true);
+      await schreibe("/api/entscheidung",
+                     {id: k.dataset.id, entscheidung: b.dataset.e, kommentar: kommentar || null});
+    }));
+  });
+}
+
 function zeichneChat(){
   const v = $("#verlauf");
   amEnde = v.scrollHeight - v.scrollTop - v.clientHeight < 90;
@@ -457,10 +578,16 @@ function zeichneZaehler(){
   const za = $("#zAufgaben");
   za.hidden = meine === 0;
   za.textContent = meine;
+
+  const wartend = (ZUSTAND.freigaben || []).filter((v) => !v.entscheidung).length;
+  const zh = $("#zHeute");
+  zh.hidden = wartend === 0;
+  zh.textContent = wartend;
+  document.title = (wartend ? `(${wartend}) ` : "") + "sorgl.OS · Team";
 }
 
 function zeichne(){
-  zeichnePraesenz(); zeichneChat(); zeichneAufgaben(); zeichneWissen();
+  zeichnePraesenz(); zeichneHeute(); zeichneChat(); zeichneAufgaben(); zeichneWissen();
   zeichneFuss(); zeichneZaehler();
 }
 

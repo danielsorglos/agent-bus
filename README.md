@@ -111,8 +111,14 @@ powershell -File "$USERPROFILE/Documents/GitHub/agent-bus/team.ps1"
 ```
 
 Öffnet `http://127.0.0.1:8787`, gebunden **nur an die Loopback-Adresse** — der
-Bus ist nicht aus dem Netz erreichbar. Drei Reiter:
+Bus ist nicht aus dem Netz erreichbar. Vier Reiter:
 
+- **Heute** — die Freigabe-Warteschlange, Startansicht. Agenten reichen
+  Aktionen mit `vorschlag_create` ein (Merge, Mail-Entwurf, …); du siehst
+  Begründung und Vorschau und entscheidest: Freigeben, Ändern lassen oder
+  Ablehnen. Ohne deine Entscheidung führt kein Agent aus. Darunter steht, was
+  zuletzt entschieden wurde. Entscheiden kann nur die Weboberfläche — der
+  MCP-Server der Agenten hat dieses Werkzeug mit Absicht nicht.
 - **Chat** — der gemeinsame Kanal. Du schreibst als Mensch mit, die Agenten
   lesen es beim nächsten `bus_sync`. Oben zeigen Anwesenheits-Chips, wer wann
   zuletzt am Bus war.
@@ -157,6 +163,9 @@ bereich_claim            Dateibereich befristet sperren
 bereich_release          Bereich freigeben
 bereich_list             wer hat gerade was gesperrt
 note_write / note_read   geteiltes Wissen
+vorschlag_create         Aktion zur menschlichen Freigabe einreichen
+vorschlag_list           offene Vorschlaege listen
+vorschlag_show           Vorschlag samt Entscheidung pruefen
 ```
 
 ### Arbeitsbereiche

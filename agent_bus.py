@@ -137,7 +137,7 @@ def pull():
 # "praesenz"-Commits, und versehentlich abgelegte Dateien waeren mitgepusht
 # worden. Code-Aenderungen (agent_bus.py, setup.ps1, agents.json, …) werden
 # bewusst von Hand committet.
-DATEN_ORDNER = ("msgs", "tasks", "notes", "cursors", "presence")
+DATEN_ORDNER = ("msgs", "tasks", "notes", "cursors", "presence", "freigaben")
 
 
 def commit_push(nachricht):
@@ -574,9 +574,17 @@ def t_sync(_):
                  and m.get("from") != AGENT]
     offen = [z for z in (task_zustand(t) for t in alle_task_ids())
              if z and z["status"] in ("open", "in_progress", "blocked")]
+    meine_v = [z for z in (vorschlag_zustand(v) for v in alle_vorschlag_ids())
+               if z and z.get("by") == AGENT]
+    v_zeile = ""
+    if meine_v:
+        wartend = sum(1 for z in meine_v if not z.get("entscheidung"))
+        entschieden = len(meine_v) - wartend
+        v_zeile = (f"\nmeine Vorschlaege: {wartend} warten auf Entscheidung, "
+                   f"{entschieden} entschieden (vorschlag_list mine:true include_decided:true)")
     return (f"pull: {p}\npush: {c}\n"
             f"ungelesene Nachrichten: {len(ungelesen)}\n"
-            f"offene Tasks: {len(offen)}")
+            f"offene Tasks: {len(offen)}" + v_zeile)
 
 
 def t_send(a):
@@ -841,6 +849,129 @@ def t_note_read(a):
         return DATEN_HINWEIS + f"\n\n--- notes/{key}.md ---\n" + f.read()
 
 
+# -------------------------------------------------------------------- Freigaben
+# Der Freigabe-Kreislauf: ein Agent schlaegt eine Aktion vor (vorschlag.json),
+# der Mensch entscheidet ueber die Weboberflaeche (entscheidung.json), der Agent
+# sieht die Entscheidung beim naechsten Sync und handelt. Ohne Entscheidung gilt
+# WARTEN. Append-only wie alles am Bus: eine Entscheidung wird nie ueberschrieben.
+# Bewusst gibt es KEIN MCP-Werkzeug zum Entscheiden — entscheiden koennen nur
+# Menschen, und die sitzen an der Weboberflaeche.
+
+FREIGABE_STUFEN = ("hoch", "mittel", "niedrig")
+ENTSCHEIDUNGEN = ("freigegeben", "abgelehnt", "geaendert")
+
+
+def vorschlag_zustand(vid):
+    basis = lies_json(pfad("freigaben", vid, "vorschlag.json"))
+    if not basis:
+        return None
+    z = dict(basis)
+    z["entscheidung"] = lies_json(pfad("freigaben", vid, "entscheidung.json"))
+    return z
+
+
+def alle_vorschlag_ids():
+    wurzel = pfad("freigaben")
+    if not os.path.isdir(wurzel):
+        return []
+    return sorted(
+        d for d in os.listdir(wurzel)
+        if os.path.isfile(os.path.join(wurzel, d, "vorschlag.json"))
+    )
+
+
+def entscheide_vorschlag(vid, entscheidung, kommentar=None):
+    """Schreibt die menschliche Entscheidung. Wird NUR von der Weboberflaeche
+    gerufen (dort ist AGENT eine mensch-*-Identitaet), nie ueber MCP."""
+    if entscheidung not in ENTSCHEIDUNGEN:
+        raise BusFehler(f"'entscheidung' muss eins von {list(ENTSCHEIDUNGEN)} sein.")
+    if entscheidung == "geaendert" and not (kommentar or "").strip():
+        raise BusFehler("'geaendert' braucht einen Kommentar — was soll anders werden?")
+    pull()
+    z = vorschlag_zustand(vid)
+    if not z:
+        raise BusFehler(f"Vorschlag '{vid}' nicht gefunden.")
+    if z.get("entscheidung"):
+        e = z["entscheidung"]
+        raise BusFehler(f"Schon entschieden: {e.get('entscheidung')} von {e.get('by')} um {e.get('ts')}.")
+    schreibe_json(pfad("freigaben", vid, "entscheidung.json"), {
+        "id": vid, "ts": jetzt(), "by": AGENT,
+        "entscheidung": entscheidung, "kommentar": (kommentar or "").strip() or None,
+    })
+    return commit_push(f"entscheidung {vid}: {entscheidung} von {AGENT}")
+
+
+def formatiere_vorschlag(z, kurz=False):
+    e = z.get("entscheidung")
+    stand = (f"{e.get('entscheidung')} von {e.get('by')} am {(e.get('ts') or '')[:16]}"
+             + (f" — {e['kommentar']}" if e.get("kommentar") else "")) if e else "WARTET auf Entscheidung"
+    kopf = (f"[{z.get('stufe', 'mittel'):<7}] {z.get('id')}  {z.get('titel')}\n"
+            f"   von {z.get('by')} am {(z.get('ts') or '')[:16]}   stand: {stand}")
+    if kurz:
+        return kopf
+    teile = [kopf]
+    if z.get("warum"):
+        teile.append("   warum: " + z["warum"])
+    if z.get("vorschau"):
+        teile.append("   --- Vorschau ---\n" + z["vorschau"])
+    return "\n".join(teile)
+
+
+def t_vorschlag_create(a):
+    titel = (a.get("titel") or a.get("title") or "").strip()
+    if not titel:
+        raise BusFehler("'titel' fehlt — was soll freigegeben werden?")
+    stufe = (a.get("stufe") or "mittel").strip().lower()
+    if stufe not in FREIGABE_STUFEN:
+        raise BusFehler(f"'stufe' muss eins von {list(FREIGABE_STUFEN)} sein.")
+    pull()
+    vid = neue_id("f-", titel)
+    schreibe_json(pfad("freigaben", vid, "vorschlag.json"), {
+        "id": vid, "ts": jetzt(), "by": AGENT, "titel": titel,
+        "warum": (a.get("warum") or "").strip(),
+        "vorschau": a.get("vorschau") or "",
+        "stufe": stufe,
+        "task": a.get("task") or None,
+    })
+    ergebnis = commit_push(f"vorschlag {vid} von {AGENT}: {titel[:60]}")
+    return (f"Vorschlag eingereicht: {vid}  {titel}\n"
+            f"Der Mensch sieht ihn in der Weboberflaeche unter 'Heute'. Bis zur "
+            f"Entscheidung gilt: WARTEN — nicht ausfuehren. Stand pruefen mit "
+            f"vorschlag_show id:{vid} (nach einem bus_sync).\n{ergebnis}")
+
+
+def t_vorschlag_list(a):
+    pull()
+    nur_meine = bool(a.get("mine"))
+    auch_entschiedene = bool(a.get("include_decided"))
+    zs = [z for z in (vorschlag_zustand(v) for v in alle_vorschlag_ids()) if z]
+    if nur_meine:
+        zs = [z for z in zs if z.get("by") == AGENT]
+    if not auch_entschiedene:
+        zs = [z for z in zs if not z.get("entscheidung")]
+    if not zs:
+        return ("Keine offenen Vorschlaege." if not auch_entschiedene
+                else "Keine Vorschlaege vorhanden.")
+    return "\n".join(formatiere_vorschlag(z, kurz=True) for z in zs)
+
+
+def t_vorschlag_show(a):
+    vid = (a.get("id") or "").strip()
+    if not vid:
+        raise BusFehler("'id' fehlt.")
+    pull()
+    z = vorschlag_zustand(vid)
+    if not z:
+        return f"Vorschlag '{vid}' nicht gefunden."
+    hinweis = ""
+    if not z.get("entscheidung"):
+        hinweis = "\n\nNoch keine Entscheidung — es gilt WARTEN, nicht ausfuehren."
+    elif z["entscheidung"].get("entscheidung") == "geaendert":
+        hinweis = ("\n\nEntscheidung 'geaendert': den Kommentar umsetzen und einen "
+                   "NEUEN Vorschlag einreichen — der alte bleibt, wie er ist.")
+    return DATEN_HINWEIS + "\n\n" + formatiere_vorschlag(z) + hinweis
+
+
 # ----------------------------------------------------------------- Tool-Register
 
 def _s(typ, beschreibung, **extra):
@@ -1043,6 +1174,44 @@ TOOLS = [
         },
         "fn": t_note_read,
     },
+    {
+        "name": "vorschlag_create",
+        "description": "Reicht eine Aktion zur menschlichen Freigabe ein (Merge, Mail, alles nach aussen Wirksame). Der Mensch entscheidet in der Weboberflaeche unter 'Heute'; bis dahin gilt WARTEN — nicht ausfuehren.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "titel": _s("string", "Was freigegeben werden soll, in einem Satz. Z.B. 'Merge stand/daniel-2 nach main'."),
+                "warum": _s("string", "Begruendung und Kontext: was wurde getan, warum ist es sicher."),
+                "vorschau": _s("string", "Was genau passieren wird — Diff-Auszug, Mail-Entwurf, Testresultate. Der Mensch entscheidet auf dieser Grundlage."),
+                "stufe": _s("string", "Risiko: 'hoch' (wirkt nach aussen), 'mittel' (gemeinsamer Stand), 'niedrig'. Default mittel."),
+                "task": _s("string", "Optional: Task-ID, zu der der Vorschlag gehoert."),
+            },
+            "required": ["titel", "warum", "vorschau"],
+        },
+        "fn": t_vorschlag_create,
+    },
+    {
+        "name": "vorschlag_list",
+        "description": "Listet Freigabe-Vorschlaege. Standard: nur offene (unentschiedene).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "mine": _s("boolean", "Nur eigene Vorschlaege."),
+                "include_decided": _s("boolean", "Auch schon entschiedene zeigen."),
+            },
+        },
+        "fn": t_vorschlag_list,
+    },
+    {
+        "name": "vorschlag_show",
+        "description": "Zeigt einen Freigabe-Vorschlag samt Entscheidung, falls der Mensch schon entschieden hat. Nach bus_sync aufrufen, um den eigenen Vorschlag zu pruefen.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"id": _s("string", "Vorschlags-ID (f-…).")},
+            "required": ["id"],
+        },
+        "fn": t_vorschlag_show,
+    },
 ]
 
 TOOL_MAP = {t["name"]: t for t in TOOLS}
@@ -1164,6 +1333,9 @@ def _selftest_schritte():
         ("bus_presence", {}),
         ("note_write", {"key": "selftest", "content": "# selftest\nok"}),
         ("note_read", {"key": "selftest"}),
+        ("vorschlag_create", {"titel": "selftest-vorschlag", "warum": "nur ein Test",
+                              "vorschau": "nichts passiert", "stufe": "niedrig"}),
+        ("vorschlag_list", {}),
         ("bus_sync", {}),
     ]
     fehlgeschlagen = 0
@@ -1175,6 +1347,23 @@ def _selftest_schritte():
         except Exception as e:
             fehlgeschlagen += 1
             print(f"  FEHL {name:<14} {type(e).__name__}: {e}")
+
+    # Der Freigabe-Kreislauf einmal rundherum: entscheiden und Ergebnis pruefen.
+    try:
+        vid = alle_vorschlag_ids()[-1]
+        entscheide_vorschlag(vid, "freigegeben", "selftest")
+        z = vorschlag_zustand(vid)
+        assert z and z["entscheidung"]["entscheidung"] == "freigegeben"
+        try:
+            entscheide_vorschlag(vid, "abgelehnt")
+            raise AssertionError("Zweitentscheidung haette scheitern muessen")
+        except BusFehler:
+            pass  # genau richtig: eine Entscheidung ist endgueltig
+        print(f"  OK   {'entscheidung':<14} {vid} freigegeben, Zweitentscheidung abgelehnt")
+    except Exception as e:
+        fehlgeschlagen += 1
+        print(f"  FEHL {'entscheidung':<14} {type(e).__name__}: {e}")
+
     print("selftest bestanden" if not fehlgeschlagen else f"{fehlgeschlagen} Tool(s) fehlerhaft")
     return 1 if fehlgeschlagen else 0
 

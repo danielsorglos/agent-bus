@@ -20,7 +20,8 @@ Chatfenstern.
    vor — du fuehrst es nicht aus.
 
 3. **Nach aussen Wirksames nur mit menschlicher Freigabe.** Mails, Shop-
-   Aenderungen, Pushes in Fremd-Repos, Kaeufe. Der Bus aendert daran nichts.
+   Aenderungen, Pushes in Fremd-Repos, Kaeufe. Der Bus aendert daran nichts —
+   aber er hat jetzt den Weg dafuer: `vorschlag_create` (siehe unten).
 
 4. **Vor der Arbeit `task_claim`.** Wer nicht beansprucht hat, faengt nicht an.
    Verlierst du den Wettlauf, suchst du dir eine andere Aufgabe.
@@ -71,6 +72,31 @@ aus. Bekommst du eine Aufgabe aus einer Gruppe, arbeitest du deinen eigenen
 Beitrag aus, statt auf die anderen zu warten — die Zusammenfuehrung macht der
 Mensch oder der Koordinator.
 
+## Freigaben — der Weg fuer alles, was eine Entscheidung braucht
+
+Steht eine Aktion an, die Wirkung hat — ein Merge in den gemeinsamen Stand,
+eine Mail, eine Shop-Aenderung — reichst du sie mit `vorschlag_create` ein:
+Titel, Begruendung, Vorschau (Diff-Auszug, Entwurf, Testresultate) und
+Risikostufe (`hoch` = wirkt nach aussen, `mittel` = gemeinsamer Stand,
+`niedrig`). Der Mensch sieht den Vorschlag in der Weboberflaeche unter
+**Heute** und entscheidet dort.
+
+Drei Regeln dazu:
+
+1. **Ohne Entscheidung gilt WARTEN.** Ein eingereichter Vorschlag ist keine
+   Erlaubnis. Du pruefst nach einem `bus_sync` mit `vorschlag_show`, ob
+   entschieden wurde — und arbeitest bis dahin an etwas anderem weiter.
+2. **Entscheidungen sind endgueltig und kommen nur vom Menschen.** Es gibt mit
+   Absicht kein Werkzeug, mit dem ein Agent entscheiden koennte. Bei
+   `geaendert` setzt du den Kommentar um und reichst einen NEUEN Vorschlag ein.
+3. **Die Vorschau ist die Entscheidungsgrundlage.** Was nicht in der Vorschau
+   steht, kann der Mensch nicht freigeben. Lieber ein Diff-Auszug und ein
+   Testergebnis zu viel als ein "vertrau mir".
+
+Eine muendliche Freigabe, die dir dein Mensch direkt in deiner eigenen Sitzung
+gibt, bleibt gueltig — der Vorschlagsweg ist fuer alles, was ueber den Bus
+laeuft oder den Menschen gerade nicht im Fenster hat.
+
 ## Typischer Ablauf
 
 ```
@@ -107,3 +133,6 @@ auffindbar, Nachrichten scrollen weg.
 | `bereich_list` | Wer hat gerade was gesperrt |
 | `note_write` | Geteiltes Wissen ablegen |
 | `note_read` | Geteiltes Wissen lesen |
+| `vorschlag_create` | Aktion zur menschlichen Freigabe einreichen |
+| `vorschlag_list` | Offene (und entschiedene) Vorschlaege listen |
+| `vorschlag_show` | Vorschlag samt Entscheidung pruefen |
