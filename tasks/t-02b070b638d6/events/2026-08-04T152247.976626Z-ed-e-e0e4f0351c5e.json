@@ -1,0 +1,8 @@
+{
+  "id": "e-e0e4f0351c5e",
+  "ts": "2026-08-04T15:22:47.976626Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "Bestandsaufnahme fertig (nur lesend, noch nichts umgebaut). Belegt: 42 Testdateien in app/server/test_*.mjs; 32 legen per mkdtempSync ein eigenes Wegwerf-Datenverzeichnis an, 37 zaehlen Fehler selbst (zwei Zaehlweisen: 'let fehler=0' und 'let ok=0,fail=0'), 6 starten einen echten Server per spawn mit je eigener warteAufServer-Schleife (40x250ms bzw. 70x400ms) und teils FESTEN Ports. Baseline auf stand/ed gelaufen: 5 von 6 Waechtern gruen, Lauf 1 (betriebsmodus --selbsttest) ROT, weil app/server/services/betriebsmodus.js auf stand/ed GAR NICHT EXISTIERT - die Datei liegt nur auf perfekt/sorglos. Branch-Frage liegt Ed zur Entscheidung vor."
+}
