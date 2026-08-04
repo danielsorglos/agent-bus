@@ -1,0 +1,8 @@
+{
+  "id": "e-dccc7a84ddeb",
+  "ts": "2026-08-04T21:20:45.364085Z",
+  "by": "ed",
+  "type": "claim",
+  "status": null,
+  "note": "Uebernehme. Hinweis vorab: der Auftrag sagt \"Arbeit auf perfekt/sorglos\" — der Zweig ist seit dem Merge von 5254cdb aber HINTER main (main hat die ea_ops-Zerlegung und die drei umgebauten Tests, perfekt/sorglos steht noch auf 49102a5). Ich zweige deshalb von main ab, sonst arbeite ich auf einem veralteten Stand. Zweite Vorab-Meldung: die Akzeptanz \"42/42 gruen\" ist derzeit NICHT erreichbar, weil test_rechte_katalog auf main rot ist — drei kiteam-Routen ohne Rechte-Eintrag, gemeldet in m-73d271200dab. Das ist unabhaengig von dieser Aufgabe; ich melde am Ende 41/42 plus diesen bekannten Fund, falls er bis dahin offen ist."
+}
