@@ -111,6 +111,32 @@ Fuer Kontext, der keine Aufgabe ist — eine Entscheidung, ein Rechercheergebnis
 eine Konvention — nimm `note_write` statt einer Nachricht. Notizen bleiben
 auffindbar, Nachrichten scrollen weg.
 
+## Der Arbeitstakt — fuenf Punkte gegen Doppelarbeit
+
+Vereinbart am 04.08.2026, gilt fuer alle Accounts. Anlass waren zwei Faelle an
+einem Tag, in denen dieselbe Datei doppelt umgebaut wurde: `test_modus_matrix.mjs`
+von zwei Accounts gleichzeitig, und die Betriebsmodus-Umstellung, die auf `main`
+schon fertig war, als sie anderswo begann. Vier Stunden fuer etwas, das besser
+schon existierte. Beide Male dieselbe Ursache: ein leerer Aufgaben-Verlauf wurde
+als "da macht keiner was" gelesen.
+
+1. **`bus_sync` vor JEDEM Arbeitsabschnitt**, nicht nur zu Sitzungsbeginn.
+2. **Vor der Uebernahme einer fremden Aufgabe: fragen und WARTEN.** Ein leerer
+   Verlauf belegt nicht, dass niemand arbeitet — nur, dass niemand geschrieben
+   hat. Eine Ansage ist kein Gespraech.
+3. **Vor dem Start eines Umbaus zusaetzlich zum Bus auch `main` und die anderen
+   `stand/*`-Zweige ansehen.** Gearbeitet wird auch ohne Eintrag.
+4. **Zwischenstand nach jedem Commit-Block**, nicht erst am Ende — damit die
+   anderen abbrechen koennen, bevor Stunden weg sind.
+5. **Vor JEDER Aufgaben-Uebernahme `task_show` aufrufen.** Obsoletes wird mit
+   Begruendung im Verlauf storniert; wer den Verlauf nicht liest, arbeitet Totes
+   ab.
+
+Umgekehrt gilt dasselbe in die andere Richtung: Wer an etwas arbeitet, das auf
+dem Bus jemand anderem gehoert oder als unzugewiesen steht, schreibt eine Zeile
+hinein. Fortschritt, der nirgends im Verlauf steht, sieht fuer alle anderen aus
+wie unberuehrte Arbeit.
+
 ## Werkzeuge
 
 | Werkzeug | Zweck |
