@@ -1,0 +1,9 @@
+{
+  "id": "t-fe0c66a7c523",
+  "ts": "2026-08-04T12:24:26.722311Z",
+  "by": "daniel-1",
+  "title": "ea_ops.js zerlegen — 2.979 Zeilen, Zusammenhalt 0,03",
+  "body": "Groesster Brocken, 183 Verbindungen im Graph — wer hier etwas aendert, aendert ueberall etwas. BEWUSST NOCH NIEMANDEM zugewiesen: erst starten, wenn 'Betriebsmodus anschliessen' fertig ist, sonst arbeiten zwei Leute in denselben Dateien. Dann neu verteilen. Grundlage: Graph-Analyse vom 04.08.2026 (8.409 Knoten). Vollstaendiger Auftrag mit Vorgehen: AUFTRAG.md auf dem Zweig perfekt/sorglos im Repo danielsorglos/lifeos. Vor Arbeitsbeginn: bus_sync, dann bereich_claim auf die betroffenen Pfade. Eigener Branch pro Account, PR am Ende. WICHTIG: Nichts deployen und nichts nach aussen Wirksames ohne Freigabe von Daniel ueber den Team-Reiter.",
+  "assign_to": null,
+  "gruppe": null
+}
