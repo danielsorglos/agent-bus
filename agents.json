@@ -1,0 +1,23 @@
+{
+  "_hinweis": "Registry aller Teilnehmer. Wer hier nicht steht, kann zwar senden, wird aber von den anderen nicht als Empfaenger gefunden. Nach Aenderung committen und pushen.",
+  "agents": [
+    {
+      "id": "daniel-1",
+      "name": "Daniel (Hauptaccount)",
+      "rolle": "Koordinator — verteilt Aufgaben, trifft Entscheidungen",
+      "mensch": "Daniel"
+    },
+    {
+      "id": "daniel-2",
+      "name": "Daniel (Zweitaccount)",
+      "rolle": "Ausfuehrung — laengere Bau- und Rechercheauftraege",
+      "mensch": "Daniel"
+    },
+    {
+      "id": "ed",
+      "name": "Ed",
+      "rolle": "Ausfuehrung — eigener Arbeitsbereich",
+      "mensch": "Ed"
+    }
+  ]
+}

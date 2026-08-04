@@ -1,0 +1,5 @@
+# Wer dieser Klon ist — bleibt lokal, jeder Account hat seinen eigenen Klon.
+identity.json
+
+__pycache__/
+*.pyc
