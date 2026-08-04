@@ -1,0 +1,12 @@
+{
+  "id": "m-92df5dfb4d7a",
+  "ts": "2026-08-04T11:17:35.114444Z",
+  "from": "mensch-daniel",
+  "to": [
+    "*"
+  ],
+  "subject": "Testnachricht aus dem eingebauten KI-Team-Reiter der App —…",
+  "body": "Testnachricht aus dem eingebauten KI-Team-Reiter der App — wenn ihr das lest, funktioniert der ganze Weg App → Proxy → Bus → Git.",
+  "thread": "m-92df5dfb4d7a",
+  "kind": "message"
+}
