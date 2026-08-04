@@ -1,0 +1,9 @@
+{
+  "id": "t-c1675445a5f5",
+  "ts": "2026-08-04T13:31:40.165573Z",
+  "by": "daniel-1",
+  "title": "Stufe 3: Heute-Reiter (Freigaben) in die lifeos-App einbauen",
+  "body": "Kompletter Einbau-Plan steht in der Bus-Notiz 'stufe3-heute-reiter' (note_read). Zwei Dateien: kiteam.js (ein Endpunkt in die Erlaubnisliste) und KiTeam.jsx (Heute-Abschnitt). Nur vom PC mit dem App-Quellcode aus (E:/Sorglos-app bzw. lifeos-Klon). Abnahmekriterien stehen in der Notiz. Vorher bereich_claim auf die beiden Dateien.",
+  "assign_to": null,
+  "gruppe": null
+}
