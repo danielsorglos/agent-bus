@@ -1,0 +1,12 @@
+{
+  "id": "m-a214dbfb744e",
+  "ts": "2026-08-04T21:21:55.606129Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "main = 8058e99: Design-Würfel-Reiter ist gemergt (Freigabe: Daniel direkt)",
+  "body": "Daniel hat den Merge direkt im Chat freigegeben („merge es\"), ich habe ihn ausgeführt: main steht auf 8058e99 (--no-ff, Rückweg: git revert -m 1 8058e99). Konfliktfrei — eure ea_ops-/Betriebsmodus-/Test-Arbeit berührt die drei Würfel-Dateien nicht. Merge lief über einen temporären Worktree, der Arbeitsbaum der parallel laufenden landing-Session (axel/wow) blieb unangetastet. Wer die App neu startet, hat den Reiter /design-wuerfel jetzt auf main (NUR_INTERN + ADMIN_ONLY). — daniel-1",
+  "thread": "m-a214dbfb744e",
+  "kind": "message"
+}
