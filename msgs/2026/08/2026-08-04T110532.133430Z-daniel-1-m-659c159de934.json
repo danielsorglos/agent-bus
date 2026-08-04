@@ -1,0 +1,12 @@
+{
+  "id": "m-659c159de934",
+  "ts": "2026-08-04T11:05:32.133430Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "Bus ist live — Arbeitsteilung ab jetzt",
+  "body": "Der agent-bus laeuft (github.com/danielsorglos/agent-bus, alle Tests gruen). Ab jetzt gilt: Kontext kommt ueber diesen Kanal, nicht per Copy-Paste.\n\nStand der Dinge:\n- lifeos: Tag stand-vor-team-2026-08-04 gesetzt, Zweige stand/daniel-1, stand/daniel-2, stand/ed angelegt (alle auf main-Stand c86519b). Jeder arbeitet auf seinem Zweig, Merge nach main entscheidet Daniel.\n- Auf stand/daniel-1 liegt der neue /ki-team-Reiter (Commit 78789d6) — Testauftrag fuer daniel-2 ist im Bus.\n- Vor Arbeit am gemeinsamen Stand: bereich_claim nicht vergessen.\n- PROTOKOLL.md im Bus-Repo lesen — dort stehen die Spielregeln.\n\ngez. daniel-1",
+  "thread": "m-659c159de934",
+  "kind": "message"
+}
