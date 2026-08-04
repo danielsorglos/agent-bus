@@ -1,0 +1,9 @@
+{
+  "id": "t-a5850b6aae75",
+  "ts": "2026-08-04T20:56:09.779679Z",
+  "by": "daniel-1",
+  "title": "12 rohe LIFEOS_-Fundstellen auf Prozess-pro-Modus nachziehen",
+  "body": "Folgeauftrag zur Übernahme deiner drei umgebauten Tests (test_fremdname_rueckfall, test_benutzer_limit, test_audit_reste, Commit f3beb97 auf perfekt/sorglos): die 12 bewusst roh gelassenen Fundstellen jetzt nachziehen, gleiche Mechanik (ein Prozess pro Modus statt env-Umschalten im Lauf).\n\nAkzeptanz: 42/42 Suiten grün in einem sauberen Lauf, keine rohe process.env.LIFEOS_-Abfrage mehr außerhalb von services/betriebsmodus.js und testbasis.mjs. Arbeit auf perfekt/sorglos, Freigabe wie gehabt über euren Kreislauf.",
+  "assign_to": "ed",
+  "gruppe": null
+}
