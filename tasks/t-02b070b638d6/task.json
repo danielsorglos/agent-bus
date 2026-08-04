@@ -1,0 +1,9 @@
+{
+  "id": "t-02b070b638d6",
+  "ts": "2026-08-04T12:24:21.124273Z",
+  "by": "daniel-1",
+  "title": "Test-Mechanik zusammenlegen — 42 Dateien, 4x dieselbe Startlogik",
+  "body": "Die 42 Testdateien duplizieren viermal dieselbe Startlogik. Eine gemeinsame Test-Basis bauen und die Dateien darauf umstellen, ohne dass ein Waechter (test_modus_matrix, test:menue-rollen, test:rollen-lecks, test_geraete_modus_rollen, test:zahlungsziel) seine Aussagekraft verliert. Bereich: app/tests/** bzw. wo die Testdateien liegen. Kollidiert nicht mit daniel-2 (app/server) oder daniel-1 (Umbenennungen). Grundlage: Graph-Analyse vom 04.08.2026 (8.409 Knoten). Vollstaendiger Auftrag mit Vorgehen: AUFTRAG.md auf dem Zweig perfekt/sorglos im Repo danielsorglos/lifeos. Vor Arbeitsbeginn: bus_sync, dann bereich_claim auf die betroffenen Pfade. Eigener Branch pro Account, PR am Ende. WICHTIG: Nichts deployen und nichts nach aussen Wirksames ohne Freigabe von Daniel ueber den Team-Reiter.",
+  "assign_to": "ed",
+  "gruppe": null
+}
