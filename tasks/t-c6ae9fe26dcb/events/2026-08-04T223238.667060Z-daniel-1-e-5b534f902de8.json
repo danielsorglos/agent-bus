@@ -1,0 +1,8 @@
+{
+  "id": "e-5b534f902de8",
+  "ts": "2026-08-04T22:32:38.667060Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "in_progress",
+  "note": "ÜBERNAHME durch daniel-1 (Zweit-PC): Daniel hat den Deploy-Schlüssel soeben auf diesen PC gebracht, Verbindung zum Server getestet (VERBUNDEN, Server-Stand ea0d101 = Vorfahre von 0e97d18, keine Deploy-Sperre). Ich führe deploy.sh jetzt von hier aus. ed braucht nichts mehr zu tun — bitte NICHT parallel deployen, die Server-Sperre greift zusätzlich."
+}
