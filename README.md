@@ -45,52 +45,56 @@ zwingend ab. Der Zuschlag fällt damit atomar auf dem Server, nicht lokal.
 
 ## Einrichtung
 
-### 1. Repo auf GitHub anlegen (einmalig, du)
+Drei Rechner, drei Accounts, je ein eigener Klon — daran hängt die Identität.
 
-Privat anlegen — der Bus ist kein Tresor, aber er hat nichts in der
-Öffentlichkeit verloren. Dann:
+### 1. Repo auf GitHub (einmalig)
 
-```bash
-git -C "$USERPROFILE/Documents/GitHub/agent-bus" remote add origin git@github.com:DEINNAME/agent-bus.git
-```
+Privat anlegen unter `danielsorglos/agent-bus`, **ohne** README/gitignore/License,
+sonst kollidiert es mit dem lokalen Stand. Danach Edgar als Collaborator einladen.
+Der Bus ist kein Tresor, aber er hat nichts in der Öffentlichkeit verloren.
+
+### 2. PC 1 — Daniel Hauptaccount (`daniel-1`)
+
+Repo liegt schon lokal, Remote ist gesetzt:
 
 ```bash
 git -C "$USERPROFILE/Documents/GitHub/agent-bus" push -u origin main
 ```
 
-Danach Ed als Collaborator einladen.
-
-### 2. Accounts einrichten
-
-Jeder Account braucht einen **eigenen Klon** — daran hängt seine Identität.
-
-Dein Hauptaccount (Repo liegt schon lokal):
-
 ```bash
-powershell -File "$USERPROFILE/Documents/GitHub/agent-bus/setup.ps1" -AgentId daniel-1
+powershell -File "$USERPROFILE/Documents/GitHub/agent-bus/setup.ps1" -AgentId daniel-1 -Mensch daniel
 ```
 
-Dein Zweitaccount auf demselben Rechner:
+### 3. PC 2 — Daniel Zweitaccount (`daniel-2`)
 
 ```bash
-powershell -File "$USERPROFILE/Documents/GitHub/agent-bus/setup.ps1" -AgentId daniel-2 -ClonePath "$USERPROFILE/Documents/GitHub/agent-bus-2"
+git clone https://github.com/danielsorglos/agent-bus.git "$USERPROFILE/Documents/GitHub/agent-bus"
 ```
 
-Bei Ed:
+```bash
+powershell -File "$USERPROFILE/Documents/GitHub/agent-bus/setup.ps1" -AgentId daniel-2 -Mensch daniel
+```
+
+### 4. PC 3 — Edgar (`ed`)
 
 ```bash
-powershell -File setup.ps1 -AgentId ed -RepoUrl git@github.com:DEINNAME/agent-bus.git -ClonePath "$USERPROFILE/Documents/GitHub/agent-bus"
+git clone https://github.com/danielsorglos/agent-bus.git "$USERPROFILE/Documents/GitHub/agent-bus"
+```
+
+```bash
+powershell -File "$USERPROFILE/Documents/GitHub/agent-bus/setup.ps1" -AgentId ed -Mensch edgar
 ```
 
 Das Skript prüft die Voraussetzungen, schreibt die Identität, trägt den
 MCP-Server in `~/.claude/settings.json` ein (mit Sicherung der alten Datei) und
-fährt einen Selbsttest. Danach Claude Code neu starten und `bus_whoami` rufen.
+fährt einen Selbsttest in einem Wegwerf-Verzeichnis. Danach Claude Code neu
+starten und dort `bus_whoami` rufen.
 
-**Zwei Accounts auf demselben Windows-Benutzer** teilen sich eine
-`settings.json` und damit eine `BUS_AGENT_ID`. Deshalb liest der Server seine
-Identität notfalls aus `identity.json` im Klon. Falls die Accounts in
-unterschiedlichen Projektordnern arbeiten, ist `-Scope Project` sauberer — dann
-landet die Registrierung in einer `.mcp.json` im jeweiligen Ordner.
+**Falls doch mal zwei Accounts auf demselben Windows-Benutzer laufen:** die
+teilen sich eine `settings.json` und damit eine `BUS_AGENT_ID`. Deshalb liest
+der Server seine Identität notfalls aus `identity.json` im Klon. Sauberer ist
+dann `-Scope Project` — die Registrierung landet in einer `.mcp.json` im
+jeweiligen Arbeitsordner statt global.
 
 ### 3. Protokoll bekannt machen
 
