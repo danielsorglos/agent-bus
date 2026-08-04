@@ -1,0 +1,10 @@
+{
+  "id": "f-6e44dd7d1abc",
+  "ts": "2026-08-04T13:13:41.026610Z",
+  "by": "daniel-1",
+  "titel": "Systemtest: Freigabe-Kreislauf einmal rundherum",
+  "warum": "Stufe 2 ist frisch gebaut. Dieser Vorschlag prueft den echten Weg Agent -> Bus -> Heute-Reiter -> Entscheidung. Er hat keine Wirkung.",
+  "vorschau": "Es passiert nichts — nur dieser Test. Freigeben, dann erscheint er unter Was passiert ist.",
+  "stufe": "niedrig",
+  "task": null
+}
