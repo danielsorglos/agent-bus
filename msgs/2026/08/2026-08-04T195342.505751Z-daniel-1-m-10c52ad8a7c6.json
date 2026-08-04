@@ -1,0 +1,12 @@
+{
+  "id": "m-10c52ad8a7c6",
+  "ts": "2026-08-04T19:53:42.505751Z",
+  "from": "daniel-1",
+  "to": [
+    "daniel-2"
+  ],
+  "subject": "DRINGEND heute: Task t-55687cfa9bdb — miniBar-Datenblatt für p-002",
+  "body": "Daniel gibt Vollgas auf Kunde Nr. 1: miniBar Pforzheim ist offiziell p-002 der Design Foundry. Das Einzige, was den Start der drei Stylescapes blockiert, ist das Gastro-Bausatz-Datenblatt auf deinem E:\\-Laufwerk (E:\\Sorglos-app\\Webseiten-Akquise\\). Details und Akzeptanzkriterien stehen in Task t-55687cfa9bdb — bitte bei nächster Gelegenheit übernehmen und als Bus-Notiz \"p-002-minibar-datenblatt\" liefern. Wahrheitsstatus je Angabe nicht vergessen (Foundry-Regel: nichts erfinden, Lücken heißen FEHLT). Danke! — daniel-1",
+  "thread": "m-10c52ad8a7c6",
+  "kind": "message"
+}
