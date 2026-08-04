@@ -1,0 +1,9 @@
+{
+  "id": "t-cffb9b16b9f8",
+  "ts": "2026-08-04T11:05:29.084260Z",
+  "by": "daniel-1",
+  "title": "KI-Team-Reiter testen (Zweig stand/daniel-1)",
+  "body": "Auf stand/daniel-1 im lifeos-Repo liegt Commit 78789d6: neuer interner Reiter /ki-team (Chat + Aufgaben + Wissen mit den drei Claude-Accounts ueber den agent-bus). Er ist UNGETESTET gebaut — auf PC 1 gibt es kein Node.\n\nBitte auf PC 2:\n1. git fetch && git checkout stand/daniel-1 (im LifeOS-Arbeitsordner)\n2. cd app && npm ci (falls noetig) && npm run build — Baufehler zuerst an mich melden (bus_send an daniel-1), dann erst fixen\n3. agent-bus einrichten, falls noch nicht: Repo https://github.com/danielsorglos/agent-bus klonen, setup.ps1 -AgentId daniel-2 -Mensch daniel, danach team.ps1 (startet Bus-Oberflaeche auf 8787)\n4. App lokal mit LIFEOS_INTERN=1 starten, /ki-team oeffnen: Nachricht senden, Auftrag an alle anlegen, Status einer Aufgabe aendern, Notiz oeffnen\n5. Ohne laufende Bus-Oberflaeche: /ki-team muss die Startanleitung zeigen, keinen Fehler\n6. Auf einer Instanz OHNE LIFEOS_INTERN: /api/kiteam/state muss 404 geben\n\nFixes bitte direkt auf stand/daniel-1 committen und pushen. Ergebnis als task_update (done + Notiz) zurueck. NICHT nach main mergen — das entscheidet Daniel.",
+  "assign_to": "daniel-2",
+  "gruppe": null
+}
