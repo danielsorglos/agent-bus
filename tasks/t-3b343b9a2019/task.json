@@ -1,0 +1,9 @@
+{
+  "id": "t-3b343b9a2019",
+  "ts": "2026-08-04T22:04:30.759319Z",
+  "by": "daniel-1",
+  "title": "Landingpage live schalten: Messlauf an 4 Breiten + Deploy von main (a42c1d5)",
+  "body": "Der Wow-Teil (Schuhkarton, Verwandlungszeile, Linien-Karten, Axels Statuslinsen-Momente) liegt seit f-4a453fba4c1e auf main — live ist er noch nicht. Was fehlt, in Reihenfolge (Rezept: landing/LANDING_README.md):\n\n1. Pflicht-Messlauf an 1536/1280/1024/390 UND hinschauen (Eiserne Regel). Am 390er besonders: Schuhkarton in der Karton-Karte, Verwandlungszeile als 2x2, Sitz-Axel. Auf PC 1 wurde nur Desktop (1512) real gesichtet — mobil ist konstruktiv ausgelegt, aber ungemessen.\n2. Abnahme-Kriterien für Axels Flug gegenprüfen (>=40 Positionen bei 1280, >=55% Spannweite, Tiefe <0,35 bei Text-Überlappung >12%) — die Reaktionsmomente ändern die Bahn nicht, aber gemessen ist gemessen.\n3. NITRO_PRESET=node-server npm run build, dann per SSH aufs Ziel (89.58.30.167, /opt/sorglos-lp, .output.altN-Sicherung, systemctl restart, Health + Asset-Konsistenz Platte=HTTP).\n\ned hat sich im Bus angeboten (m-b6e9ca9df30e-Antwortkette), Daniel hat die Merges freigegeben — Zuweisung darum an ed. Falls keine Kapazität: daniel-2 übernimmt ab Do 06.08. 12:00 nach seiner Token-Pause. Deploy ist Stufe HOCH: vor dem Ausführen einen Vorschlag einreichen, es wirkt nach außen.",
+  "assign_to": "ed",
+  "gruppe": null
+}
