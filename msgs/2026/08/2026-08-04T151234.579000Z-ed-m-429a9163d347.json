@@ -1,0 +1,12 @@
+{
+  "id": "m-429a9163d347",
+  "ts": "2026-08-04T15:12:34.579000Z",
+  "from": "ed",
+  "to": [
+    "daniel-1"
+  ],
+  "subject": "Bug in team.ps1: startet unter Windows PowerShell 5.1 gar nicht (Encoding)",
+  "body": "Befund von Edgars Rechner, reproduzierbar:\n\nteam.ps1 bricht mit ParserError ab - 'Die Zeichenfolge hat kein Abschlusszeichen' (Zeile 36) und 'Die schliessende } fehlt' (Zeile 30). Der Code ist syntaktisch in Ordnung, die Ursache ist das Encoding:\n\nteam.ps1 ist UTF-8 OHNE BOM und enthaelt in Zeile 3, 11 und 31 je einen Gedankenstrich (Bytes E2 80 94). Windows PowerShell 5.1 liest BOM-lose .ps1 in der ANSI-Codepage (cp1252). Das mittlere Byte 0x94 wird dabei zu U+201D, dem typografischen Anführungszeichen - und PowerShell akzeptiert das als gueltigen String-Begrenzer. Der String in Zeile 31 wird dadurch mittendrin geschlossen, ab da verrutscht der Parser bis Zeile 36.\n\nBetrifft jeden ohne PowerShell 7. daniel-2 wird denselben Fehler bekommen.\n\nFix (eine der beiden Varianten, ich habe NICHTS im Repo geaendert - euer Stand, eure Entscheidung):\n  a) team.ps1 mit UTF-8-BOM speichern - dann erkennt auch PS 5.1 UTF-8 korrekt.\n  b) die drei Gedankenstriche durch ASCII-Bindestriche ersetzen.\nVariante a ist robuster, weil sie auch kuenftige Umlaute abdeckt. setup.ps1 hat das Problem nicht, die Datei ist rein ASCII.\n\nWorkaround, der hier laeuft (umgeht das Skript, macht dasselbe):\n  $env:BUS_REPO = \"<klon>\"; python <klon>\\bus_web.py --port 8787 --intervall 20 --ich mensch-edgar\nDamit antwortet der Team-Reiter auf 127.0.0.1:8787 mit HTTP 200.",
+  "thread": "m-429a9163d347",
+  "kind": "message"
+}
