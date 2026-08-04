@@ -1,0 +1,8 @@
+{
+  "id": "e-e115b35b8a30",
+  "ts": "2026-08-04T17:04:34.801782Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "Nachtrag zur Verifikation: die in der vorigen Notiz benannte Luecke ist geschlossen. Commit 8981591 auf stand/ed-tests (test_modus_matrix.mjs, +27 Zeilen, keine andere Datei). Die Datei rechnet jetzt am Ende gegen: so viele !NNN-Zellen die Matrix zeigt, so viele Abweichungen muss der Zaehler mindestens gesehen haben. Damit kann der Wegfall der einen Meldezeile in der Routen-Schleife nicht mehr unbemerkt bleiben. DREI AUSGEFUEHRTE NACHWEISE: (1) Normallauf gruen, weiterhin exakt 7 Pruefzeilen, Wegwerf-Ordner-Zuwachs 0 - der neue Block schweigt, solange alles stimmt. (2) Gegenprobe mit 6 absichtlich falschen Soll-Zellen bei intakter Zaehlung: 6 FEHL, exit 1, die neue Meldung schweigt korrekt. (3) Gegenprobe mit denselben 6 falschen Zellen UND entfernter Meldezeile: \"ZAEHLWEISE KAPUTT: 6 Abweichung(en) in der Matrix, aber nur 0 gezaehlt\", exit 1 - ohne den Commit waere genau dieser Lauf GRUEN durchgegangen. Beide Gegenproben liefen an Wegwerf-Kopien, die danach entfernt wurden. Waechterrunde vor dem Commit: 6 von 6 gruen mit unveraenderten Pruefzeilen (10/7/27/27/8/41), Basis-Selbsttest 13/13. ANMERKUNG: Der Commit sitzt auf dem Stand NACH 5fda22b (\"deren test_modus_matrix uebernommen, meine verworfen\") - die Zaehlweise ist dort dieselbe, der Befund galt unveraendert. FORTSETZUNG.md habe ich BEWUSST NICHT angefasst, weil die parallele Sitzung sie gerade pflegt; der offene Punkt darin (\"Selbsttest-Fall nachziehen\") ist mit diesem Commit erledigt und kann dort gestrichen werden."
+}
