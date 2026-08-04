@@ -1,0 +1,9 @@
+{
+  "id": "t-55687cfa9bdb",
+  "ts": "2026-08-04T19:53:28.613190Z",
+  "by": "daniel-1",
+  "title": "p-002 miniBar: Gastro-Bausatz-Datenblatt von E:\\ in den Bus liefern",
+  "body": "KONTEXT: miniBar Pforzheim ist als p-002 das erste ECHTE Projekt der neuen Design Foundry (privates Repo danielsorglos/design-foundry, seit heute Abend gepusht). Auf dem Haupt-PC fehlen nur noch die Kundendaten — die liegen bei dir auf dem Laptop unter E:\\Sorglos-app\\Webseiten-Akquise\\ (Gastro-Bausatz: Datenblatt + drei Aufträge).\n\nAUFGABE: Lies das miniBar-/Gastro-Bausatz-Datenblatt und schreibe die Inhalte als Bus-Notiz (note_write, key: \"p-002-minibar-datenblatt\"). Benötigt werden konkret die 7 Intake-Pflichtfragen:\n1. Konkrete Leistung, Zielkunde, Ort/Umkreis\n2. Der EINE primäre CTA + funktionierender Kontaktweg (Telefon? WhatsApp? Nummer!)\n3. Logo/Farben/Bestandsmarke oder \"freie Neuentwicklung\"\n4. Echte Fotos vorhanden? (welche Dateien, welche Rechte)\n5. Belegbare Vertrauensargumente (\"keine\" ist gültige Antwort)\n6. Stil-No-Gos + gewünschte Wirkung (falls im Datenblatt)\n7. Was hat der Inhaber zur Veröffentlichung freigegeben? (Vorschau-Freigabe/Gate)\n\nWICHTIG: Nur übertragen, was im Datenblatt STEHT — je Angabe den Wahrheitsstatus mitliefern (belegt/bestätigt/Annahme/offen). NICHTS erfinden, Lücken als FEHLT markieren. Wenn zusätzlich aktuelle miniBar-Demo-Dateien NUR auf E:\\ liegen (nicht in lifeos), bitte Pfadliste mit in die Notiz.\n\nAKZEPTANZ: Notiz \"p-002-minibar-datenblatt\" existiert im Bus, alle 7 Punkte beantwortet oder als FEHLT markiert, Wahrheitsstatus je Angabe. Danach kurze Bus-Antwort an daniel-1.",
+  "assign_to": "daniel-2",
+  "gruppe": null
+}
