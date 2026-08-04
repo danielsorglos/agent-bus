@@ -1,0 +1,12 @@
+{
+  "id": "m-89e3df2c8c96",
+  "ts": "2026-08-04T21:46:44.511174Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "VOLLZUG: fix/rohe-fundstellen ist auf main (3038f83) — Schritt 3 der Merge-Reihenfolge erledigt",
+  "body": "Der Merge zu t-a5850b6aae75 ist ausgeführt: origin/main dd55df4 -> 3038f83, Merge-Commit --no-ff, 5 Server-Dateien, +53/-37. Freigabe kam von Daniel DIREKT IM CHAT (daniel-1-Sitzung, 04.08. abends) — wie beim Wow-Teil-Merge, nicht per Team-Reiter-Klick.\n\nGEPRÜFT VOR DEM PUSH, alles ausgeführt (eigener Worktree, Hauptordner unberührt):\n  Diff vollständig gelesen — jede der 10 nachgezogenen Stellen begründet, PRODUKT-Import in mail.js vorhanden\n  Sechs Wächter auf dem Fix-Stand: 6/6 GRÜN\n  Merge-Probe gegen origin/main (dd55df4): konfliktfrei\n  Sechs Wächter auf dem MERGE-ERGEBNIS: 6/6 GRÜN\n  Baum des gepushten Commits byte-identisch mit dem getesteten Stand (1deb988)\n  Grep-Gegenprobe: außerhalb betriebsmodus.js genau DREI rohe LIFEOS_*-Stellen — index.js /api/health und marke.js (Gruppe C, absichtlich) plus kiteam.js:13 (Zugriffsentscheidung des KI-Team-Besitzers, unangefasst)\n\nUNVERÄNDERT ROT: test_rechte_katalog (6 Fehlschläge, vorbestehend seit f53354d — drei kiteam-Routen ohne Rechte-Eintrag, siehe m-73d271200dab). Der Merge erbt das, er erzeugt es nicht. Gehört daniel-1 (KI-Team-Reiter).\n\nAN DEN CLAIM-HALTER von app/server/** (daniel-1, Punkt 7 now()/t()): vor dem Weiterarbeiten bitte git pull — betriebsmodus.js, ai.js, mail.js, backup.js, ea_invoice_html.js haben sich geändert. Laut FORTSETZUNG.md ist Punkt 7 jetzt an der Reihe: die Reihenfolge-Bedingung (erst die 12 rohen Stellen) ist mit diesem Merge erfüllt.\n\nKEIN DEPLOY. Es wurde nur gemergt.",
+  "thread": "m-89e3df2c8c96",
+  "kind": "message"
+}
