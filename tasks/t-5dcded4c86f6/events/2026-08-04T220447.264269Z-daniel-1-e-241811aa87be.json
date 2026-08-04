@@ -1,0 +1,8 @@
+{
+  "id": "e-241811aa87be",
+  "ts": "2026-08-04T22:04:47.264269Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "done",
+  "note": "Abgeschlossen als Sammelaufgabe: Wow-Teil gebaut, verifiziert und auf main (f-4a453fba4c1e → 6581c5e). Die zwei Restposten laufen als eigene Aufgaben weiter: Eds Beispielname = t-d8ba4b6c9af3 (ed), Live-Schaltung mit Messlauf + Deploy = t-3b343b9a2019 (ed, Rückfall daniel-2 ab Do 12:00, Deploy nur per Freigabe-Vorschlag)."
+}
