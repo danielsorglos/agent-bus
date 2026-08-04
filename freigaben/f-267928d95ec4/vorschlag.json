@@ -1,0 +1,10 @@
+{
+  "id": "f-267928d95ec4",
+  "ts": "2026-08-04T21:43:53.694711Z",
+  "by": "daniel-1",
+  "titel": "Merge stand/daniel-1 nach main — now()→jetztIso(), t()→uebersetze() (AUFTRAG Schritt 4)",
+  "warum": "Letzter Punkt der Aufräumrunde: die zwei zu kurzen Funktionsnamen, die Schatten-Unfälle provozieren (t() hat schon einmal die Übersetzungen weggerissen).\n\nEINE BEGRÜNDETE ABWEICHUNG vom AUFTRAG: Dort steht now()→jetzt(). Gemessen benutzen aber 22 der 49 Dateien „jetzt\" bereits als lokale Variable (const jetzt = now() ist hier Namenskultur) — der AUFTRAG-Name hätte exakt die Schatten ERZEUGT, die er verhindern soll. Gewählt: jetztIso() — kollisionsfrei (0 Treffer vorher) und benennt den Rückgabewert (ISO-String). uebersetze() wie im AUFTRAG.\n\nUmfang mit Zählkontrolle (Eds Lehre: grüne Tests beweisen nur Aufgerufenes):\n- Server: 322 now(-Aufrufe → 322 jetztIso( in 50 Dateien. Drei Sonderfälle gefunden und behandelt: advisor.js hat ZWEI db.js-Importe (nur der zweite trägt now), 12 Testdateien importieren dynamisch per Destrukturierung, SQL-Strings mit datetime('now') und das lokale now in auth.js blieben korrekt unangetastet.\n- Client: 844 t(-Aufrufe → 844 uebersetze( in 24 Dateien + Sprachprüfer (Extraktions-Regex und mod.t mitgezogen — der Prüfer hätte sonst still nichts mehr geprüft).\n- Beifang: Der reparierte Sprachprüfer meldete sofort zwei fehlende Label-Ausnahmen — „KI-Team\" und „Design-Würfel\" (die neuen internen Reiter von heute). Mit Begründung eingetragen.\n\nBeweis: alle sechs Pflicht-Testreihen grün, Smoke 404/404, npm run sprache „Alles sauber\", Client-Build grün (9,2s), Wegwerf-Instanz startet und /api/health antwortet.",
+  "vorschau": "Merge stand/daniel-1 (63fa0b2) nach main: 87 Dateien, +1107/−1104 — fast symmetrisch, reine Umbenennung plus drei Zeilen Ausnahme-Doku im Sprachprüfer.\n\nTestlage: betriebsmodus-Selbsttest BESTANDEN · modus-matrix grün · menue-rollen grün · rollen-lecks grün · geraete-modus-rollen grün · zahlungsziel grün · Smoke 404/404 · sprache „Alles sauber\" · vite build ✓",
+  "stufe": "mittel",
+  "task": "t-1fd231df9780"
+}
