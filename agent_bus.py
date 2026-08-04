@@ -197,6 +197,125 @@ def versuche_claim(tid):
     return (False, claim_besitzer(tid) or "jemand anderem")
 
 
+# ---------------------------------------------------- Arbeitsbereiche (Leases)
+
+def bereich_ref(muster):
+    return "refs/bus-areas/" + hashlib.sha1(muster.encode("utf-8")).hexdigest()[:16]
+
+
+def _bereich_lesen(muster):
+    """Aktueller Halter eines Bereichs, direkt vom Remote. None = frei."""
+    ref = bereich_ref(muster)
+    if not hat_remote():
+        return None
+    if git("fetch", "-q", "origin", f"+{ref}:{ref}", check=False).returncode != 0:
+        return None
+    s = git("show", "-s", "--format=%s", ref, check=False)
+    if s.returncode != 0:
+        return None
+    teile = s.stdout.strip().split("|", 4)
+    if len(teile) != 5 or teile[0] != "area":
+        return None
+    return {"agent": teile[1], "bis": teile[2], "muster": teile[4]}
+
+
+def _abgelaufen(bis):
+    try:
+        ende = datetime.strptime(bis[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError):
+        return True
+    return datetime.now(timezone.utc) >= ende
+
+
+def t_bereich_claim(a):
+    muster = (a.get("muster") or "").strip()
+    if not muster:
+        raise BusFehler("'muster' fehlt, z.B. 'web/**' oder 'src/components/Team/**'.")
+    if not hat_remote():
+        raise BusFehler("Ohne Remote gibt es keine Sperre — die anderen sehen sie nicht.")
+    minuten = int(a.get("minuten") or 90)
+
+    vorhanden = _bereich_lesen(muster)
+    if vorhanden and vorhanden["agent"] != AGENT and not _abgelaufen(vorhanden["bis"]):
+        return (f"Bereich '{muster}' ist bis {vorhanden['bis'][:16].replace('T',' ')} "
+                f"von {anzeige(vorhanden['agent'])} belegt. Nicht anfassen — "
+                f"sprich dich per bus_send ab oder nimm einen anderen Bereich.")
+
+    bis = datetime.now(timezone.utc).timestamp() + minuten * 60
+    bis_txt = datetime.fromtimestamp(bis, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    leer = git("hash-object", "-t", "tree", "-w", "--stdin", stdin="").stdout.strip()
+    sha = git("commit-tree", leer, "-m",
+              f"area|{AGENT}|{bis_txt}|{time.time_ns()}|{muster}").stdout.strip()
+
+    # Ohne Vorbesitzer normal pushen — dann entscheidet das Remote atomar, wer
+    # zuerst war. Nur eine abgelaufene oder eigene Sperre darf ueberschrieben
+    # werden, und danach wird nachgesehen, wer tatsaechlich draufsteht.
+    refspec = f"{'+' if vorhanden else ''}{sha}:{bereich_ref(muster)}"
+    r = git("push", "-q", "origin", refspec, check=False)
+    if r.returncode != 0:
+        jetzt_halter = _bereich_lesen(muster)
+        return (f"Bereich '{muster}' ging an "
+                f"{anzeige(jetzt_halter['agent']) if jetzt_halter else 'jemand anderen'}. "
+                f"Wettlauf verloren.")
+    endgueltig = _bereich_lesen(muster)
+    if endgueltig and endgueltig["agent"] != AGENT:
+        return (f"Wettlauf verloren: {anzeige(endgueltig['agent'])} haelt '{muster}'.")
+    return (f"Bereich '{muster}' gehoert dir bis {bis_txt[:16].replace('T', ' ')} UTC "
+            f"({minuten} Min). Danach faellt er automatisch zurueck — "
+            f"verlaengere rechtzeitig oder gib ihn mit bereich_release frei.")
+
+
+def t_bereich_release(a):
+    muster = (a.get("muster") or "").strip()
+    if not muster:
+        raise BusFehler("'muster' fehlt.")
+    halter = _bereich_lesen(muster)
+    if not halter:
+        return f"Bereich '{muster}' war gar nicht belegt."
+    if halter["agent"] != AGENT and not _abgelaufen(halter["bis"]):
+        return (f"'{muster}' gehoert {anzeige(halter['agent'])}, nicht dir. "
+                f"Nicht freigegeben.")
+    ref = bereich_ref(muster)
+    r = git("push", "-q", "origin", f":{ref}", check=False)
+    git("update-ref", "-d", ref, check=False)
+    return (f"Bereich '{muster}' freigegeben." if r.returncode == 0
+            else f"Freigabe fehlgeschlagen: {r.stderr.strip()[:200]}")
+
+
+def t_bereich_list(_):
+    if not hat_remote():
+        return "Ohne Remote gibt es keine Bereichssperren."
+    git("fetch", "-q", "--prune", "origin",
+        "+refs/bus-areas/*:refs/bus-areas/*", check=False)
+    r = git("for-each-ref", "--format=%(subject)", "refs/bus-areas/", check=False)
+    zeilen = []
+    for s in (r.stdout or "").splitlines():
+        teile = s.strip().split("|", 4)
+        if len(teile) == 5 and teile[0] == "area":
+            zustand = "ABGELAUFEN" if _abgelaufen(teile[2]) else f"bis {teile[2][:16].replace('T', ' ')}"
+            zeilen.append(f"  {teile[4]:<34} {anzeige(teile[1]):<26} {zustand}")
+    if not zeilen:
+        return "Kein Arbeitsbereich ist belegt — alles frei."
+    return ("Belegte Arbeitsbereiche (abgelaufene darfst du uebernehmen):\n"
+            + "\n".join(sorted(zeilen)))
+
+
+def bereiche_roh():
+    """Fuer die Weboberflaeche: Liste statt Fliesstext."""
+    if not hat_remote():
+        return []
+    git("fetch", "-q", "--prune", "origin",
+        "+refs/bus-areas/*:refs/bus-areas/*", check=False)
+    r = git("for-each-ref", "--format=%(subject)", "refs/bus-areas/", check=False)
+    aus = []
+    for s in (r.stdout or "").splitlines():
+        t = s.strip().split("|", 4)
+        if len(t) == 5 and t[0] == "area":
+            aus.append({"muster": t[4], "agent": t[1], "bis": t[2],
+                        "abgelaufen": _abgelaufen(t[2])})
+    return sorted(aus, key=lambda x: x["muster"])
+
+
 # ---------------------------------------------------------------------- Dateien
 
 def pfad(*teile):
@@ -856,6 +975,35 @@ TOOLS = [
             "required": ["id"],
         },
         "fn": t_task_update,
+    },
+    {
+        "name": "bereich_claim",
+        "description": "Beansprucht einen Dateibereich des gemeinsamen Standes fuer eine begrenzte Zeit, damit nicht zwei Accounts dieselben Dateien umbauen. VOR dem Bearbeiten aufrufen.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "muster": _s("string", "Bereich, z.B. 'web/**' oder 'src/components/Team/**'. Schneidet euch nicht ins Gehege: lieber eng fassen."),
+                "minuten": _s("integer", "Wie lange, Default 90. Danach faellt der Bereich automatisch zurueck."),
+            },
+            "required": ["muster"],
+        },
+        "fn": t_bereich_claim,
+    },
+    {
+        "name": "bereich_release",
+        "description": "Gibt einen beanspruchten Arbeitsbereich wieder frei. Nach getaner Arbeit aufrufen, statt die Zeit ablaufen zu lassen.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"muster": _s("string", "Derselbe Bereich wie beim Beanspruchen.")},
+            "required": ["muster"],
+        },
+        "fn": t_bereich_release,
+    },
+    {
+        "name": "bereich_list",
+        "description": "Zeigt, welche Arbeitsbereiche gerade von wem belegt sind. Vor dem Loslegen pruefen.",
+        "inputSchema": {"type": "object", "properties": {}},
+        "fn": t_bereich_list,
     },
     {
         "name": "note_write",
