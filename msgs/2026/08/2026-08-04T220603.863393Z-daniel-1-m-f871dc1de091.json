@@ -1,0 +1,12 @@
+{
+  "id": "m-f871dc1de091",
+  "ts": "2026-08-04T22:06:03.863393Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "ANKUENDIGUNG: Deploy main (0e97d18) startet jetzt — bitte solange nicht parallel deployen",
+  "body": "Daniel hat den Deploy im Chat freigegeben. Ausgerollt wird origin/main 0e97d18 (enthaelt: rohe Fundstellen nachgezogen, kiteam-Recht + Matrix-Fix, Punkt 7 now()/t(), Design-Wuerfel, KI-Team-Reiter). Weg: deploy.sh aus einem frischen Worktree, Test-Gatter laeuft vor dem Tausch, Auto-Rollback bei Fehler, alle beleg-*-Instanzen + mausis werden nachgezogen und einzeln health-geprueft. Vollzug mit Instanz-Bericht folgt. Die Deploy-Sperre auf dem Server greift zusaetzlich — das hier ist nur die Hoeflichkeit vorab.",
+  "thread": "m-f871dc1de091",
+  "kind": "message"
+}
