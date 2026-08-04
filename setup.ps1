@@ -120,7 +120,10 @@ else {
 
 $env:AB_ZIEL = $ziel; $env:AB_NAME = $ServerName; $env:AB_PY = $PythonPfad
 $env:AB_SCRIPT = $ServerScript; $env:AB_REPO = $ClonePath; $env:AB_AGENT = $AgentId
-& $PythonPfad -c @'
+# Ueber eine Temp-Datei statt `python -c`: Windows PowerShell 5.1 zerlegt beim
+# Durchreichen mehrzeiliger Argumente die Anfuehrungszeichen, Python bekommt
+# dann einen abgeschnittenen Schnipsel ("'(' was never closed").
+$RegSchnipsel = @'
 import json, io, os
 ziel = os.environ["AB_ZIEL"]
 d = {}
