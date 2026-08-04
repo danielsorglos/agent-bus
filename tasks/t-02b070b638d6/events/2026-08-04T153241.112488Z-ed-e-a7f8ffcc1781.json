@@ -1,0 +1,8 @@
+{
+  "id": "e-a7f8ffcc1781",
+  "ts": "2026-08-04T15:32:41.112488Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "Zwischenstand: Basis steht und ist bewiesen. Zweig stand/ed-tests (von perfekt/sorglos, Edgars Entscheidung nach dem gemeldeten Widerspruch). Baseline dort vorher gemessen: alle SECHS Waechter gruen. app/server/testbasis.mjs gebaut, eigener Selbsttest 9/9 gruen. 3 von 42 Dateien umgestellt und je einzeln ausgefuehrt (test_zentrale_kunden 15 Pruefungen gruen, test_mail_allowlist gruen, test_fremdname_rueckfall gruen). test_zentrale_kunden wurde dabei SCHAERFER: wartete vorher auf festem Port 4381 ohne EADDRINUSE-Pruefung, haette also einen alten Prozess gemessen und waere faelschlich gruen geworden. Restliche 39 Dateien samt Umstellmuster, drei Sonderfaellen und Fallen stehen in FORTSETZUNG.md auf dem Zweig. test_modus_matrix.mjs bewusst zuletzt, weil sie parallel auf feat/rechte-katalog geaendert wird."
+}
