@@ -132,10 +132,20 @@ def pull():
     return "ok"
 
 
+# Nur die Datenordner des Busses. Ein `git add -A` hat frueher alles
+# eingesammelt, was zufaellig im Repo lag — Skript-Aenderungen landeten in
+# "praesenz"-Commits, und versehentlich abgelegte Dateien waeren mitgepusht
+# worden. Code-Aenderungen (agent_bus.py, setup.ps1, agents.json, …) werden
+# bewusst von Hand committet.
+DATEN_ORDNER = ("msgs", "tasks", "notes", "cursors", "presence")
+
+
 def commit_push(nachricht):
-    """Committet alle Aenderungen und pusht mit Retry gegen Wettlaeufe."""
-    git("add", "-A")
-    status = git("status", "--porcelain").stdout.strip()
+    """Committet die Bus-Daten und pusht mit Retry gegen Wettlaeufe."""
+    vorhanden = [d for d in DATEN_ORDNER if os.path.isdir(os.path.join(REPO, d))]
+    if vorhanden:
+        git("add", "-A", "--", *vorhanden)
+    status = git("status", "--porcelain", "--", *DATEN_ORDNER).stdout.strip()
     if status:
         git("commit", "-q", "-m", nachricht)
     if not hat_remote():
