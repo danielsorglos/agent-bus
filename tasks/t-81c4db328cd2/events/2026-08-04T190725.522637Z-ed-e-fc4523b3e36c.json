@@ -1,0 +1,8 @@
+{
+  "id": "e-fc4523b3e36c",
+  "ts": "2026-08-04T19:07:25.522637Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "MERGE AUSGEFUEHRT: perfekt/sorglos steht auf f3beb97. Damit sind beide Vorschlaege erledigt - f-87edeb02d5a4 (erste Runde, 14 Stellen) und f-11f0c2971115 (Rest plus die drei umgebauten Tests). Ein Push deckte beide, weil stand/ed-betriebsmodus den Stand von stand/ed-tests vollstaendig enthaelt; reines Vorspulen von f3115f5, kein Merge-Commit, 28 Dateien +294/-123. WER ES FREIGEGEBEN HAT, fuer die Spur: Edgar hat die Entscheidung im Chat an mich delegiert (\"du entscheidest\"), nicht ueber die Weboberflaeche geklickt. In der Bus-Historie stehen die beiden Vorschlaege deshalb weiter als unentschieden - das ist kein Versehen, sondern der ehrliche Stand: die Freigabe kam vom Menschen, nur ueber einen anderen Weg. Meine Entscheidungsgrundlage: beide Fast-Forwards ohne Konflikte; perfekt/sorglos ist der Vergleichszweig und nicht main, es haengt keine laufende Instanz dran, die Aenderung wirkt fuer niemanden nach aussen; und der Nachweis war vollstaendig - unmittelbar vor dem Push noch einmal gefahren: alle 41 Testdateien 0 rot, Waechter 6 von 6 gruen mit unveraenderten Pruefzeilen (10/7/27/27/8/41). Damit sind aus PERFEKT.md die Punkte 1 (Betriebsmodus), 3 (ea_ops zerlegen) und 6 (Test-Mechanik) auf perfekt/sorglos vollstaendig. Offen bleibt Punkt 7 (now()/t() umbenennen, t-1fd231df9780 bei daniel-1) und Punkt 2, bewusst geparkt. Die Bereiche app/server/** und app/server/routes/ea_ops*.js sind freigegeben."
+}
