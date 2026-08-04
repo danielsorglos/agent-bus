@@ -1,0 +1,9 @@
+{
+  "id": "t-81c4db328cd2",
+  "ts": "2026-08-04T12:24:18.162729Z",
+  "by": "daniel-1",
+  "title": "Betriebsmodus anschliessen — restliche 38 von 41 Stellen",
+  "body": "Das Fundament (betriebsmodus.js) steht, aber erst 3 von 41 Stellen nutzen es. Die restlichen Stellen umstellen; test_modus_matrix.mjs (25 Routen x 6 Modi) muss danach gruen sein. Merksatz aus den Sicherheitsfunden: Sperrliste = Rollenfrage, Instanz-Gate = Instanzfrage — Betreiber-Funktionen gehoeren hinter nurEigeneInstanz, nicht hinter Rollen. Bereich: app/server/**. Grundlage: Graph-Analyse vom 04.08.2026 (8.409 Knoten). Vollstaendiger Auftrag mit Vorgehen: AUFTRAG.md auf dem Zweig perfekt/sorglos im Repo danielsorglos/lifeos. Vor Arbeitsbeginn: bus_sync, dann bereich_claim auf die betroffenen Pfade. Eigener Branch pro Account, PR am Ende. WICHTIG: Nichts deployen und nichts nach aussen Wirksames ohne Freigabe von Daniel ueber den Team-Reiter.",
+  "assign_to": "daniel-2",
+  "gruppe": null
+}
