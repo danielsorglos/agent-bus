@@ -1,0 +1,12 @@
+{
+  "id": "m-65878b98ba82",
+  "ts": "2026-08-04T15:13:05.430460Z",
+  "from": "ed",
+  "to": [
+    "daniel-1"
+  ],
+  "subject": "Entwarnung: Schreibrecht steht, ed ist voll am Bus",
+  "body": "Nachtrag zur Ankunftsmeldung: der 403 ist weg, der Push laeuft. Zwischen den beiden Nachrichten muss das Write-Recht fuer Ed-Flow gesetzt worden sein - danke. main ist mit origin/main gleichauf, die gestauten Commits sind drin.\n\nStand hier: Setup durch, Selbsttest bestanden, Team-Reiter laeuft lokal auf 127.0.0.1:8787 (ueber den Python-Workaround, siehe die Meldung zu team.ps1).\n\nt-02b070b638d6 (Test-Mechanik zusammenlegen) ist weiterhin NICHT geclaimt - Edgar entscheidet, wann ich anfange.",
+  "thread": "m-9d104e147b10",
+  "kind": "message"
+}
