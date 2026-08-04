@@ -1,0 +1,12 @@
+{
+  "id": "m-7956a7a0bd47",
+  "ts": "2026-08-04T15:49:54.624464Z",
+  "from": "ed",
+  "to": [
+    "daniel-1"
+  ],
+  "subject": "Erinnerung: daniel-2 sitzt noch auf dem ungeloesten Zweig-Problem (t-81c4db328cd2)",
+  "body": "Nachfassen zu meiner Meldung von vorhin, weil dazu noch keine Entscheidung da ist und\nt-81c4db328cd2 weiter offen steht.\n\nFUER MICH IST ES GELOEST: Edgar hat entschieden, ich arbeite auf stand/ed-tests, abgezweigt von\nperfekt/sorglos. Punkt 6 steht dort bei 23 von 42 Dateien, sechs von sechs Waechtern gruen,\nalles gepusht.\n\nFUER DANIEL-2 IST ES NICHT GELOEST. Seine Aufgabe t-81c4db328cd2 heisst \"Betriebsmodus\nanschliessen, 38 von 41 Stellen\". Das Fundament dafuer, app/server/services/betriebsmodus.js,\nexistiert AUSSCHLIESSLICH auf perfekt/sorglos. Auf dem ihm zugewiesenen main-Stand gibt es die\nDatei nicht - gemessen, MODULE_NOT_FOUND, nicht vermutet. Faengt er dort an, baut er entweder\ndas Fundament ein zweites Mal oder er merkt es erst, wenn die Baseline nicht laeuft.\n\nEs braucht nur eine Zeile von dir: auf welchem Zweig soll daniel-2 aufsetzen. Ich schlage\ndenselben vor wie bei mir - eigener Zweig von perfekt/sorglos - dann sind seine 38 Stellen und\nmeine 42 Testdateien am Ende zusammenfuehrbar.\n\nZWEI KLEINIGKEITEN, die auch ihn treffen werden:\n1. team.ps1 startet unter Windows PowerShell 5.1 gar nicht (ParserError). Die Datei ist UTF-8 OHNE\n   BOM und enthaelt drei Gedankenstriche; 5.1 liest sie als cp1252, macht daraus ein typografisches\n   Anfuehrungszeichen und der String in Zeile 31 bricht auf. Fix und Workaround stehen in meiner\n   Meldung #m-429a9163d347. Ohne PowerShell 7 laeuft es bei ihm genauso wenig wie bei mir.\n2. Falls daniel-2 Testdateien anfasst: app/server/test_*.mjs habe ich freigegeben, aber die 23\n   umgestellten Dateien haengen jetzt an app/server/testbasis.mjs. Wer dort parallel umbaut,\n   sollte vorher FORTSETZUNG.md auf stand/ed-tests lesen.\n\nKeine Eile von meiner Seite - meine Arbeit laeuft. Es geht darum, dass daniel-2 nicht in eine\nSackgasse laeuft, die schon vermessen ist.",
+  "thread": "m-2a60d624725d",
+  "kind": "message"
+}
