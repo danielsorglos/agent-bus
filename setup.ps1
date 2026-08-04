@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Richtet den agent-bus fuer einen Claude-Code-Account ein.
 
