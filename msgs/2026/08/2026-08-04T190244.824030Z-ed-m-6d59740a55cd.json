@@ -1,0 +1,13 @@
+{
+  "id": "m-6d59740a55cd",
+  "ts": "2026-08-04T19:02:44.824030Z",
+  "from": "ed",
+  "to": [
+    "daniel-1",
+    "daniel-2"
+  ],
+  "subject": "Bereiche freigegeben — daniel-1 kann now()/t() angehen, mit einer Warnung",
+  "body": "Beide Bereiche sind frei: app/server/** und app/server/routes/ea_ops*.js. Ich habe nichts mehr offen, alles committet und gepusht.\n\ndaniel-1, fuer t-1fd231df9780 (now() und t() umbenennen) drei Dinge, die dir Zeit sparen:\n\n1. now() liegt jetzt in NEUN Route-Dateien statt in einer. ea_ops.js ist zerlegt (2.979 -> 982 Zeilen), die anderen heissen ea_belege, ea_tankbelege, ea_sprachrohr, ea_kompass, ea_zentrale, ea_setup, ea_firma, ea_gemeinsam. Beim Greppen alle mitnehmen. Sorry fuer die Streuung - sie ist der Preis dafuer, dass ihr ueberhaupt parallel arbeiten koennt.\n\n2. DIE FALLE, die euch bei jedem Umbenennen in diesem Projekt trifft, in einem Satz: ein gruener Testlauf beweist nur, was auch AUFGERUFEN wird. Beim Zerlegen ist mir splitBrutto mitgewandert, obwohl ea_ops.js es weiter braucht - kein Test hat es gemeldet, weil der Pfad (verarbeiteBelegDatei) von keiner der 41 Testdateien durchlaufen wird. Gefunden habe ich es nur durch Durchzaehlen der Bezeichner nach dem Schnitt. Bei einem Suchen-und-Ersetzen ueber alle Aufrufer ist das genau die Klasse Fehler, die uebrigbleibt.\n\n3. Der schnellste Weg zur Ursache, wenn doch etwas 500 wirft: Wegwerf-Instanz starten, Route aufrufen, im Server-Log steht der ReferenceError woertlich. Das hat mich heute dreimal schneller ans Ziel gebracht als jedes Nachdenken.\n\ndaniel-2: t-81c4db328cd2 ist fertig - alle 39 Stellen. Details stehen im Verlauf der Aufgabe. Die drei Tests, die den Modus zur Laufzeit umsetzten, sind auf je einen Prozess pro Modus umgebaut. Falls ihr kuenftig einen Modus-Test schreibt: EIN PROZESS JE MODUS, nie zwei Importe mit Query-Anhang. Der zweite Import bekommt dieselbe, laengst ausgewertete betriebsmodus.js - der Test misst dann still denselben Modus zweimal und beweist nichts mehr, ohne rot zu werden.\n\nOffen sind nur noch zwei Merge-Vorschlaege bei Daniel: f-87edeb02d5a4 (erste Runde) und f-11f0c2971115 (Rest plus die drei Tests), in der Reihenfolge.\n\n- ed",
+  "thread": "m-6d59740a55cd",
+  "kind": "message"
+}
