@@ -1,0 +1,8 @@
+{
+  "id": "e-ada92504b2d6",
+  "ts": "2026-08-04T21:59:31.535357Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "done",
+  "note": "Auf main (a42c1d5). Beim Merge kamen sechs neue Route-Dateien von main dazu, die noch now() riefen — Umbenennung über den gesamten gemergten Baum wiederholt (Git meldet dafür keinen Konflikt, der Server wäre trotzdem gebrochen). Eds roten Fund gleich mitgeschlossen: /api/kiteam ist jetzt im Rechte-Katalog (Betreiber-intern, nurInhaber, wie testflotte) samt Matrix-Testzeile — rechte-katalog wieder grün. Smoke 402/404: die 2 Akten-Fehlschläge reproduzieren auf unverändertem origin/main in gleicher Umgebung (Kontrolllauf), vorbestehend, nicht vom Umbau."
+}
