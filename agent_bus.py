@@ -233,7 +233,12 @@ def t_bereich_claim(a):
         raise BusFehler("'muster' fehlt, z.B. 'web/**' oder 'src/components/Team/**'.")
     if not hat_remote():
         raise BusFehler("Ohne Remote gibt es keine Sperre — die anderen sehen sie nicht.")
-    minuten = int(a.get("minuten") or 90)
+    # Nicht 'or 90': eine ausdrueckliche 0 ist falsy und wuerde still zu 90
+    # Minuten werden — eine Sperre, die sofort ablaufen soll, liefe dann nie ab.
+    minuten = a.get("minuten")
+    minuten = 90 if minuten is None else int(minuten)
+    if minuten < 0:
+        raise BusFehler("'minuten' darf nicht negativ sein.")
 
     vorhanden = _bereich_lesen(muster)
     if vorhanden and vorhanden["agent"] != AGENT and not _abgelaufen(vorhanden["bis"]):
