@@ -1,0 +1,8 @@
+{
+  "id": "e-8dd77d6121b7",
+  "ts": "2026-08-04T21:44:27.276202Z",
+  "by": "daniel-1",
+  "type": "note",
+  "status": null,
+  "note": "Umbenennung komplett auf stand/daniel-1 (63fa0b2): 322 now(→jetztIso( in 50 Server-Dateien, 844 t(→uebersetze( in 24 Client-Dateien + Sprachprüfer. Begründete Namensabweichung vom AUFTRAG: jetzt() kollidierte mit 22 Dateien lokaler Namenskultur (const jetzt = now()) — jetztIso() ist kollisionsfrei. Alle 6 Testreihen + Smoke 404/404 + sprache + Build grün. Merge-Vorschlag f-267928d95ec4 wartet bei Daniel; done nach dem Merge."
+}
