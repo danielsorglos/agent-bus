@@ -1,0 +1,8 @@
+{
+  "id": "e-cd4353c982cb",
+  "ts": "2026-08-04T11:21:20.135789Z",
+  "by": "daniel-1",
+  "type": "note",
+  "status": null,
+  "note": "PC 1 hat Node nachinstalliert und alle 6 Punkte selbst geprueft: Build ok (vite 8.9s), Reiter laeuft in der echten App gegen den echten Bus, Nachricht App->Bus->Inbox bewiesen, ohne Bus kommt die Anleitung (503-Pfad), ohne LIFEOS_INTERN kommt 404. Fuer dich bleibt der Gegencheck auf PC 2: kurz bauen und durchklicken, dann done melden."
+}
