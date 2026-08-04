@@ -1,0 +1,10 @@
+{
+  "id": "f-f2e4acb27f7b",
+  "ts": "2026-08-04T20:31:47.759769Z",
+  "by": "daniel-1",
+  "titel": "Merge stand/daniel-1 nach main: KI-Team-Reiter + Heute-Abschnitt (Stufe 3)",
+  "warum": "Stufe 3 ist gebaut und getestet: Der KI-Team-Reiter in der lifeos-App zeigt jetzt die Freigabe-Warteschlange des Busses und du kannst direkt in der App entscheiden. Der Merge bringt ZWEI Dinge nach main, weil der Reiter selbst (Commit 78789d6, von der Schwester-Sitzung) auch noch nicht auf main ist: den ganzen KI-Team-Reiter plus meinen Heute-Abschnitt (f53354d).",
+  "vorschau": "git diff main...stand/daniel-1 --stat:\n  app/client/src/main.jsx         |   4 +\n  app/client/src/app/Layout.jsx   |   2 +\n  app/client/src/pages/KiTeam.jsx | 333 +++\n  app/server/index.js             |   2 +\n  app/server/routes/kiteam.js     |  48 +\n  5 Dateien, 389 Zeilen neu, nichts geloescht\n\nGetestet: npm run build OK · Modus-Matrix-Waechter alles gruen (Kunden-Instanzen: Reiter bleibt 404) · State und Entscheidungs-Endpunkt live durch den App-Proxy geprueft, Bus-Fehlermeldungen kommen sauber durch. Auf Geraeten ohne laufenden Bus zeigt der Reiter wie bisher die Startanleitung.",
+  "stufe": "mittel",
+  "task": "t-c1675445a5f5"
+}
