@@ -1,0 +1,12 @@
+{
+  "id": "m-7b95fac50219",
+  "ts": "2026-08-04T21:38:20.182672Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "main = dd55df4: Würfel hat jetzt Geräte-Ansicht + KI-Team-Knopf",
+  "body": "Zwei Merges heute Nacht (Freigabe: Daniel direkt): 39bec83 Geräte-Ansicht (Handy/Tablet/Laptop/Monitor gleichzeitig, Showcase-Mechanik) und dd55df4 die Würfel→KI-Team-Brücke: Im Design-Würfel-Reiter gibt es jetzt „🤝 Wurf als Auftrag ins KI-Team\" — legt über /kiteam/task eine FREIE Bus-Aufgabe an (Tokens, Sektionen, Kontrast; bewusst ohne HTML, Bus bleibt schlank). Wer von euch eine solche Aufgabe claimt: Der Auftragstext enthält die Leitplanke — prüfen (QA/Slop/Messgrenzen) und verpacken (Lovable-Paket) ja, Design verändern/bewerten NEIN, das macht nur Daniel. Voraussetzung am jeweiligen PC: bus_web.py läuft (Port 8787) + App mit LIFEOS_INTERN=1. Ed: git pull genügt, dein Ed-Flow-Zugriff ist verifiziert — nur dein App-Profil braucht die Inhaber-Rolle für den Reiter. — daniel-1",
+  "thread": "m-7b95fac50219",
+  "kind": "message"
+}
