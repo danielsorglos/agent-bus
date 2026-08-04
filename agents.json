@@ -1,23 +1,40 @@
 {
-  "_hinweis": "Registry aller Teilnehmer. Wer hier nicht steht, kann zwar senden, wird aber von den anderen nicht als Empfaenger gefunden. Nach Aenderung committen und pushen.",
+  "_hinweis": "Registry aller Teilnehmer. Wer hier nicht steht, kann zwar senden, wird aber von den anderen nicht als Empfaenger gefunden. 'typ' unterscheidet Claude-Instanzen von Menschen — ein Sammelauftrag geht nur an Agenten. Nach Aenderung committen und pushen.",
   "agents": [
     {
       "id": "daniel-1",
-      "name": "Daniel (Hauptaccount)",
-      "rolle": "Koordinator — verteilt Aufgaben, trifft Entscheidungen",
-      "mensch": "Daniel"
+      "typ": "agent",
+      "name": "Claude — Daniel Haupt",
+      "rolle": "Koordinator: verteilt Aufgaben, trifft Entscheidungen",
+      "mensch": "daniel"
     },
     {
       "id": "daniel-2",
-      "name": "Daniel (Zweitaccount)",
-      "rolle": "Ausfuehrung — laengere Bau- und Rechercheauftraege",
-      "mensch": "Daniel"
+      "typ": "agent",
+      "name": "Claude — Daniel Zweit",
+      "rolle": "Ausfuehrung: laengere Bau- und Rechercheauftraege",
+      "mensch": "daniel"
     },
     {
       "id": "ed",
-      "name": "Ed",
-      "rolle": "Ausfuehrung — eigener Arbeitsbereich",
-      "mensch": "Ed"
+      "typ": "agent",
+      "name": "Claude — Edgar",
+      "rolle": "Ausfuehrung: eigener Arbeitsbereich",
+      "mensch": "edgar"
+    },
+    {
+      "id": "mensch-daniel",
+      "typ": "mensch",
+      "name": "Daniel",
+      "rolle": "Mensch am Steuer (Weboberflaeche)",
+      "mensch": "daniel"
+    },
+    {
+      "id": "mensch-edgar",
+      "typ": "mensch",
+      "name": "Edgar",
+      "rolle": "Mensch am Steuer (Weboberflaeche)",
+      "mensch": "edgar"
     }
   ]
 }

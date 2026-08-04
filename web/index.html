@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sorgl.OS · Team</title>
+<style>
+  /* App-Blau nach sorgl.OS-CSS. Lila bleibt der Website vorbehalten. */
+  :root{
+    --bg:#0a1526; --karte:#0f1c31; --gehoben:#162641; --linie:#24375a;
+    --text:#eaf1fb; --muted:#95a9c8; --akzent:#2f86e0; --akzent-hell:#4a9ad9;
+    --gruen:#3fb27f; --gelb:#d9a441; --rot:#d9615a;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font:15px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  button,input,textarea,select{font:inherit; color:inherit}
+
+  /* ---------------------------------------------------------------- Kopf */
+  header{
+    display:flex; align-items:center; gap:18px; padding:12px 20px;
+    background:var(--karte); border-bottom:1px solid var(--linie); flex:none;
+  }
+  .marke{display:flex; align-items:baseline; gap:9px; font-weight:600; letter-spacing:.2px}
+  .marke .punkt{color:var(--akzent)}
+  .marke small{color:var(--muted); font-weight:400; letter-spacing:.08em; text-transform:uppercase; font-size:11px}
+  .praesenz{display:flex; gap:7px; margin-left:auto; flex-wrap:wrap; justify-content:flex-end}
+  .chip{
+    display:flex; align-items:center; gap:7px; padding:4px 11px 4px 7px;
+    background:var(--gehoben); border:1px solid var(--linie); border-radius:999px;
+    font-size:12px; white-space:nowrap;
+  }
+  .chip .punktlicht{width:7px; height:7px; border-radius:50%; background:var(--linie); flex:none}
+  .chip.an .punktlicht{background:var(--gruen); box-shadow:0 0 0 3px rgba(63,178,127,.16)}
+  .chip .wann{color:var(--muted)}
+  .chip.mensch{border-style:dashed}
+
+  /* --------------------------------------------------------------- Reiter */
+  nav{display:flex; gap:2px; padding:0 20px; background:var(--karte); border-bottom:1px solid var(--linie); flex:none}
+  nav button{
+    background:none; border:none; border-bottom:2px solid transparent; cursor:pointer;
+    padding:11px 16px; color:var(--muted); font-weight:500;
+  }
+  nav button:hover{color:var(--text)}
+  nav button.aktiv{color:var(--text); border-bottom-color:var(--akzent)}
+  nav .zaehler{
+    display:inline-block; min-width:18px; margin-left:7px; padding:0 5px;
+    background:var(--akzent); color:#fff; border-radius:9px; font-size:11px;
+    font-weight:600; text-align:center;
+  }
+
+  main{flex:1; overflow:hidden; display:flex}
+  .blatt{flex:1; display:none; overflow:hidden}
+  .blatt.aktiv{display:flex}
+
+  /* ----------------------------------------------------------------- Chat */
+  #chat{flex-direction:column}
+  .verlauf{flex:1; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:14px}
+  .tagtrenner{display:flex; align-items:center; gap:12px; color:var(--muted); font-size:12px; margin:6px 0}
+  .tagtrenner:before,.tagtrenner:after{content:""; flex:1; height:1px; background:var(--linie)}
+  .msg{display:flex; gap:12px; max-width:860px}
+  .avatar{
+    width:34px; height:34px; border-radius:10px; flex:none; display:grid; place-items:center;
+    font-size:12px; font-weight:700; background:var(--gehoben); border:1px solid var(--linie);
+  }
+  .msg.ich .avatar{background:var(--akzent); border-color:var(--akzent); color:#fff}
+  .msg.mensch .avatar{border-style:dashed}
+  .msgkopf{display:flex; align-items:baseline; gap:9px; margin-bottom:3px; flex-wrap:wrap}
+  .msgkopf .wer{font-weight:600}
+  .msgkopf .meta{color:var(--muted); font-size:12px}
+  .anhaenger{
+    padding:1px 7px; border-radius:5px; background:var(--gehoben);
+    border:1px solid var(--linie); font-size:11px; color:var(--muted);
+  }
+  .msgtext{white-space:pre-wrap; overflow-wrap:anywhere}
+  .betreff{font-weight:600; margin-bottom:2px}
+
+  .verfassen{
+    flex:none; border-top:1px solid var(--linie); background:var(--karte); padding:12px 24px 16px;
+  }
+  .verfassen .zeile{display:flex; gap:10px; align-items:flex-end}
+  .verfassen textarea{
+    flex:1; min-height:46px; max-height:220px; resize:none; padding:12px 14px;
+    background:var(--gehoben); border:1px solid var(--linie); border-radius:var(--radius);
+  }
+  .verfassen textarea:focus{outline:none; border-color:var(--akzent)}
+  .empfaenger{
+    background:var(--gehoben); border:1px solid var(--linie); border-radius:var(--radius);
+    padding:12px 12px; max-width:210px;
+  }
+  .hinweiszeile{color:var(--muted); font-size:12px; margin-top:7px}
+
+  /* ------------------------------------------------------------- Aufgaben */
+  #aufgaben{flex-direction:column}
+  .werkzeugleiste{
+    flex:none; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    padding:14px 24px; border-bottom:1px solid var(--linie); background:var(--karte);
+  }
+  .spalten{flex:1; overflow-x:auto; overflow-y:hidden; display:flex; gap:14px; padding:18px 24px}
+  .spalte{flex:0 0 300px; display:flex; flex-direction:column; min-height:0}
+  .spaltenkopf{
+    display:flex; align-items:center; gap:9px; padding:0 4px 10px;
+    font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+  }
+  .spaltenkopf .anzahl{color:var(--text); font-weight:700}
+  .spalteninhalt{flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding-bottom:20px}
+  .karte{
+    background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius);
+    padding:13px 14px; cursor:pointer;
+  }
+  .karte:hover{border-color:var(--akzent); background:var(--gehoben)}
+  .karte .titel{font-weight:600; margin-bottom:7px}
+  .karte .fuss{display:flex; gap:7px; flex-wrap:wrap; align-items:center; font-size:11px; color:var(--muted)}
+  .marker{width:3px; border-radius:3px; align-self:stretch}
+  .karte{display:flex; gap:11px}
+  .karte .inhalt{flex:1; min-width:0}
+  .leer{color:var(--muted); font-size:13px; padding:14px 4px; font-style:italic}
+
+  /* -------------------------------------------------------------- Wissen */
+  #wissen{flex-direction:row}
+  .notizliste{
+    flex:0 0 230px; border-right:1px solid var(--linie); overflow-y:auto;
+    padding:14px; display:flex; flex-direction:column; gap:5px; background:var(--karte);
+  }
+  .notizliste button{
+    text-align:left; background:none; border:1px solid transparent; border-radius:8px;
+    padding:8px 11px; cursor:pointer; color:var(--muted);
+  }
+  .notizliste button:hover{background:var(--gehoben); color:var(--text)}
+  .notizliste button.aktiv{background:var(--gehoben); color:var(--text); border-color:var(--linie)}
+  .notizinhalt{flex:1; overflow-y:auto; padding:24px; white-space:pre-wrap; overflow-wrap:anywhere}
+
+  /* ------------------------------------------------------------ Bausteine */
+  .knopf{
+    background:var(--akzent); color:#fff; border:1px solid var(--akzent);
+    border-radius:9px; padding:10px 17px; cursor:pointer; font-weight:600;
+  }
+  .knopf:hover{background:var(--akzent-hell); border-color:var(--akzent-hell)}
+  .knopf:disabled{opacity:.5; cursor:default}
+  .knopf.leise{background:var(--gehoben); border-color:var(--linie); color:var(--text); font-weight:500}
+  .knopf.leise:hover{border-color:var(--akzent); background:var(--gehoben)}
+
+  dialog{
+    background:var(--karte); color:var(--text); border:1px solid var(--linie);
+    border-radius:16px; padding:0; width:min(560px,92vw); box-shadow:0 24px 70px rgba(0,0,0,.6);
+  }
+  dialog::backdrop{background:rgba(4,10,20,.72)}
+  .dlgkopf{padding:18px 22px 0; font-size:17px; font-weight:600}
+  .dlgkoerper{padding:16px 22px; display:flex; flex-direction:column; gap:13px}
+  .dlgfuss{display:flex; gap:10px; justify-content:flex-end; padding:0 22px 20px}
+  label{display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--muted)}
+  label input,label textarea,label select{
+    background:var(--gehoben); border:1px solid var(--linie); border-radius:9px;
+    padding:10px 12px; color:var(--text);
+  }
+  label input:focus,label textarea:focus{outline:none; border-color:var(--akzent)}
+  .kaestchen{display:flex; gap:16px; flex-wrap:wrap}
+  .kaestchen label{flex-direction:row; align-items:center; gap:7px; color:var(--text); font-size:14px}
+
+  .verlaufsliste{
+    background:var(--bg); border:1px solid var(--linie); border-radius:9px;
+    padding:11px 13px; font-size:12px; color:var(--muted); max-height:190px; overflow-y:auto;
+    white-space:pre-wrap;
+  }
+  .statuswahl{display:flex; gap:7px; flex-wrap:wrap}
+
+  footer{
+    flex:none; display:flex; align-items:center; gap:14px; padding:7px 20px;
+    background:var(--karte); border-top:1px solid var(--linie);
+    font-size:12px; color:var(--muted);
+  }
+  footer .warn{color:var(--gelb)}
+  footer .fehler{color:var(--rot)}
+  footer .rechts{margin-left:auto; display:flex; gap:14px; align-items:center}
+  .fluestern{color:var(--muted); font-size:12px}
+  ::-webkit-scrollbar{width:10px; height:10px}
+  ::-webkit-scrollbar-thumb{background:var(--linie); border-radius:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marke">sorgl<span class="punkt">.</span>OS <small>Team</small></div>
+  <div class="praesenz" id="praesenz"></div>
+</header>
+
+<nav>
+  <button data-blatt="chat" class="aktiv">Chat<span class="zaehler" id="zChat" hidden></span></button>
+  <button data-blatt="aufgaben">Aufgaben<span class="zaehler" id="zAufgaben" hidden></span></button>
+  <button data-blatt="wissen">Wissen</button>
+</nav>
+
+<main>
+  <section class="blatt aktiv" id="chat">
+    <div class="verlauf" id="verlauf"></div>
+    <div class="verfassen">
+      <div class="zeile">
+        <select class="empfaenger" id="empfaenger" title="An wen geht die Nachricht"></select>
+        <textarea id="eingabe" rows="1" placeholder="An das Team schreiben…  (Enter sendet, Umschalt+Enter macht eine neue Zeile)"></textarea>
+        <button class="knopf" id="senden">Senden</button>
+      </div>
+      <div class="hinweiszeile">
+        Die Agenten sehen das beim nächsten <code>bus_sync</code> — nicht in Echtzeit.
+      </div>
+    </div>
+  </section>
+
+  <section class="blatt" id="aufgaben">
+    <div class="werkzeugleiste">
+      <button class="knopf" id="neuerAuftrag">Auftrag an alle drei</button>
+      <button class="knopf leise" id="neueAufgabe">Einzelne Aufgabe</button>
+      <span class="fluestern" id="aufgabenHinweis"></span>
+    </div>
+    <div class="spalten" id="spalten"></div>
+  </section>
+
+  <section class="blatt" id="wissen">
+    <div class="notizliste" id="notizliste"></div>
+    <div class="notizinhalt" id="notizinhalt"></div>
+  </section>
+</main>
+
+<footer>
+  <span id="ichbin"></span>
+  <span class="rechts">
+    <span id="syncstatus"></span>
+    <button class="knopf leise" id="jetztSync" style="padding:4px 12px">Jetzt abgleichen</button>
+  </span>
+</footer>
+
+<!-- ------------------------------------------------------------- Dialoge -->
+<dialog id="dlgAuftrag">
+  <form method="dialog">
+    <div class="dlgkopf" id="dlgAuftragTitel">Auftrag an alle drei</div>
+    <div class="dlgkoerper">
+      <label>Titel
+        <input id="aTitel" placeholder="z.B. Ideen für Kunde Nr. 1 sammeln" autocomplete="off">
+      </label>
+      <label>Was genau zu tun ist
+        <textarea id="aBody" rows="5" placeholder="Kontext, Ziel, woran man merkt, dass es fertig ist."></textarea>
+      </label>
+      <div id="aWer">
+        <div class="fluestern" style="margin-bottom:7px">Bearbeiter</div>
+        <div class="kaestchen" id="aKaestchen"></div>
+      </div>
+    </div>
+    <div class="dlgfuss">
+      <button class="knopf leise" value="abbrechen">Abbrechen</button>
+      <button class="knopf" id="aSenden" value="ok">Anlegen</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlgAufgabe">
+  <div class="dlgkopf" id="dTitel">Aufgabe</div>
+  <div class="dlgkoerper">
+    <div id="dMeta" class="fluestern"></div>
+    <div id="dBody" style="white-space:pre-wrap"></div>
+    <div>
+      <div class="fluestern" style="margin-bottom:7px">Status setzen</div>
+      <div class="statuswahl" id="dStatus"></div>
+    </div>
+    <label>Notiz an den Verlauf hängen
+      <textarea id="dNotiz" rows="2" placeholder="optional"></textarea>
+    </label>
+    <div>
+      <div class="fluestern" style="margin-bottom:7px">Verlauf</div>
+      <div class="verlaufsliste" id="dVerlauf"></div>
+    </div>
+  </div>
+  <div class="dlgfuss">
+    <button class="knopf leise" id="dSchliessen">Schließen</button>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+
+const $  = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+let ZUSTAND = null;
+let offeneAufgabe = null;
+let gelesenBis = Number(localStorage.getItem("gelesenBis") || 0);
+let amEnde = true;
+
+const STATUS = {
+  open:        {label:"Offen",      farbe:"var(--linie)"},
+  in_progress: {label:"In Arbeit",  farbe:"var(--akzent)"},
+  blocked:     {label:"Blockiert",  farbe:"var(--rot)"},
+  done:        {label:"Erledigt",   farbe:"var(--gruen)"},
+  cancelled:   {label:"Verworfen",  farbe:"var(--muted)"},
+};
+
+const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function name(id){
+  const t = ZUSTAND?.teilnehmer.find((x) => x.id === id);
+  return t ? t.name : (id || "?");
+}
+function initialen(id){
+  const n = name(id).replace(/^Claude\s*[—-]\s*/, "");
+  return n.split(/\s+/).slice(0,2).map((w) => w[0] || "").join("").toUpperCase() || "?";
+}
+function istMensch(id){
+  return ZUSTAND?.teilnehmer.find((x) => x.id === id)?.typ === "mensch";
+}
+function uhr(ts){
+  if(!ts) return "";
+  const d = new Date(ts.replace(/(\.\d+)?Z$/, "Z"));
+  return d.toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit"});
+}
+function tag(ts){
+  const d = new Date(String(ts).replace(/(\.\d+)?Z$/, "Z"));
+  const heute = new Date(), gestern = new Date(Date.now() - 864e5);
+  const gleich = (a,b) => a.toDateString() === b.toDateString();
+  if(gleich(d,heute)) return "Heute";
+  if(gleich(d,gestern)) return "Gestern";
+  return d.toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"});
+}
+
+async function hole(pfad, koerper){
+  const opt = koerper
+    ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(koerper)}
+    : {};
+  const r = await fetch(pfad, opt);
+  const d = await r.json().catch(() => ({fehler:"Antwort unlesbar"}));
+  if(!r.ok) throw new Error(d.fehler || `HTTP ${r.status}`);
+  return d;
+}
+
+// ------------------------------------------------------------------ Zeichnen
+
+function zeichnePraesenz(){
+  $("#praesenz").innerHTML = ZUSTAND.teilnehmer.map((t) => `
+    <span class="chip ${t.aktiv ? "an" : ""} ${t.typ === "mensch" ? "mensch" : ""}"
+          title="${esc(t.rolle)}">
+      <span class="punktlicht"></span>${esc(t.name)}
+      <span class="wann">${esc(t.zuletzt_text)}</span>
+    </span>`).join("");
+}
+
+function zeichneChat(){
+  const v = $("#verlauf");
+  amEnde = v.scrollHeight - v.scrollTop - v.clientHeight < 90;
+  let letzterTag = null;
+  v.innerHTML = ZUSTAND.nachrichten.map((m) => {
+    let vorspann = "";
+    const t = tag(m.ts);
+    if(t !== letzterTag){ letzterTag = t; vorspann = `<div class="tagtrenner">${esc(t)}</div>`; }
+    const anAlle = (m.to || []).includes("*");
+    const ziel = anAlle ? "" : `<span class="anhaenger">an ${esc((m.to||[]).map(name).join(", "))}</span>`;
+    const zeigeBetreff = m.subject && !String(m.body || "").startsWith(m.subject);
+    return vorspann + `
+      <div class="msg ${m.from === ZUSTAND.ich ? "ich" : ""} ${istMensch(m.from) ? "mensch" : ""}">
+        <div class="avatar">${esc(initialen(m.from))}</div>
+        <div>
+          <div class="msgkopf">
+            <span class="wer">${esc(name(m.from))}</span>
+            <span class="meta">${esc(uhr(m.ts))}</span>${ziel}
+          </div>
+          ${zeigeBetreff ? `<div class="betreff">${esc(m.subject)}</div>` : ""}
+          <div class="msgtext">${esc(m.body)}</div>
+        </div>
+      </div>`;
+  }).join("") || `<div class="leer">Noch nichts gesagt. Schreib den ersten Satz — alle drei Accounts sehen ihn beim nächsten Abgleich.</div>`;
+  if(amEnde) v.scrollTop = v.scrollHeight;
+
+  const sel = $("#empfaenger");
+  if(sel.dataset.stand !== String(ZUSTAND.teilnehmer.length)){
+    sel.dataset.stand = String(ZUSTAND.teilnehmer.length);
+    sel.innerHTML = `<option value="*">An alle</option>` + ZUSTAND.teilnehmer
+      .filter((t) => t.id !== ZUSTAND.ich)
+      .map((t) => `<option value="${esc(t.id)}">Nur ${esc(t.name)}</option>`).join("");
+  }
+}
+
+function zeichneAufgaben(){
+  const nach = (s) => ZUSTAND.aufgaben.filter((a) => a.status === s);
+  $("#spalten").innerHTML = Object.entries(STATUS)
+    .filter(([s]) => s !== "cancelled" || nach("cancelled").length)
+    .map(([s, def]) => {
+      const liste = nach(s);
+      return `<div class="spalte">
+        <div class="spaltenkopf">${esc(def.label)} <span class="anzahl">${liste.length}</span></div>
+        <div class="spalteninhalt">${
+          liste.map((a) => `
+            <div class="karte" data-id="${esc(a.id)}">
+              <div class="marker" style="background:${def.farbe}"></div>
+              <div class="inhalt">
+                <div class="titel">${esc(a.title)}</div>
+                <div class="fuss">
+                  <span>${a.owner ? esc(name(a.owner)) : (a.assign_to ? "→ " + esc(name(a.assign_to)) : "frei")}</span>
+                  ${a.gruppe ? `<span class="anhaenger">Sammelauftrag</span>` : ""}
+                </div>
+              </div>
+            </div>`).join("") || `<div class="leer">nichts</div>`
+        }</div></div>`;
+    }).join("");
+  $$("#spalten .karte").forEach((k) =>
+    k.addEventListener("click", () => zeigeAufgabe(k.dataset.id)));
+
+  const offen = ZUSTAND.aufgaben.filter((a) => ["open","in_progress","blocked"].includes(a.status));
+  $("#aufgabenHinweis").textContent = offen.length
+    ? `${offen.length} offen — die Agenten holen sie sich mit task_claim.`
+    : "Alles abgearbeitet.";
+}
+
+function zeichneWissen(){
+  const l = $("#notizliste");
+  const aktiv = l.querySelector("button.aktiv")?.dataset.key;
+  l.innerHTML = ZUSTAND.notizen.map((k) =>
+    `<button data-key="${esc(k)}" class="${k === aktiv ? "aktiv" : ""}">${esc(k)}</button>`
+  ).join("") || `<div class="leer">Noch keine Notizen.</div>`;
+  l.querySelectorAll("button").forEach((b) => b.addEventListener("click", async () => {
+    l.querySelectorAll("button").forEach((x) => x.classList.remove("aktiv"));
+    b.classList.add("aktiv");
+    const d = await hole("/api/note/read", {key:b.dataset.key});
+    $("#notizinhalt").textContent = d.text;
+  }));
+  if(!aktiv && !$("#notizinhalt").textContent){
+    $("#notizinhalt").innerHTML = `<div class="leer">Links eine Notiz wählen. Notizen legen die Agenten mit <code>note_write</code> an — für Entscheidungen und Konventionen, die nicht im Chat wegscrollen sollen.</div>`;
+  }
+}
+
+function zeichneFuss(){
+  $("#ichbin").textContent = `Du bist ${name(ZUSTAND.ich)}`;
+  const s = $("#syncstatus");
+  if(!ZUSTAND.hat_remote){
+    s.className = "warn";
+    s.textContent = "Kein Git-Remote — nur lokal, die anderen sehen nichts";
+  } else if(ZUSTAND.sync.fehler){
+    s.className = "fehler";
+    s.textContent = "Abgleich klemmt: " + ZUSTAND.sync.fehler;
+  } else {
+    s.className = "";
+    s.textContent = "Abgeglichen " + (ZUSTAND.sync.letzter_sync ? uhr(ZUSTAND.sync.letzter_sync) : "—");
+  }
+}
+
+function zeichneZaehler(){
+  const neue = ZUSTAND.nachrichten.filter((m) =>
+    m.from !== ZUSTAND.ich && new Date(String(m.ts).replace(/(\.\d+)?Z$/, "Z")).getTime() > gelesenBis).length;
+  const z = $("#zChat");
+  z.hidden = neue === 0 || $("nav button.aktiv").dataset.blatt === "chat";
+  z.textContent = neue;
+
+  const meine = ZUSTAND.aufgaben.filter((a) => ["open","in_progress","blocked"].includes(a.status)).length;
+  const za = $("#zAufgaben");
+  za.hidden = meine === 0;
+  za.textContent = meine;
+}
+
+function zeichne(){
+  zeichnePraesenz(); zeichneChat(); zeichneAufgaben(); zeichneWissen();
+  zeichneFuss(); zeichneZaehler();
+}
+
+// ------------------------------------------------------------ Aufgaben-Dialog
+
+function zeigeAufgabe(id){
+  const a = ZUSTAND.aufgaben.find((x) => x.id === id);
+  if(!a) return;
+  offeneAufgabe = id;
+  $("#dTitel").textContent = a.title;
+  $("#dMeta").textContent =
+    `${a.id} · angelegt von ${name(a.created_by)} · ` +
+    (a.owner ? `bearbeitet von ${name(a.owner)}` : a.assign_to ? `vorgesehen für ${name(a.assign_to)}` : "niemandem zugewiesen") +
+    (a.gruppe ? " · Teil eines Sammelauftrags" : "");
+  $("#dBody").textContent = a.body || "(keine Beschreibung)";
+  $("#dVerlauf").textContent = (a.verlauf || []).join("\n") || "(leer)";
+  $("#dStatus").innerHTML = Object.entries(STATUS).map(([s, def]) =>
+    `<button class="knopf ${s === a.status ? "" : "leise"}" data-status="${s}">${esc(def.label)}</button>`).join("");
+  $$("#dStatus button").forEach((b) => b.addEventListener("click", async () => {
+    await schreibe("/api/task/update", {id:offeneAufgabe, status:b.dataset.status,
+                                        note:$("#dNotiz").value.trim() || null});
+    $("#dNotiz").value = "";
+    $("#dlgAufgabe").close();
+  }));
+  $("#dlgAufgabe").showModal();
+}
+
+// ------------------------------------------------------------------ Schreiben
+
+async function schreibe(pfad, koerper){
+  try{
+    await hole(pfad, koerper);
+    await aktualisiere();
+  }catch(e){
+    alert("Hat nicht geklappt:\n\n" + e.message);
+  }
+}
+
+async function aktualisiere(){
+  try{
+    ZUSTAND = await hole("/api/state");
+    zeichne();
+  }catch(e){
+    $("#syncstatus").className = "fehler";
+    $("#syncstatus").textContent = "Server nicht erreichbar";
+  }
+}
+
+// -------------------------------------------------------------------- Bedienung
+
+$$("nav button").forEach((b) => b.addEventListener("click", () => {
+  $$("nav button").forEach((x) => x.classList.remove("aktiv"));
+  b.classList.add("aktiv");
+  $$(".blatt").forEach((s) => s.classList.toggle("aktiv", s.id === b.dataset.blatt));
+  if(b.dataset.blatt === "chat"){
+    gelesenBis = Date.now();
+    localStorage.setItem("gelesenBis", String(gelesenBis));
+    $("#zChat").hidden = true;
+    $("#verlauf").scrollTop = $("#verlauf").scrollHeight;
+  }
+}));
+
+const eingabe = $("#eingabe");
+eingabe.addEventListener("input", () => {
+  eingabe.style.height = "auto";
+  eingabe.style.height = Math.min(eingabe.scrollHeight, 220) + "px";
+});
+eingabe.addEventListener("keydown", (e) => {
+  if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); sende(); }
+});
+$("#senden").addEventListener("click", sende);
+
+async function sende(){
+  const text = eingabe.value.trim();
+  if(!text) return;
+  const an = $("#empfaenger").value;
+  $("#senden").disabled = true;
+  eingabe.value = "";
+  eingabe.style.height = "auto";
+  await schreibe("/api/message", {to:[an], body:text});
+  $("#senden").disabled = false;
+  eingabe.focus();
+}
+
+let auftragModus = "alle";
+$("#neuerAuftrag").addEventListener("click", () => oeffneAuftrag("alle"));
+$("#neueAufgabe").addEventListener("click", () => oeffneAuftrag("einzeln"));
+
+function oeffneAuftrag(modus){
+  auftragModus = modus;
+  const agenten = ZUSTAND.teilnehmer.filter((t) => t.typ === "agent");
+  $("#dlgAuftragTitel").textContent = modus === "alle" ? "Auftrag an alle drei" : "Einzelne Aufgabe";
+  $("#aKaestchen").innerHTML = agenten.map((t, i) => modus === "alle"
+    ? `<label><input type="checkbox" value="${esc(t.id)}" checked> ${esc(t.name)}</label>`
+    : `<label><input type="radio" name="wer" value="${esc(t.id)}" ${i===0?"checked":""}> ${esc(t.name)}</label>`
+  ).join("");
+  $("#aTitel").value = ""; $("#aBody").value = "";
+  $("#dlgAuftrag").showModal();
+  setTimeout(() => $("#aTitel").focus(), 50);
+}
+
+$("#dlgAuftrag").addEventListener("close", async () => {
+  if($("#dlgAuftrag").returnValue !== "ok") return;
+  const titel = $("#aTitel").value.trim();
+  if(!titel) return;
+  const body = $("#aBody").value.trim();
+  const gewaehlt = $$("#aKaestchen input:checked").map((i) => i.value);
+  if(!gewaehlt.length){ alert("Niemand ausgewählt."); return; }
+  if(auftragModus === "alle"){
+    await schreibe("/api/auftrag", {title:titel, body, an:gewaehlt});
+  } else {
+    await schreibe("/api/task", {title:titel, body, assign_to:gewaehlt[0]});
+  }
+});
+
+$("#dSchliessen").addEventListener("click", () => $("#dlgAufgabe").close());
+$("#jetztSync").addEventListener("click", async (e) => {
+  e.target.disabled = true;
+  e.target.textContent = "läuft…";
+  await schreibe("/api/sync", {});
+  e.target.disabled = false;
+  e.target.textContent = "Jetzt abgleichen";
+});
+
+aktualisiere();
+setInterval(aktualisiere, 4000);
+</script>
+</body>
+</html>

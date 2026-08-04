@@ -56,6 +56,14 @@ def _identitaet():
 AGENT = _identitaet()
 NO_PUSH = os.environ.get("BUS_NO_PUSH") == "1"
 
+
+def setze_agent(agent_id):
+    """Identitaet zur Laufzeit setzen — genutzt von der Weboberflaeche, die als
+    Mensch (z.B. 'mensch-daniel') und nicht als Agent im Bus auftritt."""
+    global AGENT
+    AGENT = agent_id
+    return AGENT
+
 PROTOCOL_FALLBACK = "2024-11-05"
 SERVER_NAME = "agent-bus"
 SERVER_VERSION = "1.0.0"
@@ -233,6 +241,13 @@ def bekannte_ids():
     return {a.get("id") for a in registry().get("agents", [])}
 
 
+def agenten_ids():
+    """Nur die Claude-Instanzen, ohne die Menschen. Ein Sammelauftrag geht an
+    Agenten — Menschen bekommen Nachrichten, keine Arbeitsauftraege."""
+    return {a.get("id") for a in registry().get("agents", [])
+            if a.get("typ", "agent") == "agent"}
+
+
 def anzeige(agent_id):
     for a in registry().get("agents", []):
         if a.get("id") == agent_id:
@@ -258,6 +273,45 @@ def markiere_gelesen(ids):
     if len(read) > 5000:
         read = read[-5000:]
     schreibe_json(cursor_pfad(), {"agent": AGENT, "read": read, "ts": jetzt()})
+
+
+# ---------------------------------------------------------------------- Praesenz
+
+def melde_praesenz(rolle="agent"):
+    """Hinterlaesst 'ich war hier'. Eigene Datei je Teilnehmer, also konfliktfrei."""
+    if AGENT:
+        schreibe_json(pfad("presence", f"{AGENT}.json"),
+                      {"agent": AGENT, "ts": jetzt(), "rolle": rolle})
+
+
+def praesenz():
+    eintraege = {}
+    wurzel = pfad("presence")
+    if os.path.isdir(wurzel):
+        for fn in sorted(os.listdir(wurzel)):
+            if fn.endswith(".json"):
+                d = lies_json(os.path.join(wurzel, fn))
+                if isinstance(d, dict) and d.get("agent"):
+                    eintraege[d["agent"]] = d
+    return eintraege
+
+
+def alter_text(ts):
+    """'vor 3 Min' statt eines Zeitstempels, den niemand im Kopf umrechnet."""
+    if not ts:
+        return "nie"
+    try:
+        dann = datetime.strptime(ts[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+    except ValueError:
+        return "unbekannt"
+    sek = (datetime.now(timezone.utc) - dann).total_seconds()
+    if sek < 90:
+        return "gerade eben"
+    if sek < 5400:
+        return f"vor {int(sek // 60)} Min"
+    if sek < 172800:
+        return f"vor {int(sek // 3600)} Std"
+    return f"vor {int(sek // 86400)} Tagen"
 
 
 # -------------------------------------------------------------------- Nachrichten
@@ -300,6 +354,7 @@ def task_zustand(tid):
         "created_by": basis.get("by"),
         "created_at": basis.get("ts"),
         "assign_to": basis.get("assign_to"),
+        "gruppe": basis.get("gruppe"),
         "status": "open",
         "owner": None,
         "verlauf": [],
@@ -378,6 +433,7 @@ def t_whoami(_):
 
 def t_sync(_):
     p = pull()
+    melde_praesenz()
     c = commit_push(f"sync von {AGENT}")
     ungelesen = [m for m in alle_json("msgs")
                  if fuer_mich(m) and m.get("id") not in gelesene_ids()
@@ -470,21 +526,69 @@ def t_mark_read(a):
     return f"{len(ids)} Nachricht(en) als gelesen markiert. {ergebnis}"
 
 
+def erzeuge_task(titel, body="", assign_to=None, gruppe=None):
+    """Legt eine Aufgabe an und gibt ihre ID zurueck. Committet nicht."""
+    tid = neue_id("t-", titel, assign_to or "")
+    schreibe_json(os.path.join(task_ordner(tid), "task.json"), {
+        "id": tid, "ts": jetzt(), "by": AGENT, "title": titel,
+        "body": body or "", "assign_to": assign_to, "gruppe": gruppe,
+    })
+    return tid
+
+
 def t_task_create(a):
     titel = (a.get("title") or "").strip()
     if not titel:
         raise BusFehler("'title' fehlt.")
     pull()
-    tid = neue_id("t-", titel)
-    schreibe_json(os.path.join(task_ordner(tid), "task.json"), {
-        "id": tid, "ts": jetzt(), "by": AGENT, "title": titel,
-        "body": a.get("body") or "", "assign_to": a.get("assign_to"),
-    })
+    tid = erzeuge_task(titel, a.get("body"), a.get("assign_to"))
     ergebnis = commit_push(f"task {tid} von {AGENT}: {titel[:60]}")
     ziel = a.get("assign_to")
     return (f"Task angelegt: {tid}  {titel}"
             + (f"\nvorgesehen fuer: {ziel}" if ziel else "\n(niemandem zugewiesen)")
             + f"\n{ergebnis}")
+
+
+def t_auftrag_create(a):
+    """Ein Auftrag, mehrere Bearbeiter: je Empfaenger eine eigene Aufgabe.
+
+    Bewusst nicht EINE Aufgabe fuer alle — sonst streiten sich drei Agenten um
+    denselben Claim und zwei gehen leer aus. So hat jeder sein eigenes Stueck,
+    und die Gruppen-ID haelt die Antworten zusammen.
+    """
+    titel = (a.get("title") or "").strip()
+    if not titel:
+        raise BusFehler("'title' fehlt.")
+    an = a.get("an")
+    if isinstance(an, str):
+        an = [an]
+    if not an or an == ["*"]:
+        an = [i for i in sorted(agenten_ids()) if i and i != AGENT]
+    if not an:
+        raise BusFehler("Keine Empfaenger. Steht ausser dir jemand in agents.json?")
+
+    pull()
+    gruppe = neue_id("g-", titel)
+    ids = [erzeuge_task(titel, a.get("body"), ziel, gruppe) for ziel in an]
+    ergebnis = commit_push(f"auftrag {gruppe} von {AGENT} an {len(an)}: {titel[:50]}")
+    zeilen = [f"Sammelauftrag {gruppe}: {titel}", f"an {len(an)} Bearbeiter:"]
+    zeilen += [f"  {ziel}  ->  {tid}" for ziel, tid in zip(an, ids)]
+    zeilen.append(ergebnis)
+    return "\n".join(zeilen)
+
+
+def t_presence(_):
+    pull()
+    p = praesenz()
+    zeilen = ["Wer war wann zuletzt am Bus:"]
+    for a in registry().get("agents", []):
+        e = p.get(a.get("id"))
+        zeilen.append(f"  {a.get('id'):<14} {alter_text(e.get('ts') if e else None)}"
+                      f"   {a.get('name', '')}")
+    fremde = [k for k in p if k not in bekannte_ids()]
+    for k in sorted(fremde):
+        zeilen.append(f"  {k:<14} {alter_text(p[k].get('ts'))}   (nicht in agents.json)")
+    return "\n".join(zeilen)
 
 
 def t_task_list(a):
@@ -685,6 +789,26 @@ TOOLS = [
         "fn": t_task_create,
     },
     {
+        "name": "auftrag_create",
+        "description": "Sammelauftrag: legt dieselbe Aufgabe fuer mehrere Accounts an, je eine eigene Aufgabe pro Bearbeiter, verbunden ueber eine Gruppen-ID. Fuer 'das sollen alle drei beantworten'.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "title": _s("string", "Kurzer Titel des Auftrags."),
+                "body": _s("string", "Was genau zu tun ist."),
+                "an": _s("array", "Agent-IDs der Bearbeiter. Leer oder [\"*\"] = alle ausser mir.", items={"type": "string"}),
+            },
+            "required": ["title"],
+        },
+        "fn": t_auftrag_create,
+    },
+    {
+        "name": "bus_presence",
+        "description": "Zeigt, wer wann zuletzt am Bus war. Nuetzlich, bevor man auf eine Antwort wartet.",
+        "inputSchema": {"type": "object", "properties": {}},
+        "fn": t_presence,
+    },
+    {
         "name": "task_list",
         "description": "Listet die gemeinsamen Aufgaben mit Status und Besitzer.",
         "inputSchema": {
@@ -849,6 +973,7 @@ def selftest():
         ("bus_inbox", {"include_read": True}),
         ("task_create", {"title": "selftest-task", "body": "nur ein Test"}),
         ("task_list", {}),
+        ("bus_presence", {}),
         ("note_write", {"key": "selftest", "content": "# selftest\nok"}),
         ("note_read", {"key": "selftest"}),
         ("bus_sync", {}),
