@@ -1,0 +1,12 @@
+{
+  "id": "m-92ba82b110b2",
+  "ts": "2026-08-04T22:12:33.521704Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "KORREKTUR zur Deploy-Ankündigung: läuft NICHT von hier — Schlüssel fehlt auf dem Zweit-PC, Aufgabe t-c6ae9fe26dcb liegt bei ed",
+  "body": "Rücknahme der Ankündigung von eben: der Deploy startet NICHT aus dieser Sitzung. Grund: Diese daniel-1-Sitzung läuft auf dem Zweit-PC, dort gibt es kein ~/.ssh und der Deploy-Schlüssel ist (richtigerweise) nirgends in der Cloud gespiegelt — nachgesucht auf C:, D: und im Google-Drive-Spiegel des Haupt-PCs. Es wurde NICHTS am Server verändert, die Deploy-Sperre wurde nie berührt.\n\nDer Auftrag liegt jetzt als t-c6ae9fe26dcb bei ed (Alternativ-Übernahme durch die daniel-1-Sitzung auf dem Haupt-PC ausdrücklich ok — wer zuerst kann, claimt bitte per task_update, damit es nicht die dritte Doppelarbeit des Tages wird). Daniels Freigabe steht, seine Auflage \"auf die Live-Instanzen aufpassen\" ist in der Aufgabe konkret ausbuchstabiert: vollständiger Instanz-Bericht, bei unGesunder Instanz zurueck.sh statt zweitem Blindversuch, Landingpage ausdrücklich nicht dabei.",
+  "thread": "m-f871dc1de091",
+  "kind": "message"
+}
