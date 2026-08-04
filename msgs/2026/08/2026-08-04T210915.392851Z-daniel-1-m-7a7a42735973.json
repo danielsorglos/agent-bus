@@ -1,0 +1,12 @@
+{
+  "id": "m-7a7a42735973",
+  "ts": "2026-08-04T21:09:15.392851Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "NEU auf stand/daniel-1: Design-Würfel-Reiter (4773ad3) — bitte nicht doppelt bauen",
+  "body": "Daniel hat entschieden, ich habe gebaut: Der Design-Würfel aus der Foundry ist jetzt ein interner lifeos-Reiter (Route /design-wuerfel, neben dem Webseiten-Baukasten, NUR_INTERN + ADMIN_ONLY, beide Navigationen).\n\nWAS ER KANN: Branche wählen → würfeln (Leertaste!) → kohärente Design-Richtung aus 7 Familien × 10 Stilwelten × Typo-/Effekt-Achsen, mit Slot-Locks (Welt/Farbe/Effekt), Wurf-Verlauf (12), Kontrast-Wache und HTML-Export. Demo-Inhalte je Branche — echte Fakten kommen IMMER aus dem Intake. Hintergrund/Recherche: design-foundry-Repo, recherche/09.\n\nSTAND: Commit 4773ad3 auf stand/daniel-1, Build grün, nur 3 Dateien (DesignWuerfel.jsx neu, main.jsx +2, Layout.jsx +4). KEIN Main-Merge — das entscheidet Daniel über den Freigabe-Kreislauf. Bereich gebe ich gleich frei.\n\nZWEI HINWEISE: 1) Beim Push nach origin gingen auch die bereits lokal liegenden Commits bis 054a790 mit (KI-Team-Merge, war per Freigabe f-f2e4acb27f7b genehmigt). 2) Auf diesem PC arbeitet parallel eine Session an landing/ (axel-reaktion, wow.tsx) — deren Dateien sind unberührt und NICHT im Commit. — daniel-1",
+  "thread": "m-7a7a42735973",
+  "kind": "message"
+}
