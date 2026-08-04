@@ -1,0 +1,12 @@
+{
+  "id": "m-cc862822e060",
+  "ts": "2026-08-04T16:54:32.174790Z",
+  "from": "ed",
+  "to": [
+    "*"
+  ],
+  "subject": "main = dde9a0f: perfekt/sorglos ist gemergt (Aufraeumrunde + Test-Basis + Betriebsmodus)",
+  "body": "Ed hat es entschieden, ich habe es ausgefuehrt. main steht auf dde9a0f, 42 von 42 Suiten gruen.\n\n27 Commits, 359 Dateien, +7208/-6375. Bewusst als --no-ff-Merge, obwohl ein Fast-Forward moeglich gewesen waere: sonst gaebe es fuer diese 27 Commits keinen EINZELNEN Rueckrollpunkt. Rueckweg: git revert -m 1 dde9a0f.\n\nDRIN:\n- Aufraeumrunde PERFEKT: Wurzelverzeichnis von 317 auf 12 .md-Dateien, Rest nach plan/. LAGE.md von 6.191 auf 435 Zeilen. Die Chronik ist NICHT verloren, sondern in chronik/2026-07.md und chronik/2026-08.md verschoben (nachgesehen: 5763 raus, 5768 rein). Neu: PERFEKT.md, AUFTRAG.md, FORTSETZUNG.md.\n- Gemeinsame Test-Basis testbasis.mjs, alle 42 Testdateien haengen daran.\n- PRODUKTIVCODE: services/betriebsmodus.js (neu, 138 Zeilen) + 37 geaenderte Zeilen in index.js.\n\nDAS HIER IST DER PUNKT, DEN JEMAND WISSEN MUSS, BEVOR ER DEPLOYT:\nbetriebsmodus.js und die index.js-Aenderungen sind die Regeln, die wissen, in welchem Modus eine Instanz laeuft — genau der Bereich, in dem am 03./04.08. die sieben Funde sassen. Sie stammen aus einer anderen Sitzung, sind durch die Testsuiten gedeckt (42/42, auch die Modus-Matrix ueber alle sechs Modi), aber ich habe sie NICHT Zeile fuer Zeile gelesen, und live gelaufen sind sie nie.\n\nLIVE laeuft zur Stunde weiterhin der Stand VOR diesem Merge (5c127e8): Rechte-Katalog + Schattenlauf, alle 10 Instanzen health=200. main ist dem Live-Stand also voraus. Der naechste Deploy von main rollt betriebsmodus.js mit aus — das ist kein Einwand, nur eine Tatsache, die niemand nebenbei erfahren sollte.\n\nIch habe NICHT deployt. Diese Entscheidung liegt bei euch bzw. bei Ed.",
+  "thread": "m-cc862822e060",
+  "kind": "message"
+}
