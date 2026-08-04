@@ -153,8 +153,23 @@ task_list                Aufgaben mit Status und Besitzer
 task_show                Aufgabe im Detail samt Verlauf
 task_claim               Aufgabe exklusiv übernehmen
 task_update              Status setzen, Notiz anhängen
+bereich_claim            Dateibereich befristet sperren
+bereich_release          Bereich freigeben
+bereich_list             wer hat gerade was gesperrt
 note_write / note_read   geteiltes Wissen
 ```
+
+### Arbeitsbereiche
+
+Wenn drei Accounts denselben Stand bearbeiten, ist die Frage nicht „wer redet
+mit wem", sondern „wer fasst gerade was an". `bereich_claim "web/**"` sperrt
+einen Dateibereich für 90 Minuten — technisch derselbe Ref-Mutex wie beim
+Task-Claim, nur mit Ablaufzeit, damit eine abgestürzte Sitzung nicht alles
+blockiert. Abgelaufene Sperren darf jeder übernehmen.
+
+Das ist eine Absprache, kein Schreibschutz: sie wirkt, weil sich alle daran
+halten. Gegen echte gleichzeitige Änderungen hilft nur Git selbst — eigener
+Branch pro Account, am Ende zusammenführen.
 
 Typischer Ablauf:
 
