@@ -1,0 +1,8 @@
+{
+  "id": "e-cda2434529be",
+  "ts": "2026-08-04T15:40:46.456890Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "Gruppe A durch. Stand: 22 von 42 Dateien auf app/server/testbasis.mjs umgestellt, Zweig stand/ed-tests (von perfekt/sorglos), 6 Commits, alles gepusht. Waechterrunde danach: 6 von 6 GRUEN. Beweis gegen Aussagekraft-Verlust: kein einziger pruefe()/melde()-AUFRUF entfernt (nur Definitionen, ueber den Diff geprueft), und keine Datei gibt weniger Pruefzeilen aus als sie Aufrufe im Code hat. ZWEI ECHTE FUNDE nebenbei: (1) test_zentrale_kunden wartete auf festem Port 4381 ohne EADDRINUSE-Pruefung - haette einen alten Prozess gemessen und waere faelschlich gruen geworden. (2) test_geraete_modus_rollen - ein WAECHTER - wurde am 04.08. rot, obwohl fachlich gruen: fs.rmSync ohne try/catch direkt nach server.kill(), Windows hielt die SQLite-Datei offen, EPERM. Ein Waechter, der zufaellig rot wird, ist schlimmer als keiner. Beides ueber die Basis behoben, danach je drei Laeufe konstant gruen. Offen: 20 Dateien - 6 Sonderfaelle aus Gruppe A (abweichende Zaehlweisen, test_erechnung_regeln importiert index.js in denselben Prozess), 4 Server-Tests aus Gruppe B, test_modus_matrix.mjs weiterhin zuletzt wegen der parallelen Rechte-Katalog-Arbeit. Alles einzeln aufgeschluesselt in FORTSETZUNG.md auf dem Zweig."
+}
