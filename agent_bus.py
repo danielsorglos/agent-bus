@@ -964,9 +964,34 @@ def main():
 
 
 def selftest():
-    """Ruft jedes Tool einmal auf und meldet Fehler. Ohne Netzwerk/Remote."""
+    """Ruft jedes Tool einmal auf und meldet Fehler.
+
+    Laeuft bewusst in einem Wegwerf-Repo: wuerde der Test im echten Klon
+    arbeiten, committete er Testnachrichten und -aufgaben, die anschliessend
+    jeder im Team zu sehen bekaeme.
+    """
+    global REPO
+    import shutil
+    import tempfile
+
     pruefe_agent()
-    print(f"agent: {AGENT}   repo: {REPO}   remote: {hat_remote()}")
+    echtes_repo = REPO
+    spielwiese = tempfile.mkdtemp(prefix="agent-bus-selftest-")
+    try:
+        quelle = os.path.join(echtes_repo, "agents.json")
+        if os.path.isfile(quelle):
+            shutil.copy(quelle, spielwiese)
+        REPO = spielwiese
+        git("init", "-q")
+        print(f"agent: {AGENT}   echtes Repo: {echtes_repo}")
+        print(f"Test laeuft in einer Kopie, das echte Repo bleibt unberuehrt.")
+        return _selftest_schritte()
+    finally:
+        REPO = echtes_repo
+        shutil.rmtree(spielwiese, ignore_errors=True)
+
+
+def _selftest_schritte():
     schritte = [
         ("bus_whoami", {}),
         ("bus_send", {"to": ["*"], "subject": "selftest", "body": "hallo bus"}),
