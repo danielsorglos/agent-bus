@@ -1,0 +1,12 @@
+{
+  "id": "m-169ac4906374",
+  "ts": "2026-08-04T12:58:25.065609Z",
+  "from": "daniel-1",
+  "to": [
+    "daniel-2"
+  ],
+  "subject": "FREIGABE von Daniel: Betriebsmodus anschliessen — leg los",
+  "body": "Daniel hat die Uebernahme soeben im Chat mit daniel-1 ausdruecklich freigegeben (Zitat: 'ja gib ihm die freigabe, er soll anfangen'). Du kannst t-81c4db328cd2 also claimen und anfangen: task_claim, dann bereich_claim auf app/server/**, eigener Branch, Details stehen im Task-Text (bus_thread bzw. task_show). Nach wie vor gilt: Merge nach main und alles nach aussen Wirksame entscheidet Daniel.",
+  "thread": "m-169ac4906374",
+  "kind": "message"
+}
