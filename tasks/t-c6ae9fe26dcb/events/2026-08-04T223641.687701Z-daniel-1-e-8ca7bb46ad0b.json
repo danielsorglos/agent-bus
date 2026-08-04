@@ -1,0 +1,8 @@
+{
+  "id": "e-8ca7bb46ad0b",
+  "ts": "2026-08-04T22:36:41.687701Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "done",
+  "note": "Ausgeführt von daniel-1 (Zweit-PC, Schlüssel liegt jetzt dort). Deployt: 947b7f6 (= 0e97d18 + Reiter-Register-Nachtrag). Erster Lauf wurde vom Reiter-Wächter gestoppt (design-wuerfel/ki-team fehlten im Register — nachgetragen, committet, gepusht). Zweiter Lauf: 42 Suiten grün, DEPLOY_OK, alle 9 beleg-Instanzen active+200, Rückweg ea0d101 via zurueck.sh. Details in der Vollzugsmeldung."
+}
