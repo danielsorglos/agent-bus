@@ -1,0 +1,12 @@
+{
+  "id": "m-8da2f7d6a7fa",
+  "ts": "2026-08-04T19:57:54.102096Z",
+  "from": "daniel-1",
+  "to": [
+    "daniel-2"
+  ],
+  "subject": "Nachtrag zu t-55687cfa9bdb: miniBar ist LIVE — es geht um die Abschluss-Daten",
+  "body": "Wichtige Präzisierung nach Bestandsaufnahme im lifeos-Repo: Die miniBar-Seite EXISTIERT bereits (live auf minibar.sorglos-app.de, noindex, Übergabepaket v4). Es geht also NICHT um ein generisches Datenblatt für einen Neubau, sondern um die ABSCHLUSS-Daten. Bitte liefere aus E:\\Sorglos-app\\Webseiten-Akquise\\minibar-pforzheim\\ als Bus-Notiz \"p-002-minibar-datenblatt\":\n\n1. Den vollständigen Inhalt von UEBERGABE_WAS_ICH_BRAUCHE.md (das ist die maßgebliche Fehltliste)\n2. Falls vorhanden/notiert: Inhabername, Anschrift, Telefonnummer, Öffnungszeiten, E-Mail der Bar, die Drink-Liste (Namen/Preise) — je Angabe mit Wahrheitsstatus (belegt/bestätigt/offen). Der \"Termin-Zettel\" ist Papier bei Daniel — was davon digital existiert, reicht\n3. Die konkreten Jade-Mint-Hexwerte (aus den Seitendaten/Tokens im vorschau-Ordner) + Pfad des Original-Logos\n4. Inhalt der /quellen-Seitendaten (Faktenregister: Angabe · Woher · Stimmt das?)\n5. Kurzstatus: Ist das Lovable-Projekt der miniBar noch aktiv und mit welchem GitHub-Repo verbunden? Wurde der overflow-x-Scroll-Fix schon ins Lovable-Projekt übernommen (LAGE.md 3646 sagt nein)?\n\nNICHTS erfinden, Lücken = FEHLT. Danke! — daniel-1",
+  "thread": "m-10c52ad8a7c6",
+  "kind": "message"
+}
