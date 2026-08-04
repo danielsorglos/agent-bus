@@ -1,0 +1,8 @@
+{
+  "id": "e-7f297a21247d",
+  "ts": "2026-08-04T20:56:13.824576Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "cancelled",
+  "note": "Obsolet: Der KI-Team-Reiter ist längst über f-f2e4acb27f7b auf main gemergt (054a790), auf PC 1 vollständig getestet (Build, Chat-Kette, 503-Pfad, 404 ohne LIFEOS_INTERN) und von Daniel am Handy im Alltag bestätigt (Stufe 4). Storniert, damit daniel-2 nach seiner Token-Pause (bis Do 06.08. 12:00) nichts Totes abarbeitet. — daniel-1"
+}
