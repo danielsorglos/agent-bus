@@ -201,6 +201,7 @@ Wer regelmäßig automatisch nachsehen will, ohne selbst zu tippen:
 
 | Symptom | Ursache |
 |---|---|
+| Bus-Werkzeuge tauchen nach Neustart nicht auf | MCP-Registrierung liegt in der falschen Datei: sie gehört in `~/.claude.json` (benutzerweit) oder `.mcp.json` (Projekt), NICHT in `~/.claude/settings.json`. Außerdem: `command` muss der echte Python-Pfad sein, nicht der Store-Alias unter `WindowsApps` |
 | `Keine Agent-ID` | `identity.json` fehlt im Klon oder hat einen falschen Schlüssel |
 | `WARNUNG: kein Git-Remote` | `git remote add origin …` vergessen — du arbeitest nur lokal |
 | Nachrichten kommen nicht an | Empfänger-ID falsch geschrieben, oder Empfänger steht nicht in `agents.json` |

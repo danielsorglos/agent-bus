@@ -97,42 +97,48 @@ if (Test-Path $registry) {
 }
 
 # --- MCP-Server registrieren -------------------------------------------------
-$eintrag = [ordered]@{
-  command = $PythonPfad
-  args    = @($ServerScript)
-  env     = [ordered]@{ BUS_REPO = $ClonePath; BUS_AGENT_ID = $AgentId }
-}
-
+# WICHTIG: Claude Code liest MCP-Server NICHT aus ~/.claude/settings.json.
+# User-weit gehoeren sie in ~/.claude.json (top-level mcpServers), projektweit
+# in eine .mcp.json im Arbeitsordner. Das hat uns zwei vergebliche Neustarts
+# gekostet — nicht wieder settings.json anfassen.
+#
+# Die JSON-Chirurgie macht Python, nicht PowerShell: ~/.claude.json ist Claude
+# Codes eigene, tief verschachtelte Zustandsdatei, und ConvertTo-Json kappt
+# Aeste jenseits von -Depth stillschweigend.
 if ($Scope -eq 'Project') {
   $ziel = Join-Path (Get-Location) '.mcp.json'
   Schritt "Registriere in $ziel (projektweit)"
-  if (Test-Path $ziel) { $conf = Get-Content $ziel -Raw | ConvertFrom-Json } else { $conf = [pscustomobject]@{} }
-  if (-not $conf.PSObject.Properties['mcpServers']) {
-    $conf | Add-Member -NotePropertyName mcpServers -NotePropertyValue ([pscustomobject]@{})
-  }
 }
 else {
-  $ziel = Join-Path $env:USERPROFILE '.claude\settings.json'
-  Schritt "Registriere in $ziel (global)"
+  $ziel = Join-Path $env:USERPROFILE '.claude.json'
+  Schritt "Registriere in $ziel (benutzerweit)"
   if (Test-Path $ziel) {
-    Copy-Item $ziel "$ziel.bak" -Force
-    Write-Host "    Sicherung: $ziel.bak"
-    $conf = Get-Content $ziel -Raw | ConvertFrom-Json
-  }
-  else {
-    New-Item -ItemType Directory -Force (Split-Path $ziel) | Out-Null
-    $conf = [pscustomobject]@{}
-  }
-  if (-not $conf.PSObject.Properties['mcpServers']) {
-    $conf | Add-Member -NotePropertyName mcpServers -NotePropertyValue ([pscustomobject]@{})
+    Copy-Item $ziel "$ziel.bak-agent-bus" -Force
+    Write-Host "    Sicherung: $ziel.bak-agent-bus"
   }
 }
 
-if ($conf.mcpServers.PSObject.Properties[$ServerName]) {
-  $conf.mcpServers.PSObject.Properties.Remove($ServerName)
+$env:AB_ZIEL = $ziel; $env:AB_NAME = $ServerName; $env:AB_PY = $PythonPfad
+$env:AB_SCRIPT = $ServerScript; $env:AB_REPO = $ClonePath; $env:AB_AGENT = $AgentId
+& $PythonPfad -c @'
+import json, io, os
+ziel = os.environ["AB_ZIEL"]
+d = {}
+if os.path.isfile(ziel):
+    with io.open(ziel, encoding="utf-8-sig") as f:
+        d = json.load(f)
+d.setdefault("mcpServers", {})[os.environ["AB_NAME"]] = {
+    "type": "stdio",
+    "command": os.environ["AB_PY"],
+    "args": [os.environ["AB_SCRIPT"]],
+    "env": {"BUS_REPO": os.environ["AB_REPO"], "BUS_AGENT_ID": os.environ["AB_AGENT"]},
 }
-$conf.mcpServers | Add-Member -NotePropertyName $ServerName -NotePropertyValue ([pscustomobject]$eintrag)
-Schreibe-Utf8 $ziel ($conf | ConvertTo-Json -Depth 12)
+with io.open(ziel, "w", encoding="utf-8") as f:
+    json.dump(d, f, ensure_ascii=False, indent=2)
+print("    eingetragen:", os.environ["AB_NAME"], "->", ziel)
+'@
+if ($LASTEXITCODE -ne 0) { throw 'MCP-Registrierung fehlgeschlagen.' }
+Remove-Item Env:AB_ZIEL, Env:AB_NAME, Env:AB_PY, Env:AB_SCRIPT, Env:AB_REPO, Env:AB_AGENT -ErrorAction SilentlyContinue
 
 # --- Selbsttest --------------------------------------------------------------
 Schritt 'Selbsttest (ohne Push)'
