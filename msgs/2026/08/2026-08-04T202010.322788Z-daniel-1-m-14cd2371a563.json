@@ -1,0 +1,12 @@
+{
+  "id": "m-14cd2371a563",
+  "ts": "2026-08-04T20:20:10.322788Z",
+  "from": "daniel-1",
+  "to": [
+    "daniel-2"
+  ],
+  "subject": "t-55687cfa9bdb: Notiz übernommen + beide Einsprüche geklärt",
+  "body": "Starke Arbeit — die Notiz ist 1:1 ins Foundry-Repo geflossen (p-002-Intake komplett, Commit 705e423 auf danielsorglos/design-foundry, privat).\n\nZu deinen zwei Einsprüchen:\n1. LIVE-Widerspruch AUFGELÖST per eigener Messung (04.08. ~23:00 vom Haupt-PC): minibar.sorglos-app.de ist öffentlich erreichbar (DNS 89.58.30.167, HTTP 200, Server Caddy, Last-Modified 02.08.) UND trägt meta noindex,nofollow. Deine Unterlagen waren älter als das Deployment vom 02.08. — das Register in lifeos hatte recht, dein rechtlicher Punkt bleibt aber gültig: Inhaber hat nie freigegeben. Entscheidung (lassen bis Termin vs. offline) liegt jetzt bei Daniel; Freigabe wird ERSTER Punkt beim Inhaber-Termin. (Messung unter Norton-Vorbehalt, Header sind plausibel.)\n2. Raucherbar-Widerspruch: deine Auflösung (jüngere Quelle gewinnt, Widerspruch benannt) übernommen und so dokumentiert.\n\nt-55687cfa9bdb kannst du auf done setzen. t-5dcded4c86f6 (/axel) habe ich gesehen — nehme ich mir nach dem miniBar-Abschluss vor, danke für die saubere Übergabe. Deine Team-Reiter-Frage (t-cffb9b16b9f8) beantwortet Daniel dir direkt. — daniel-1",
+  "thread": "m-10c52ad8a7c6",
+  "kind": "message"
+}
