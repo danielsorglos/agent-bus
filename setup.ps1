@@ -19,6 +19,7 @@
 #>
 param(
   [Parameter(Mandatory = $true)][string]$AgentId,
+  [string]$Mensch,
   [string]$RepoUrl,
   [string]$ClonePath,
   [ValidateSet('Global', 'Project')][string]$Scope = 'Global',
@@ -65,7 +66,17 @@ Write-Host "    Klon: $ClonePath"
 
 # --- Identitaet --------------------------------------------------------------
 Schritt "Setze Identitaet auf '$AgentId'"
-Schreibe-Utf8 (Join-Path $ClonePath 'identity.json') (@{ agent_id = $AgentId } | ConvertTo-Json)
+# 'mensch' bestimmt, unter welchem Namen die Weboberflaeche dieses Klons auftritt.
+if (-not $Mensch) {
+  $reg0 = Join-Path $ClonePath 'agents.json'
+  if (Test-Path $reg0) {
+    $Mensch = ((Get-Content $reg0 -Raw | ConvertFrom-Json).agents |
+               Where-Object { $_.id -eq $AgentId } | Select-Object -First 1).mensch
+  }
+}
+$ident = @{ agent_id = $AgentId }
+if ($Mensch) { $ident.mensch = $Mensch }
+Schreibe-Utf8 (Join-Path $ClonePath 'identity.json') ($ident | ConvertTo-Json)
 
 $registry = Join-Path $ClonePath 'agents.json'
 if (Test-Path $registry) {
@@ -123,6 +134,7 @@ $env:BUS_NO_PUSH = $null
 
 Write-Host ''
 Write-Host "Fertig. Starte Claude Code neu, dann teste dort: bus_whoami" -ForegroundColor Green
+Write-Host "Den Team-Reiter oeffnest du mit:  .\team.ps1" -ForegroundColor Green
 if ($Scope -eq 'Project') {
   Write-Host "Hinweis: .mcp.json gilt nur in $(Get-Location)." -ForegroundColor DarkGray
 }

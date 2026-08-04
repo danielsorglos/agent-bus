@@ -23,13 +23,16 @@ alle drei gleichzeitig schreiben. Der Zustand einer Aufgabe entsteht durch
 Falten ihrer Events, nie durch Überschreiben.
 
 ```
-agents.json                        wer mitmacht
+agent_bus.py                       MCP-Server für die Claude-Instanzen
+bus_web.py + web/index.html        Team-Reiter für Menschen
+agents.json                        wer mitmacht (Agenten und Menschen)
 identity.json                      wer DIESER Klon ist (lokal, nicht im Repo)
 msgs/<jahr>/<monat>/*.json         Nachrichten
 tasks/<id>/task.json               Aufgabe
 tasks/<id>/events/*.json           Statusänderungen, Claims, Notizen
 notes/<key>.md                     geteiltes Wissen
 cursors/<agent>.json               Lesestand je Account
+presence/<agent>.json              zuletzt gesehen
 ```
 
 Ein Sonderfall ist die Aufgabenübernahme. Zwei Accounts, die gleichzeitig
@@ -94,6 +97,42 @@ landet die Registrierung in einer `.mcp.json` im jeweiligen Ordner.
 `PROTOKOLL.md` in die `CLAUDE.md` jedes Accounts aufnehmen (verweisen oder
 kopieren). Sonst kennen die Instanzen die Spielregeln nicht.
 
+## Der Team-Reiter
+
+Für Menschen gibt es eine Oberfläche im sorgl.OS-Look — App-Blau, weil es ein
+App-Feature ist; Lila bleibt der Website vorbehalten.
+
+```bash
+powershell -File "$USERPROFILE/Documents/GitHub/agent-bus/team.ps1"
+```
+
+Öffnet `http://127.0.0.1:8787`, gebunden **nur an die Loopback-Adresse** — der
+Bus ist nicht aus dem Netz erreichbar. Drei Reiter:
+
+- **Chat** — der gemeinsame Kanal. Du schreibst als Mensch mit, die Agenten
+  lesen es beim nächsten `bus_sync`. Oben zeigen Anwesenheits-Chips, wer wann
+  zuletzt am Bus war.
+- **Aufgaben** — Board nach Status. „Auftrag an alle drei" legt dieselbe Aufgabe
+  für jeden Agenten einzeln an, verbunden über eine Gruppen-ID. Klick auf eine
+  Karte öffnet Verlauf und Statuswechsel.
+- **Wissen** — die geteilten Notizen.
+
+Wer du bist, steht in `identity.json` (`"mensch": "daniel"`), lässt sich aber
+mit `-Ich mensch-edgar` überschreiben. Menschen stehen in `agents.json` mit
+`"typ": "mensch"` — dadurch ziehen Sammelaufträge sie nicht als Bearbeiter mit
+hinein.
+
+Die Oberfläche pollt alle vier Sekunden den lokalen Server und gleicht alle 20
+Sekunden mit dem Remote ab. „Jetzt abgleichen" erzwingt es sofort.
+
+### Später als echter Reiter in sorgl.OS
+
+`web/index.html` ist bewusst eine einzelne Datei ohne Framework und ohne
+externe Abhängigkeiten. Für den Einbau in die App wandert das Markup in eine
+Komponente, das CSS ist schon auf die App-Variablen abgestimmt, und die
+JSON-Endpunkte (`/api/state`, `/api/message`, `/api/auftrag`, …) bleiben
+unverändert — nur die Basis-URL ändert sich.
+
 ## Benutzung
 
 ```
@@ -103,7 +142,9 @@ bus_inbox                eigene ungelesene Nachrichten
 bus_thread               kompletter Gesprächsverlauf
 bus_mark_read            Nachrichten abhaken
 bus_whoami               wer bin ich, wer ist sonst dabei
+bus_presence             wer war wann zuletzt am Bus
 task_create              gemeinsame Aufgabe anlegen
+auftrag_create           Sammelauftrag an mehrere Bearbeiter
 task_list                Aufgaben mit Status und Besitzer
 task_show                Aufgabe im Detail samt Verlauf
 task_claim               Aufgabe exklusiv übernehmen
