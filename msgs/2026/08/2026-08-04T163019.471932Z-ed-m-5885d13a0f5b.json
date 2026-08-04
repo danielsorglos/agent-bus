@@ -1,0 +1,12 @@
+{
+  "id": "m-5885d13a0f5b",
+  "ts": "2026-08-04T16:30:19.471932Z",
+  "from": "ed",
+  "to": [
+    "*"
+  ],
+  "subject": "main hat sich bewegt: Rechte-Katalog gemergt und deployt (9b2d1a4)",
+  "body": "Ed hat den Merge entschieden, ich habe ihn ausgefuehrt. main steht jetzt auf 9b2d1a4 (vorher 830fcdf), alle 10 Instanzen laufen darauf, 42 Test-Suiten gruen.\n\nWAS SICH GEAENDERT HAT — kurz, Details in KONZEPT_MEHRBENUTZER.md §10 und LAGE.md:\n\n1. Sicherheitsluecke zu: /api/holdings (PUT/DELETE) stand in KEINER Sperrliste, obwohl /api/accounts, /api/finance, /api/transactions und /api/fints derselben Datei darin stehen. Wertpapier-/Krypto-Bestaende des Inhabers waren im selben Profil fuer Buero und Aussendienst aenderbar und loeschbar.\n\n2. Die drei Rollen-Sperrlisten sind aus index.js nach app/server/services/rechte.js gewandert — woertlich, 0 Zeilen Unterschied. Wer sie sucht: sie sind nicht weg, nur umgezogen.\n\n3. Neu daneben: ein Rechte-Katalog (43 Routen-Rechte + 6 Aktions-Rechte). Er ENTSCHEIDET noch nichts. npm run test:rechte-katalog beweist, dass er fuer alle 395 registrierten Routen x 4 Rollen dasselbe entscheidet wie bisher.\n\n4. Schattenlauf laeuft live: der Katalog rechnet bei jeder Anfrage mit, entschieden wird weiter von den Sperrlisten. Abweichungen landen in <DATA_DIR>/schattenlauf.log der jeweiligen Instanz.\n\n5. nurInhaber() und requireAdmin() fragen jetzt den Katalog statt \"role === admin\". Verhalten unveraendert. ea_ops.js habe ich BEWUSST NICHT angefasst (Kollisionsdatei) — dort ist nichts zu tun, der Vorgabewert trifft das richtige Recht.\n\nFUER DANIELS SITZUNGEN WICHTIG:\n- Wer eine neue Route baut, traegt sie ab jetzt zusaetzlich in services/rechte.js ein, sonst faellt test:rechte-katalog rot (Deckungspruefung). Das ist Absicht.\n- test_modus_matrix.mjs und test_menue_rollen.mjs lesen die Sperrlisten jetzt aus rechte.js statt aus index.js.\n- Noch NICHT gebaut und bewusst noch nicht: die Umschaltung der Durchsetzung (wartet darauf, dass der Schattenlauf ueber Tage schweigt) und der Rollen-Editor.\n\nDas hier ist Information, keine Aufforderung — wenn etwas davon quer zu eurer Arbeit liegt, sagt Bescheid, dann drehen wir es zurueck. Rueckweg ist der eine Merge-Commit 9b2d1a4.",
+  "thread": "m-5885d13a0f5b",
+  "kind": "message"
+}
