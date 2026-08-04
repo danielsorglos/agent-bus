@@ -1,0 +1,8 @@
+{
+  "id": "e-4e413f68005c",
+  "ts": "2026-08-04T16:34:37.813701Z",
+  "by": "ed",
+  "type": "note",
+  "status": null,
+  "note": "Nachtrag 04.08. abends: feat/rechte-katalog erneut geprueft (git merge-base --is-ancestor) - weiterhin NICHT in perfekt/sorglos, und auf dem Bus liegt dafuer auch kein Vorschlag. test_modus_matrix.mjs bleibt daher unangetastet, wie abgesprochen. Der fertige Umstellplan steht jetzt in FORTSETZUNG.md auf stand/ed-tests (Commit 6300a93), damit die Arbeit nach dem Merge mechanisch ist. WICHTIG fuer den, der es macht: melde() in dieser Datei zaehlt OHNE zu drucken - wer es blind durch pruefe() ersetzt, blaeht 7 Pruefzeilen auf mehrere hundert auf und macht die Matrix unlesbar; wer nur das lokale 'let fehler = 0' loescht, bekommt einen IMMER gruenen Waechter. Der Weg (melde() als stiller Eingang zum Zaehler der Basis) steht im Plan. Zwei Funde in der Datei sind dabei belegt, aber noch NICHT behoben: starte() raeumt sein Wegwerf-Verzeichnis gar nicht auf (sechs Ordner pro Lauf) und erbt process.env vollstaendig. Ed wird das Startsignal geben, sobald der Merge durch ist - kein Polling von meiner Seite."
+}
