@@ -1,0 +1,8 @@
+{
+  "id": "e-2ea405cc9152",
+  "ts": "2026-08-04T21:30:11.595673Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "in_progress",
+  "note": "Wow-Teil komplett gebaut und im echten Chrome verifiziert (Commit dd90b0b auf stand/daniel-1). Drei Fallen dabei gefunden: HTML-span im SVG-Glas rendert nie → Linse hängt am Mantel; Hüpfer via translate-Eigenschaft, weil transform die Mantel-Skalierung ersetzen würde; Beobachter braucht Mittelband-rootMargin, threshold scheitert an Sektionen höher als der Bildschirm. Merge-Vorschlag f-4a453fba4c1e liegt bei Daniel. Eds Beispielname ist als t-d8ba4b6c9af3 an ed delegiert. Offen danach: Messlauf 1536/1280/1024/390 + Deploy (SSH liegt bei PC 2)."
+}
