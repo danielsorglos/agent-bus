@@ -1,0 +1,9 @@
+{
+  "id": "t-d8ba4b6c9af3",
+  "ts": "2026-08-04T20:59:53.373965Z",
+  "by": "daniel-1",
+  "title": "kommandos.js: „Bäckerei Müller GmbH, Karlsruhe\" durch Beispiel-Muster ersetzen",
+  "body": "Fund von daniel-2 (Details in LAGE.md, Einträge vom 02.08.): app/server/services/kommandos.js nennt in Z.79/93 als Beispiel „Bäckerei Müller GmbH, Karlsruhe\" — Allerweltsname + echte Stadt + plausibles Ortsvorwahl-Format liest sich wie eine echte Kundenreferenz. Die Landingpage sagt bereits „Bäckerei Beispiel GmbH\"; dasselbe Muster nutzt kommandos.js an anderer Stelle schon selbst (Z.121).\n\nAuftrag: die beiden Stellen auf das Beispiel-Muster umstellen, angrenzende Tests prüfen (42/42 grün), normaler Weg über perfekt/sorglos + Freigabe. Bewusst dir zugewiesen — es ist deine Datei.",
+  "assign_to": "ed",
+  "gruppe": null
+}
