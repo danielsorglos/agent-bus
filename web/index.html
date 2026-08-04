@@ -413,6 +413,16 @@ const ENTSCHIEDEN = {
 
 function zeichneHeute(){
   const alle = ZUSTAND.freigaben || [];
+
+  // Der Abgleich-Takt zeichnete diesen Bereich BISHER BEI JEDEM DURCHLAUF neu — auch wenn
+  // sich an den Freigaben gar nichts geaendert hatte. Das kostete zweierlei: einen gerade
+  // getippten Kommentar (das Eingabefeld wird mit ersetzt) und, wenn ein Klick genau in den
+  // Austausch faellt, den Klick selbst — der Knopf ist dann samt seinem Listener schon aus
+  // dem Dokument geloest. Deshalb hier nur noch anfassen, wenn wirklich etwas anders ist.
+  const signatur = JSON.stringify(alle);
+  if(signatur === zeichneHeute.letzteSignatur) return;
+  zeichneHeute.letzteSignatur = signatur;
+
   const offen = alle.filter((v) => !v.entscheidung);
   const fertig = alle.filter((v) => v.entscheidung)
     .sort((a,b) => String(b.entscheidung.ts).localeCompare(String(a.entscheidung.ts)))
@@ -460,9 +470,18 @@ function zeichneHeute(){
         eingabe.focus();
         return;
       }
-      k.querySelectorAll("button").forEach((x) => x.disabled = true);
-      await schreibe("/api/entscheidung",
-                     {id: k.dataset.id, entscheidung: b.dataset.e, kommentar: kommentar || null});
+      const knoepfe = [...k.querySelectorAll("button")];
+      knoepfe.forEach((x) => x.disabled = true);
+      try{
+        await schreibe("/api/entscheidung",
+                       {id: k.dataset.id, entscheidung: b.dataset.e, kommentar: kommentar || null});
+      } finally {
+        // Klemmt die Anfrage, meldet schreibe() das zwar per alert — die Karte blieb aber
+        // fuer immer tot zurueck und sah damit aus wie erledigt, obwohl nichts entschieden
+        // wurde. Beim naechsten Versuch muss sie wieder bedienbar sein. Ging die Anfrage
+        // durch, ist diese Karte ohnehin gleich durch eine frisch gezeichnete ersetzt.
+        knoepfe.forEach((x) => x.disabled = false);
+      }
     }));
   });
 }
