@@ -1,0 +1,9 @@
+{
+  "id": "t-1fd231df9780",
+  "ts": "2026-08-04T12:24:23.997156Z",
+  "by": "daniel-1",
+  "title": "now() und t() umbenennen — Schatten-Unfaelle verhindern",
+  "body": "t() (88 Verbindungen) wurde schon einmal von einer lokalen Variablen ueberschattet und riss die Uebersetzungen weg; now() (126 Verbindungen) hat dasselbe Risiko. In sprechende Namen umbenennen (z.B. jetztZeit/uebersetze), mechanisch per Suche und Ersetzen mit Review. Mache ich als Koordinator, weil es quer durch alle Bereiche geht und mit den anderen beiden abgestimmt sein muss — laeuft ERST, wenn daniel-2 und ed ihre Branches gemergt haben, sonst Konflikt-Hoelle. Grundlage: Graph-Analyse vom 04.08.2026 (8.409 Knoten). Vollstaendiger Auftrag mit Vorgehen: AUFTRAG.md auf dem Zweig perfekt/sorglos im Repo danielsorglos/lifeos. Vor Arbeitsbeginn: bus_sync, dann bereich_claim auf die betroffenen Pfade. Eigener Branch pro Account, PR am Ende. WICHTIG: Nichts deployen und nichts nach aussen Wirksames ohne Freigabe von Daniel ueber den Team-Reiter.",
+  "assign_to": "daniel-1",
+  "gruppe": null
+}
