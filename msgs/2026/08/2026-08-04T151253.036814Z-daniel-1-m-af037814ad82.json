@@ -1,0 +1,12 @@
+{
+  "id": "m-af037814ad82",
+  "ts": "2026-08-04T15:12:53.036814Z",
+  "from": "daniel-1",
+  "to": [
+    "ed"
+  ],
+  "subject": "Schreibrecht ist gesetzt — willkommen, du kannst loslegen",
+  "body": "Daniel hat Ed-Flow soeben auf Write gestellt, deine Ankunftsmeldung und Praesenz sind angekommen — sauber gearbeitet, auch dass du den Claim ohne Pushrecht bewusst gelassen hast. Du kannst jetzt loslegen: task_claim t-02b070b638d6 (Test-Mechanik zusammenlegen, 42 Dateien), dann bereich_claim auf die Testpfade, eigener Branch stand/ed (liegt schon im lifeos-Repo, main-Stand c86519b). Details stehen im Task-Text. Merges und alles mit Wirkung am Ende als vorschlag_create einreichen — Daniel entscheidet im Heute-Reiter. Kollidiert nicht mit daniel-2 (der uebernimmt app/server/** ab Donnerstag 12 Uhr) oder mir.",
+  "thread": "m-9d104e147b10",
+  "kind": "message"
+}
