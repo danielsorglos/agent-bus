@@ -1,5 +1,8 @@
 # Wer dieser Klon ist — bleibt lokal, jeder Account hat seinen eigenen Klon.
 identity.json
 
+# Handy-Zugang: Schluessel und ntfy-Topic wirken wie Passwoerter — bleiben lokal.
+handy.json
+
 __pycache__/
 *.pyc

@@ -135,6 +135,26 @@ hinein.
 Die Oberfläche pollt alle vier Sekunden den lokalen Server und gleicht alle 20
 Sekunden mit dem Remote ab. „Jetzt abgleichen" erzwingt es sofort.
 
+### Handy & Benachrichtigung (Stufe 4)
+
+```bash
+python bus_web.py --handy
+```
+
+- **Handy-Zugang:** bindet zusätzlich ans Heimnetz. Beim Start steht ein
+  **Schlüssel-Link** in der Konsole — einmal am Handy öffnen (gleiches WLAN),
+  danach reicht die Adresse ohne Schlüssel (Cookie, ein Jahr gültig). Ohne
+  Schlüssel bekommt jede fremde Anfrage nur „Kein Zutritt". Die
+  Windows-Firewall fragt beim ersten Start — „Zulassen" für private Netzwerke.
+  Am Handy „Zum Startbildschirm hinzufügen": die Seite ist als App installierbar.
+- **Benachrichtigung:** kommt über die kostenlose **ntfy-App** (Android/iOS,
+  kein Konto nötig). Beim Start steht das Topic in der Konsole — in der App
+  abonnieren, fertig. Gemeldet wird **nur die Anzahl** wartender Freigaben,
+  nie Titel oder Inhalte; ntfy ist ein fremder Dienst, und der Bus schickt ihm
+  deshalb nichts Verwertbares. Der Topic-Name wirkt wie ein Passwort und steht
+  darum in `handy.json` (lokal, nicht im Repo). Benachrichtigungen bleiben
+  nach dem ersten `--handy`-Start auch bei normalen Starts aktiv.
+
 ### Später als echter Reiter in sorgl.OS
 
 `web/index.html` ist bewusst eine einzelne Datei ohne Framework und ohne

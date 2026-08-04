@@ -1,0 +1,12 @@
+{
+  "name": "sorgl.OS Team",
+  "short_name": "Team",
+  "description": "Freigaben, Chat und Aufgaben der Claude-Accounts",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1526",
+  "theme_color": "#0a1526",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

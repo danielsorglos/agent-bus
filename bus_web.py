@@ -17,9 +17,12 @@ sehen die Agenten, und umgekehrt.
 import argparse
 import json
 import os
+import secrets
+import socket
 import sys
 import threading
 import time
+import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HIER = os.path.dirname(os.path.abspath(__file__))
@@ -35,6 +38,68 @@ import agent_bus as bus  # noqa: E402
 SCHLOSS = threading.RLock()
 
 ZUSTAND = {"letzter_sync": None, "sync_status": "noch nicht gelaufen", "fehler": None}
+
+# ------------------------------------------------------------- Handy (Stufe 4)
+# Der Server bleibt normalerweise auf 127.0.0.1. Mit --handy bindet er ans
+# ganze Netz — dann schuetzt ein geheimer Schluessel jede Anfrage, die nicht
+# vom eigenen Rechner kommt: einmal den Schluessel-Link am Handy oeffnen,
+# der Rest laeuft ueber ein Cookie. Benachrichtigt wird ueber ntfy.sh, aber
+# bewusst OHNE Inhalte: nur "N Freigaben warten", nie Titel oder Texte.
+
+HANDY = {"aktiv": False, "schluessel": None, "topic": None, "url": None}
+
+
+def handy_config():
+    """Liest bzw. erzeugt handy.json (lokal, steht in .gitignore)."""
+    p = os.path.join(HIER, "handy.json")
+    cfg = bus.lies_json(p, {}) or {}
+    neu = False
+    if not cfg.get("schluessel"):
+        cfg["schluessel"] = secrets.token_urlsafe(18)
+        neu = True
+    if not cfg.get("ntfy_topic"):
+        # Der Topic-Name wirkt wie ein Passwort: wer ihn kennt, kann die
+        # (inhaltslosen) Benachrichtigungen abonnieren. Darum zufaellig.
+        cfg["ntfy_topic"] = "sorglos-team-" + secrets.token_hex(6)
+        neu = True
+    if neu:
+        with open(p, "w", encoding="utf-8") as f:
+            json.dump(cfg, f, indent=2)
+    return cfg
+
+
+def lan_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))  # baut nichts auf, ermittelt nur die eigene Adresse
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except OSError:
+        return None
+
+
+def benachrichtige(anzahl):
+    """Push ans Handy. Bewusst ohne Inhalte — nur die Anzahl."""
+    if not HANDY.get("topic"):
+        return
+    try:
+        text = f"{anzahl} Freigabe(n) warten auf dich"
+        req = urllib.request.Request(
+            "https://ntfy.sh/" + HANDY["topic"],
+            data=text.encode("utf-8"),
+            headers={"Title": "sorgl.OS Team", "Priority": "high", "Tags": "bell"},
+        )
+        if HANDY.get("url"):
+            req.add_header("Click", HANDY["url"])
+        urllib.request.urlopen(req, timeout=10).close()
+    except OSError:
+        pass  # Benachrichtigung ist Komfort — sie darf nie den Sync reissen
+
+
+def offene_vorschlaege():
+    return {v for v in bus.alle_vorschlag_ids()
+            if (z := bus.vorschlag_zustand(v)) and not z.get("entscheidung")}
 
 
 def kuerze(zeile, laenge=60):
@@ -59,12 +124,17 @@ def mensch_default():
 # ------------------------------------------------------------------ Hintergrund
 
 def sync_schleife(intervall):
+    bekannte = None  # None = erster Durchlauf, fuer Altbestand nicht klingeln
     while True:
         try:
             with SCHLOSS:
                 p = bus.pull()
                 bus.melde_praesenz(rolle="mensch")
                 bus.commit_push(f"praesenz {bus.AGENT}")
+                offen = offene_vorschlaege()
+            if bekannte is not None and (offen - bekannte):
+                benachrichtige(len(offen))
+            bekannte = offen
             ZUSTAND["letzter_sync"] = bus.jetzt()
             ZUSTAND["sync_status"] = p
             ZUSTAND["fehler"] = None if p in ("ok", "lokal (kein Remote)") else p
@@ -197,6 +267,16 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, *_a):
         pass  # Konsole bleibt ruhig; Fehler kommen ueber die Oberflaeche
 
+    def _vom_eigenen_rechner(self):
+        return self.client_address[0] in ("127.0.0.1", "::1")
+
+    def _erlaubt(self):
+        """Im Handy-Modus braucht alles von aussen den Schluessel (als Cookie)."""
+        if not HANDY["aktiv"] or self._vom_eigenen_rechner():
+            return True
+        keks = self.headers.get("Cookie") or ""
+        return f"schluessel={HANDY['schluessel']}" in keks
+
     def _sende(self, status, daten=None, roh=None, typ="application/json"):
         if roh is None:
             roh = json.dumps(daten, ensure_ascii=False).encode("utf-8")
@@ -209,6 +289,23 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         pfad = self.path.split("?")[0]
+
+        # Der Schluessel-Link vom Handy: setzt das Cookie und leitet auf die
+        # Oberflaeche. Ein falscher Schluessel bekommt dieselbe knappe Antwort
+        # wie gar keiner — kein Orakel fuer Ratende.
+        if HANDY["aktiv"] and pfad.startswith("/schluessel/"):
+            if pfad == f"/schluessel/{HANDY['schluessel']}":
+                self.send_response(302)
+                self.send_header("Set-Cookie",
+                                 f"schluessel={HANDY['schluessel']}; Path=/; Max-Age=31536000; HttpOnly; SameSite=Lax")
+                self.send_header("Location", "/")
+                self.end_headers()
+                return
+            return self._sende(403, {"fehler": "Kein Zutritt."})
+
+        if not self._erlaubt():
+            return self._sende(403, {"fehler": "Kein Zutritt. Oeffne den Schluessel-Link vom Start des Servers."})
+
         if pfad.startswith("/api/"):
             try:
                 status, daten = api(pfad, {})
@@ -221,11 +318,14 @@ class Handler(BaseHTTPRequestHandler):
         if not os.path.isfile(ziel):
             return self._sende(404, {"fehler": "nicht gefunden"})
         typ = {"html": "text/html", "css": "text/css", "js": "text/javascript",
-               "svg": "image/svg+xml"}.get(datei.rsplit(".", 1)[-1], "text/plain")
+               "svg": "image/svg+xml",
+               "webmanifest": "application/manifest+json"}.get(datei.rsplit(".", 1)[-1], "text/plain")
         with open(ziel, "rb") as f:
             return self._sende(200, roh=f.read(), typ=typ)
 
     def do_POST(self):
+        if not self._erlaubt():
+            return self._sende(403, {"fehler": "Kein Zutritt."})
         laenge = int(self.headers.get("Content-Length") or 0)
         try:
             koerper = json.loads(self.rfile.read(laenge) or b"{}")
@@ -244,6 +344,8 @@ def main():
     p.add_argument("--ich", default=None, help="Eigene Mensch-ID, z.B. mensch-edgar")
     p.add_argument("--intervall", type=int, default=20, help="Sync-Takt in Sekunden")
     p.add_argument("--kein-browser", action="store_true")
+    p.add_argument("--handy", action="store_true",
+                   help="Auch im Heimnetz erreichbar (mit Schluessel-Link) statt nur auf diesem Rechner")
     args = p.parse_args()
 
     bus.setze_agent(args.ich or mensch_default())
@@ -251,11 +353,31 @@ def main():
         print(f"Ungueltige Mensch-ID '{bus.AGENT}'.")
         return 1
 
+    # Benachrichtigungen laufen, sobald handy.json existiert — also ab dem
+    # ersten --handy-Start dauerhaft, auch wenn spaeter ohne --handy gestartet wird.
+    if args.handy or os.path.isfile(os.path.join(HIER, "handy.json")):
+        cfg = handy_config()
+        HANDY["schluessel"] = cfg["schluessel"]
+        HANDY["topic"] = cfg["ntfy_topic"]
+    HANDY["aktiv"] = bool(args.handy)
+    ip = lan_ip() if args.handy else None
+    if args.handy and ip:
+        HANDY["url"] = f"http://{ip}:{args.port}"
+
     print(f"agent-bus Weboberflaeche")
     print(f"  du bist:  {bus.AGENT}")
     print(f"  repo:     {bus.REPO}")
     print(f"  remote:   {'ja' if bus.hat_remote() else 'NEIN — nur lokal'}")
     print(f"  adresse:  http://127.0.0.1:{args.port}")
+    if HANDY["aktiv"]:
+        if ip:
+            print(f"  handy:    http://{ip}:{args.port}/schluessel/{HANDY['schluessel']}")
+            print("            (einmal am Handy oeffnen — gleiches WLAN; danach reicht die Adresse ohne Schluessel)")
+        else:
+            print("  handy:    eigene Netzadresse nicht ermittelbar — ipconfig fragen")
+        print(f"  ntfy:     Topic '{HANDY['topic']}' — in der ntfy-App abonnieren fuer Freigabe-Benachrichtigungen")
+    elif HANDY["topic"]:
+        print(f"  ntfy:     Benachrichtigungen an Topic '{HANDY['topic']}' bleiben aktiv")
     print("  (Strg+C beendet)")
 
     threading.Thread(target=sync_schleife, args=(args.intervall,), daemon=True).start()
@@ -268,8 +390,11 @@ def main():
         except Exception:
             pass
 
-    # Nur an die Loopback-Adresse binden: der Bus gehoert nicht ins Netz.
-    srv = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
+    # Ohne --handy nur an die Loopback-Adresse binden: der Bus gehoert nicht
+    # ins Netz. Mit --handy schuetzt der Schluessel jede fremde Anfrage; die
+    # Windows-Firewall fragt beim ersten Start einmal nach ("Zulassen" fuer
+    # private Netzwerke).
+    srv = ThreadingHTTPServer(("0.0.0.0" if args.handy else "127.0.0.1", args.port), Handler)
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

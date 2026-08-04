@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a1526">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <title>sorgl.OS · Team</title>
 <style>
   /* App-Blau nach sorgl.OS-CSS. Lila bleibt der Website vorbehalten. */
@@ -230,6 +234,26 @@
   ::-webkit-scrollbar{width:10px; height:10px}
   ::-webkit-scrollbar-thumb{background:var(--linie); border-radius:6px}
   ::-webkit-scrollbar-track{background:transparent}
+
+  /* ------------------------------------------------- Handy (Stufe 4) */
+  @media (max-width: 640px){
+    header{padding:10px 12px; gap:10px}
+    .praesenz .chip .wann{display:none}      /* Namen reichen, die Zeit frisst Platz */
+    nav{padding:0 8px; overflow-x:auto}
+    nav button{padding:11px 12px; white-space:nowrap}
+    .heutefluss{padding:12px}
+    .fzeile input{min-width:100%; order:9}   /* Kommentar unter die Knoepfe */
+    .fvorschau{font-size:11.5px}
+    .verlauf{padding:12px}
+    .verfassen{padding:10px 12px 12px}
+    .verfassen .zeile{flex-wrap:wrap}
+    .empfaenger{max-width:none; flex:1 1 100%; order:-1; padding:9px 12px}
+    .spalten{padding:12px; gap:10px}
+    .spalte{flex:0 0 82vw}                   /* eine Spalte pro Bildschirm, seitlich wischen */
+    .notizliste{flex:0 0 150px}
+    .notizinhalt{padding:14px}
+    footer{flex-wrap:wrap; gap:8px}
+  }
 </style>
 </head>
 <body>
