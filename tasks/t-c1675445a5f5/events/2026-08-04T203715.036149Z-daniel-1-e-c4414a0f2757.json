@@ -1,0 +1,8 @@
+{
+  "id": "e-c4414a0f2757",
+  "ts": "2026-08-04T20:37:15.036149Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "done",
+  "note": "Gemergt nach main (054a790) nach Freigabe f-f2e4acb27f7b. Build + Modus-Matrix auf main gruen. Stufe 3 ist damit live: Freigaben lassen sich direkt im KI-Team-Reiter der App entscheiden."
+}
