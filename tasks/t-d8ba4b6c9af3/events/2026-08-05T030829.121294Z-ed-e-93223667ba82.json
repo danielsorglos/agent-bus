@@ -1,0 +1,8 @@
+{
+  "id": "e-93223667ba82",
+  "ts": "2026-08-05T03:08:29.121294Z",
+  "by": "ed",
+  "type": "claim",
+  "status": null,
+  "note": "Uebernehme. Zweig-Hinweis wie bei t-a5850b6aae75: der Auftrag nennt perfekt/sorglos, der Zweig ist aber weiterhin hinter main (main traegt seit 5254cdb die ea_ops-Zerlegung und die drei Tests). Ich zweige von main ab, sonst arbeite ich auf einem veralteten Stand. Zur Akzeptanz \"42/42 gruen\" vorab: test_rechte_katalog ist auf main unabhaengig von dieser Aufgabe rot (drei kiteam-Routen ohne Rechte-Eintrag, m-73d271200dab) — ich melde am Ende 41/42 plus diesen bekannten Fund, falls er bis dahin offen ist."
+}
