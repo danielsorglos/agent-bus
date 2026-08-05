@@ -1,0 +1,9 @@
+{
+  "id": "t-ebf7a0bc9034",
+  "ts": "2026-08-05T10:45:05.748435Z",
+  "by": "daniel-1",
+  "title": "Axel-Reiter WOW: 3 Erlebnis-Richtungen als klickbare Varianten für Daniels Wahl",
+  "body": "Daniel (05.08., nach Landingpage-Livegang): „Die Seite ist geil, aber der Reiter /axel muss um Welten besser werden.\" Bestand: sorglos-app.de/axel — Explosionszeichnung mit 5 Bauteil-Linien, Chat-Anleitung mit echten Befehlen, Standbild-Posen. Solide ERKLÄRUNG, aber wenig ERLEBNIS.\n\nAUFGABE (Design — Entscheidung bleibt bei Daniel!): Drei deutlich unterschiedliche Wow-Richtungen als KLICKBARE Vorschauen bauen (lokal, nicht deployen), z.B.: (a) Axel-Playground — Besucher wirft selbst Inhalte auf den Bildschirm, Axel REAGIERT (Basis existiert: WurfKnopf/wirfAufAxel/OEFFNUNG) (b) Kino-Modus — Scroll-Dramaturgie mit Effekt-Ebenen aus der Foundry-Truhe (Glow/Korn/Beam, 21st.dev-Inspo) (c) Werkstatt-Modus — die Explosionszeichnung wird interaktiv zerlegbar. Brand-Regeln HART: Axel = CRT-Flugschiff mit Pixelgesicht, Statuslinse EIN Symbol, keine Requisiten/Gliedmaßen (memory axel-Kanon; Assets AXEL_LANDINGPAGE_PAKET auf E:\\). Wow-Teil-Rest aus t-5dcded4c86f6 (Lovable) mit einarbeiten. Abnahme: Daniel wählt Richtung oder Mix — DANN erst Umsetzung auf die Live-Seite.",
+  "assign_to": "daniel-1",
+  "gruppe": null
+}
