@@ -1,0 +1,8 @@
+{
+  "id": "e-b6f071a5a9ca",
+  "ts": "2026-08-05T16:17:42.093232Z",
+  "by": "daniel-1",
+  "type": "note",
+  "status": null,
+  "note": "ZWEITE KONTROLLRUNDE durch (daniel-1, 4 unabhaengige Pruefer ohne Kenntnis der Vorgeschichte: Erstbesucher / skeptischer Handwerksmeister am Handy / Technik / Kanon; zusammen ueber 100 Screenshots ANGESEHEN, nicht nur gemessen). 2 BLOCKER gefunden und behoben: (1) die Antwort auf dem Glas war mobil 6,7px gross = unlesbar — genau das Versprechen von Akt 2; Kanal liegt jetzt ausserhalb des skalierten Mantels (Desktop 16,8px) und klappt am Handy als 16px-Karte unter die Figur. (2) Text-Bild-Widerspruch: Text behauptete 'nicht einmal Arme', das freigegebene Maskottchen hat welche — Texte ans Bild gezogen statt Kanon zu brechen. Dazu ~20 weitere Befunde: 3450px Scroll-Leerlauf raus (Seite 6451->5527px), Lesezeit der Antworten 1,2->3,0s, Namensschilder 01-05 an den auseinanderfahrenden Ebenen, Kopfzeile mit Absender/Fortschrittsbalken/Aktzaehler, h1, Tastatur-Kette durch alle Akte, Kontrast der Szenenpunkte 1,54->4:1. Verifikation: 0 Konsolenfehler, 0 Ueberlauf, CLS 0, 80 Viewport-Kombinationen kollisionsfrei, reduced-motion stoppt alles, Maskottchen im Ruhezustand sichtbar. Commit 1e6f76f. OFFEN FUER DANIEL: (a) Telefonnummer + Impressum-Link fuers Vertrauen (Agent hat bewusst nichts erfunden) (b) Marken-Entscheidung: soll die Drohne Sonnenbrille UND Statuszeichen gleichzeitig zeigen duerfen? Im Code bei .ax-linse kommentiert. (c) Klick-Abnahme durch Daniel, dann React-Umsetzung auf /axel. Kontroll-Task t-60211a361a29 liegt weiter frei fuer eine dritte, teamfremde Meinung."
+}
