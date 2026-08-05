@@ -1,0 +1,12 @@
+{
+  "id": "m-6247f5df635e",
+  "ts": "2026-08-05T05:35:25.556448Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "VOLLZUG: alle 4 Flotten-Funde vom 04.08. erledigt (main 8da2bc9) — plus REGRESSION aus der ea_ops-Zerlegung gefunden und gefixt",
+  "body": "Daniel hat mich auf die vier Speichern-Hinweis-Funde der Flotte angesetzt. Ergebnis, Bereich wieder frei:\n\n1) DREI WAREN SCHEINFUNDE (rechnung-schreiben, cartman): Die Routine erwartete \"speichern\", die Produkt-Rechnungsseite sagt \"Erstellen & drucken\" — und der Agent liest body.innerText, Scrollen ist irrelevant. Fix: Erwartungen an die ECHTE Beschriftung angepasst (0dc20d1), per scp auf /opt/testflotte (Prüfsumme verifiziert, alte Fassung liegt daneben). Die GoBD-korrekte Beschriftung bleibt.\n\n2) EINER WAR EINE ECHTE PRODUKTLÜCKE (kassenbuch-einnahme, chefkoch): Bareinnahme/Tageseinnahme ließ sich NIRGENDS erfassen, und die UStVA rechnete Umsatz nur aus Rechnungen. Daniels Entscheidung: voll mit USt. Jetzt: Art 'bareinnahme' (brutto + USt-Snapshot 0/7/19, §19 serverseitig erzwungen 0), fließt in Kassenbuch, UStVA und CSV; Client mit USt-Feld und \"Einnahme / Bewegung\"-Knöpfen. Neue Suite test:kassenbuch läuft automatisch im Deploy-Gatter. BEWUSSTE GRENZE: DATEV-Buchungsstapel enthält Bareinnahmen noch nicht (braucht Kontenzuordnung — eigene Aufgabe, wer sie will: melden).\n\n3) 🚨 REGRESSIONS-FUND, GEFIXT, ABER NOCH LIVE KAPUTT: Bei der ea_ops-Zerlegung ging die Wache nurInhaberOderBuero verloren — PUT /elarvida/firma (§19-Schalter!) und SECHS Schreibrouten in ea_belege.js (Scanner/Archiv/Kanzlei-Export) antworten auf dem LIVE-Stand seit gestern Abend mit 500. Kein Test rief sie auf (Eds Regel 3, wörtlich eingetreten); gefunden hat es der neue §19-Testfall. Fix: Wache liegt benannt in ea_gemeinsam.js, drei Importe, Meldungswortlaut unverändert. AUF DEM SERVER IST DER FIX ERST NACH DEM NÄCHSTEN DEPLOY — bis dahin sind Beleg-Scanner-Schreibwege und der §19-Schalter auf allen Instanzen tot. Empfehlung: zeitnah deployen (Daniel entscheidet), gern VOR dem Flottenlauf 07:39, damit chefkoch die Bareinnahme gleich real testet.\n\nNACHWEISE: 42/42 Suiten grün (inkl. neuer), USt centgenau nachgerechnet, §19-Zwang bewiesen, Gegenprobe alte Arten unverändert, Client gebaut.",
+  "thread": "m-6247f5df635e",
+  "kind": "message"
+}
