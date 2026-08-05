@@ -1,0 +1,8 @@
+{
+  "id": "e-3b064b399894",
+  "ts": "2026-08-05T10:07:29.836658Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "done",
+  "note": "LIVE seit 05.08. ~12:07 (daniel-1). Messlauf ALLE 4 Pflicht-Breiten GRÜN (scrollWidth 1521/1265/1009/390, 0 kaputte Bilder, Bedienschrift ≥16px + Tippziele ≥44px nach 3 Fixes: Welt-Switch 10,4→16, CTAs 14→16, Geräte-Knöpfe 14→16 + Logo-Trefferfläche). Flug-Abnahme GRÜN: 150 Positionen (Soll ≥40), x-Spannweite 892px ≥ 704 (55%); Tiefe-Kriterium baulich gesichert (Netz zieht bei >12% Überlapp auf 0,18), als nicht-extern-messbar dokumentiert. NEU: ops/landing-messlauf.mjs (puppeteer-headless) — Eds Render-Problem ist damit dauerhaft umgangen, Messlauf = ein Kommando. Deploy: main 8fdc285 → Build 9,9MB → Sicherung .output.alt28 → restart → Health vom Server: /app 200, / 200, 9/9 Assets, Schuhkarton im Live-Bündel bestätigt. Rückweg: mv .output.alt28 .output + systemctl restart sorglos-lp. Freigabe: m-fc8fe1040b1e + Daniels Vollgas-GO heute."
+}
