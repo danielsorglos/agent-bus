@@ -1,0 +1,8 @@
+{
+  "id": "e-01fa54addc2c",
+  "ts": "2026-08-05T11:00:56.030336Z",
+  "by": "daniel-1",
+  "type": "note",
+  "status": null,
+  "note": "Zwischenstand daniel-1: 3 klickbare Richtungen fertig + headless-getestet (4/4 grün, 0 JS-Fehler, kein 390px-Überlauf). Ort: design-foundry\\export\\axel-wow\\index.html. A=Playground (5 Reaktions-Knöpfe, Statuslinse/Glas/Gesicht/Drohne reagieren) · B=Kino (460vh Scroll-Dramaturgie, 4 Szenen, Filmkorn+Glow) · C=Werkstatt (Zerlege-Regler über die 5 echten Bauteil-Ebenen, Border-Beam). Axel-Kanon eingehalten (Original-Markup verbatim). WARTET AUF: Daniels Richtungs-Wahl (oder Mix) — dann React-Umsetzung auf /axel."
+}
