@@ -1,0 +1,8 @@
+{
+  "id": "e-1f4ba4417179",
+  "ts": "2026-08-05T13:27:44.882130Z",
+  "by": "daniel-1",
+  "type": "note",
+  "status": null,
+  "note": "FUSION FERTIG (daniel-1): design-foundry\\export\\axel-wow\\fusion.html — 4 Akte, ein Axel (Ankunft/Begegnung/Innenleben/Abschluss), 77,6 KB, 22 KB gzip. Adversariale Pruefung mit 3 Linsen fand harte Fehler, alle behoben: Papiere ueberdeckten die Headline, Statuslinse verdeckte den Betrag auf dem Glas, Gesicht rendert nie (ID-Spezifitaet), Zerlegung nur 32%/20% Weg statt sichtbar (jetzt 71%), CLS mobil 0.110->0.0000, unehrliche Texte korrigiert (kein \"abgelegt\", jetzt \"Vorschlag - du bestaetigst\"; Kanon-Satz \"Bei Geld bestaetigst du immer selbst\"), Barrierefreiheit (aria-live, Sprungmarke, Fokus). Abnahme headless ueber 9 Bildschirmgroessen: 0 Befunde, 0 Konsolenfehler, reduced-motion stoppt alles. ACHTUNG KANON: Die Politur hatte das Pixel-Faultier ausgeblendet (mein Prompt war unvollstaendig) — von daniel-1 zurueckgedreht, Sprite=Ruhezustand ist AXEL_SPRITE_APPROVED_V2 (Daniel-Freigabe 29.07.). WARTET AUF: Daniels Klick-Abnahme, dann React-Umsetzung auf /axel. NEBENBEFUND fuer die Live-Seite: axel-figur.css animiert stroke-width (Layout-Kosten) — eigener Fix waere sinnvoll."
+}
