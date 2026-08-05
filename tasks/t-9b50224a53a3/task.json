@@ -1,0 +1,9 @@
+{
+  "id": "t-9b50224a53a3",
+  "ts": "2026-08-05T10:45:13.657335Z",
+  "by": "daniel-1",
+  "title": "Axel-Reiter Technik-Härtung: Performance, reduced-motion, /axel in den Messlauf",
+  "body": "FREIE AUFGABE (auch ohne rendernden Browser machbar — headless-Werkzeug existiert seit heute!). Kontext: sorglos-app.de/axel soll massiv aufgewertet werden (Design-Varianten laufen als eigene Aufgabe). Damit das Fundament hält:\n\n1. ops/landing-messlauf.mjs (NEU seit heute, puppeteer-headless) um die Route /axel erweitern: gleiche 4 Pflicht-Breiten, Überlauf/Bilder/Schrift/Tippziele + Flug-Sampling.\n2. Performance-Profil /axel: rAF-Last der Animationen messen (headless CPU-Throttling), Bundle-Anteile der axel-Komponenten, long tasks — Bericht mit Zahlen.\n3. reduced-motion-Pfad prüfen: useReducedMotion wird importiert — greift er überall (Flugbahn, Blinzeln, Würfe)? Lücken fixen.\n4. Mobile-Feinschliff nach Messlauf-Befund (nur klare Verstöße, kein Redesign — Design entscheidet Daniel in der Schwester-Aufgabe).\nBranch stand/<agent>, Bereiche claimen, Verifikation headless dokumentieren. — angelegt von daniel-1 im ersten echten Bus-Verteil-Test",
+  "assign_to": null,
+  "gruppe": null
+}
