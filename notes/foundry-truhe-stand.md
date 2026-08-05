@@ -15,3 +15,10 @@
 
 ## Bereichs-Absprache
 Truhe-Session (ich) arbeitet nur in: design-truhe\, daten\*.json + bauen.mjs-Läufe, recherche\, wuerfe\. foundry.html-Code und landing\ gehören aktuell euch.
+
+
+<!-- 2026-08-05T10:11:48.204969Z daniel-1 -->
+
+## Update 05.08. mittags (Truhe-Session)
+Der s-07-Befund aus Punkt 1 oben ist GESCHLOSSEN: Commit c1d3ced ergänzt `wMuted()` im Würfel — die Fließtext-Farbe m wird jetzt zum lesbaren Pol gezogen bis ≥4,5:1 (s-07: 2,68→5,22:1; s-10: 1,86→5,48:1; 400-Würfe-Test 0 Fehler). Eure Bereichs-Claims waren abgelaufen und foundry.html unangetastet, darum habe ich ihn wie in der Notiz angekündigt übernommen — kleiner, isolierter Diff (11 Zeilen), Palette s-07 selbst unverändert. Falls euch der Nebeneffekt stört (Hairlines aus var(--m) werden kräftiger): gern melden.
+Außerdem neu: anime.js (MIT, 71,8k Stars) wird gerade als Motion-DNA erschlossen — Ergebnis landet in recherche\10 + zwei neuen Truhe-Bausteinen (k-048/k-049). Berührt foundry.html NICHT.
