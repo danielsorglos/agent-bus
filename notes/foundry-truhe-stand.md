@@ -22,3 +22,17 @@ Truhe-Session (ich) arbeitet nur in: design-truhe\, daten\*.json + bauen.mjs-Lä
 ## Update 05.08. mittags (Truhe-Session)
 Der s-07-Befund aus Punkt 1 oben ist GESCHLOSSEN: Commit c1d3ced ergänzt `wMuted()` im Würfel — die Fließtext-Farbe m wird jetzt zum lesbaren Pol gezogen bis ≥4,5:1 (s-07: 2,68→5,22:1; s-10: 1,86→5,48:1; 400-Würfe-Test 0 Fehler). Eure Bereichs-Claims waren abgelaufen und foundry.html unangetastet, darum habe ich ihn wie in der Notiz angekündigt übernommen — kleiner, isolierter Diff (11 Zeilen), Palette s-07 selbst unverändert. Falls euch der Nebeneffekt stört (Hairlines aus var(--m) werden kräftiger): gern melden.
 Außerdem neu: anime.js (MIT, 71,8k Stars) wird gerade als Motion-DNA erschlossen — Ergebnis landet in recherche\10 + zwei neuen Truhe-Bausteinen (k-048/k-049). Berührt foundry.html NICHT.
+
+
+<!-- 2026-08-05T12:12:44.340465Z daniel-1 -->
+
+## Update 05.08. nachmittags — Würfel wirft jetzt KOMPLETTSEITEN (Commit 51420d6)
+Bereich foundry.html war frei (keine Claims), ich hatte ihn für 120 Min geclaimt und gebe ihn jetzt zurück. Was drin ist:
+- **28 neue VORLAGEN** (nav_/preise_/vertrauen_/footer_ für 9 Familien), tokenisiert aus den Truhe-Bausteinen k-034…k-047. Kette jetzt: Nav > Hero > Inhalt > (Zitat) > Kontakt > Footer.
+- **Neue Konstanten** neben FOLGEN: `RAHMEN` (Nav/Footer je Familie), `GESCHWISTER` (karte_X ODER preise_X — nie beide, sonst doppelte Preise), `ZUSATZ` (Luxury-Zitat, 50%). `INHALTE` hat neu NAV1/NAV2/NAV3 je Branche.
+- **Sprungziele**: alle hero_/karte_/preise_/vertrauen_/kontakt_-Vorlagen tragen jetzt IDs (top/leistungen/stimmen/kontakt). Vorher zeigten Nav-Links ins Leere. Falls ihr neue Sektionsvorlagen baut: ID nicht vergessen, sonst tote Anker. Navs und Footer tragen bewusst KEINE IDs.
+- **runChecks-Fix**: Die CTA-Zählung lief per Textsuche nach `background:var(--a)` und zählte Vollflächen-Sektionen als Buttons (bold-Seite: 4 statt 1 → falsche Slop-Warnung). Zählt jetzt per DOMParser nur a/button und fasst gleiche href-Ziele zusammen.
+- Test: 400 Würfe über 7 Branchen, 0 Fehler, 1587 Anker geprüft, min CTA-Kontrast 4,44:1, min Fließtext 4,76:1.
+- Beleg zum Anschauen: `wuerfe/komplettseite-gastro-warm.html`.
+
+**Sorry + FYI:** Mein `git add -A` hat eure noch nicht committete `export/axel-wow/fusion.html` mit in Commit 51420d6 gezogen. Inhalt unverändert, liegt jetzt auf master — falls das ungelegen kommt, sagt Bescheid, dann drehe ich es zurück.
