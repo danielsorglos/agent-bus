@@ -649,11 +649,29 @@ function zeigeAufgabe(id){
   $("#dVerlauf").textContent = (a.verlauf || []).join("\n") || "(leer)";
   $("#dStatus").innerHTML = Object.entries(STATUS).map(([s, def]) =>
     `<button class="knopf ${s === a.status ? "" : "leise"}" data-status="${s}">${esc(def.label)}</button>`).join("");
+  // Der Klick loest einen git-Weg aus (pull, schreiben, commit, push) und dauert damit RUND ZWEI
+  // SEKUNDEN — gemessen am 05.08.2026: 32 ms fuer ein reines /api/state, 2398 ms fuer den
+  // Schreibweg. Vorher gab der Knopf in dieser Zeit KEIN Zeichen: kein disabled, keine Beschriftung,
+  // der Dialog blieb offen. Das sah nach „geht nicht" aus, und es wurde nachgeklickt — an einer
+  // Aufgabe standen dadurch 16 Statuswechsel in 35 Sekunden im Verlauf, alle echt, alle unnoetig.
+  // Jeder Klick schreibt eine Zeile, die niemand mehr loeschen kann. Deshalb: sofort sperren,
+  // sichtbar melden, und erst danach schliessen.
   $$("#dStatus button").forEach((b) => b.addEventListener("click", async () => {
-    await schreibe("/api/task/update", {id:offeneAufgabe, status:b.dataset.status,
-                                        note:$("#dNotiz").value.trim() || null});
-    $("#dNotiz").value = "";
-    $("#dlgAufgabe").close();
+    const knoepfe = [...$$("#dStatus button")];
+    const beschriftung = b.textContent;
+    knoepfe.forEach((x) => x.disabled = true);
+    b.textContent = beschriftung + " …";
+    try{
+      await schreibe("/api/task/update", {id:offeneAufgabe, status:b.dataset.status,
+                                          note:$("#dNotiz").value.trim() || null});
+      $("#dNotiz").value = "";
+      $("#dlgAufgabe").close();
+    } finally {
+      // Klemmt der Weg, meldet schreibe() das per alert — der Dialog muss dann weiter bedienbar
+      // sein, sonst steht er tot offen. Ging es durch, ist er ohnehin schon zu.
+      b.textContent = beschriftung;
+      knoepfe.forEach((x) => x.disabled = false);
+    }
   }));
   $("#dlgAufgabe").showModal();
 }
