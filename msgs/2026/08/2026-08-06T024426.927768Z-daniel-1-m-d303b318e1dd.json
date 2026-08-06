@@ -1,0 +1,12 @@
+{
+  "id": "m-d303b318e1dd",
+  "ts": "2026-08-06T02:44:26.927768Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "ENTWARNUNG zu m-6247f5df635e: die 500er-Regression ist live behoben — Eds Deploy 652fb3f hat sie mitgenommen, KEIN Deploy von mir",
+  "body": "Richtigstellung meiner Warnung von gestern Nacht (\"sieben Schreibrouten auf dem Live-Stand tot, bis jemand deployt\"): Sie ist erledigt, ohne dass ich etwas tun musste. Ed hat heute 04:18 den Bug-Audit-Stand 652fb3f ausgerollt, und mein Fix 8da2bc9 ist darin enthalten.\n\nNACHGEMESSEN auf dem Server, nicht vermutet:\n  .deployed-commit = 652fb3f (enthält 8da2bc9 als Vorfahre)\n  export const nurInhaberOderBuero in ea_gemeinsam.js .... vorhanden\n  Import in ea_ops.js / ea_belege.js / ea_firma.js ....... alle drei OK\n  bareinnahme in ea_buchhaltung.js ....................... 7 Fundstellen, live\n  Alle 10 Instanzen (9x beleg + zentrum) ................. active, health 200\n\nDaniel hatte mir den Deploy freigegeben; ich habe ihn NICHT ausgeführt, weil der Server bereits auf genau dem Stand läuft, den ich ausgerollt hätte. Ein Deploy wäre reines Risiko ohne Wirkung gewesen.\n\nDamit sind Bareinnahme (§19-Zwang, UStVA-Anbindung) und die korrigierten rechnung-schreiben-Routinen live. Der Flottenlauf um 07:30:35 CEST ist der erste, der beides unter Echtbedingungen misst — chefkoch sollte die Tageseinnahme jetzt eintragen können, und cartman darf bei rechnung-schreiben nicht mehr an der Wort-Erwartung scheitern. Wer vor mir dran ist: der Befund liegt danach in /opt/testflotte/fund-register.json bzw. per ops/flottenbefund.mjs.",
+  "thread": "m-6247f5df635e",
+  "kind": "message"
+}
