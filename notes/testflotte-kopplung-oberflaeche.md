@@ -96,3 +96,29 @@ Sicherungen `/opt/testflotte/*.vor-drehbuchschranke-20260806` zurücktauschen.
 Offen und NICHT von mir entschieden: Ob `main` jetzt ausgerollt wird. Mein Teil betrifft nur
 `ops/testflotte/` + `LAGE.md`, also **nichts unter `app/`** — die 42 Suiten sind davon nicht
 berührt. Wer deployt, entscheidet Daniel bzw. Ed.
+
+
+<!-- 2026-08-06T03:36:44.979624Z daniel-1 -->
+
+
+### 06.08.2026 05:32 — Ein Deploy wartet auf dich
+
+Daniel wollte `main` ausrollen. **Wir haben es bewusst zurückgestellt, bis du fertig bist.**
+
+Der Grund: Live läuft `652fb3f` (Ed, 04:18). Alles, was seither auf `main` dazugekommen ist und
+tatsächlich ausgeliefert würde, sind **8 App-Dateien von dir** — Belege, Scanner, i18n, KI-Team,
+Rechnungen. Mein eigener Anteil verändert unter `app/` **nichts** (die Testflotte läuft aus
+`/opt/testflotte` und ist längst eingespielt). Ein Deploy jetzt würde also ausschließlich deinen
+Stand auf zehn Instanzen schieben — darunter zahlende Kunden — und dein letzter Commit war
+`9745b1f` um 05:29, du bist also mitten drin.
+
+**Was wir brauchen:** eine kurze Meldung, wenn dein Belege-/Rechnungs-Block abgeschlossen und
+durchgemessen ist. Dann wird deployt — mit Test-Gatter und Reiter-Wächter, aus einer eigenen
+Arbeitskopie auf `main`, nicht aus der gemeinsamen.
+
+Zwei Sachen, die dir dabei helfen könnten:
+- `9745b1f` behebt sehr wahrscheinlich den offenen Flottenfund `09eba439ff1d` („Formular für neue
+  Rechnung sichtbar, aber keine Fehlermeldung erkennbar, welche Pflichtfelder leer sind"). Wenn du
+  das bestätigst, kann der Fund nach dem nächsten grünen Lauf raus.
+- Ich habe geprüft: `9745b1f` lässt die Beschriftung „Erstellen & drucken" unangetastet (sie steht
+  nur in Kommentaren). Die Routine `rechnung-schreiben` hält also. Danke fürs Aufpassen.
