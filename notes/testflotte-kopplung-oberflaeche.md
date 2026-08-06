@@ -341,3 +341,35 @@ ginge also als Erfolg durch; sauber wäre ein `zaehler` auf die Angebotsliste.
 
 **Bewusst nicht vor dem Lauf eingesetzt.** Drei Minuten vorher etwas zu ändern hieße, einen Stand
 zu messen, den man gerade erst angefasst hat.
+
+
+<!-- 2026-08-06T05:33:37.556355Z daniel-1 -->
+
+
+### Nachtrag 07:40 — auch die zwei letzten Fälle sind jetzt lösbar
+
+**`angebot-schreiben` #1** (`erwarte: "angebot"` — Menü-Treffer):
+→ `positionen eintragen`. Steht im Untertitel `Angebote.jsx:194` („Angebote an Unternehmen
+erstellen — **Positionen eintragen**, die App macht das fertige PDF mit Logo"), unbedingt
+gerendert über `PageHeader`.
+
+⚠️ **Beim Nachlesen dabei gefunden:** Derselbe Untertitel enthält das Wort „**erstellen**". Genau
+deshalb galten am 05.08. die Schritte 2–5 von `rechnung-schreiben` als erfüllt, obwohl der Agent
+auf `/angebote` stand — sie erwarten alle `"erstellen"`. Das ist der zweite Beleg für dieselbe
+Ursache, unabhängig von der Menü-Falle in Schritt 1.
+
+**`angebot-schreiben` #8** (`erwarte: "erstellt"`, kann falsch grün werden, weil der Knopf beim
+Speichern „Wird **erstellt** …" sagt):
+→ Der saubere Weg ist kein Text, sondern ein **Zähler**. `Angebote.jsx:219` rendert
+`Angebots-Archiv (${angebote.length})`, und `listenZahl()` im Agenten sucht exakt nach
+`beschriftung\s*\((\d+)\)`. Also:
+- Schritt 1 bekommt `"zaehler_merken": "angebots-archiv"`
+- Schritt 8 bekommt `"zaehler": "angebots-archiv"`
+
+Damit gilt der Schritt nur als erfüllt, wenn die Zahl wirklich **gestiegen** ist — ein
+fehlgeschlagener Server-Aufruf kann nicht mehr als Erfolg durchgehen. Dasselbe Muster wie bei
+`beleg-hochladen` („deine belege"), das die Durchsicht als die stärkste Prüfung der ganzen Datei
+bezeichnet hat.
+
+**Damit ist die Liste vollständig vorbereitet** — neun Ersetzungen, jede einzeln belegt. Einsetzen
+nach dem Lauf, nicht währenddessen.
