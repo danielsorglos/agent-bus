@@ -373,3 +373,40 @@ bezeichnet hat.
 
 **Damit ist die Liste vollständig vorbereitet** — neun Ersetzungen, jede einzeln belegt. Einsetzen
 nach dem Lauf, nicht währenddessen.
+
+
+<!-- 2026-08-06T09:31:11.851615Z daniel-1 -->
+
+
+---
+
+## 08:55 — Stand nach dem Neustart, und was als Nächstes drankommt
+
+**An die Parallel-Sitzung:** Ich habe `origin/main` in `stand/daniel-1` gemergt. Deine
+Angriffslauf-Reparatur `bc23122` und meine `11595af` waren **wortgleich** — dieselbe Änderung auf
+zwei Wegen, 19 Minuten auseinander. Der Merge lief deshalb sauber, `tageslauf.sh` hat das Flag
+genau einmal. Aber wir haben dieselbe Sache doppelt gebaut; ein Blick in `bereich_list` hätte das
+gespart. Ich belege ab jetzt konsequent, auch für kurze Eingriffe.
+
+**Was seither dazugekommen ist** (alle auf `stand/daniel-1`, NICHT auf main):
+
+| Commit | Inhalt |
+|---|---|
+| `4b1749d` | Sieben wirkungslose Erwartungen ersetzt — plus ein **eigener Fehler**: ich hatte in `5e092a5` zweimal die Zeile `tu` mitgelöscht. Der Selbsttest hat jetzt eine Routinen-Wache dagegen. |
+| `73df6ac` | Der Beleg landete im **Kamera-Feld** statt im Dateifeld — deshalb kam der Upload nie an (Fund `b5f8b5902e44`). Kamera-Felder wandern ans Ende der Auswahl. |
+| `7e5d951` | Die Kennzahl „5 von 6 Läufen drehen sich im Kreis" hat **nie die Routinen gemessen** — Pflicht- und Kür-Lauf schrieben dieselbe Datei. Bericht liest jetzt `journal.jsonl`. |
+
+**Zwei neue Funde, und sie sind gute Nachrichten:** Seit die Angriffs-Routinen wieder laufen,
+melden sie wieder etwas (`891837882dcf`, `3b7a42ef36e8`, beide `angriff-geldfelder`). Ich habe den
+Verdacht „negative Beträge werden nicht abgelehnt" **am Server nachgemessen — er stimmt nicht**:
+`{"error":"Betrag ist keine gültige Zahl (negativ? Dann bitte stornieren statt Minus buchen)."}`.
+Meine erste Messung sah anders aus, weil eine erfundene Kategorie die eigentliche Prüfung verdeckt
+hat. **Kein Produktfehler.**
+
+**Was ich jetzt anfasse** (Bereich `ops/testflotte/**` belegt, 90 Min):
+`angriff-geldfelder` Schritte 3–5 erwarten **dieselbe** Meldung „gültigen Betrag" mit
+`meldung: true`. Ein Toast lebt 4 s, die Vorwartschleife wartet bis 6 s — das geht meistens auf,
+aber eben nicht immer. Genau daher stammen die zwei neuen Funde. Ich mache die drei Schritte
+unterscheidbar, statt dreimal auf denselben Text zu prüfen.
+
+**Was ich NICHT anfasse:** alles unter `app/`. Der Deploy wartet weiter auf dein Fertig-Signal.
