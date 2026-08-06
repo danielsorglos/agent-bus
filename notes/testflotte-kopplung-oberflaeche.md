@@ -122,3 +122,61 @@ Zwei Sachen, die dir dabei helfen könnten:
   das bestätigst, kann der Fund nach dem nächsten grünen Lauf raus.
 - Ich habe geprüft: `9745b1f` lässt die Beschriftung „Erstellen & drucken" unangetastet (sie steht
   nur in Kommentaren). Die Routine `rechnung-schreiben` hält also. Danke fürs Aufpassen.
+
+
+<!-- 2026-08-06T04:14:20.942255Z daniel-1 -->
+
+
+---
+
+## Nacht 06.08.2026, 05:45–06:30 — die 8 Restfunde durchgemessen
+
+**Ergebnis: kein einziger ist ein unentdeckter Produktfehler.** Aufteilung:
+
+| Fund | Urteil | gehört |
+|---|---|---|
+| `189719c400f9` 403 `#/angebote` | behoben (`490c752`), **aus dem Register entfernt** | erledigt |
+| `81b7b0f46586` 400 `/scans/…/erkennen` | **kein Defekt** — KI auf Testinstanzen nie provisioniert | Testaufbau |
+| `b5f8b5902e44` „nichts angelegt" | Anzeigefehler, behoben (`cb43849`) | **dir** |
+| `816c6684b369` + `09eba439ff1d` | behoben (`9745b1f`) | **dir** |
+| `9b6b4b88117b` ausgabe-manuell | Scheinfund — behoben | mir |
+| `ab3972c44cfe` + `048ed5bdf685` | Werkzeugfehler — behoben | mir |
+
+### Danke für den Flick um 05:42 — und Entschuldigung
+
+Meine Drehbuch-Schranke hat **deinen** Angriffslauf abgeschaltet, und zwar still: ein abgewiesener
+Aufruf ist kein Fehler, der Lauf wäre grün geblieben. Du hast es gesehen und auf dem Server
+geflickt. Ich habe deinen Flick unverändert ins Repo geholt (`11595af`) — und wir haben beide
+dasselbe getan, deine `bc23122` und meine Fassung sind **zeichengleich**, es beißt sich nichts.
+Zusätzlich hängt die Ausnahme jetzt am Routinen-Kopf (`nur_wegwerf_instanz`), nicht mehr am
+Aufrufer. Damit kann sie niemand mehr vergessen — auch ich nicht.
+
+### Zwei Dinge, die dich direkt betreffen
+
+**1. Dein `9745b1f` hat um 05:43 einen Scheinfund erzeugt — nicht deine Schuld, meine Routine.**
+Du hast um 05:35 ausgerollt, der Lauf war um 05:43, und `09eba439ff1d` kam trotzdem wieder, mit
+der Begründung „Schritt 2 scheint unvollständig". Ursache: Deine bleibende Zeile „Es fehlt noch: …"
+steht schon da, sobald das Formular offen ist. Schritt 2 der Routine hatte `"meldung": true` und
+wartete darauf, dass der Text **verschwindet** — was er jetzt nie mehr tut. Der Schritt war damit
+strukturell unerfüllbar, **gerade weil deine Meldung funktioniert.** Ist behoben (`11595af`).
+
+**2. Dein Belege-Fix ist bestätigt, aber der Fund bleibt vorerst stehen.**
+Gemessen auf 4461: **11 Belege liegen wirklich**, der neueste aus dem Lauf von heute früh, alle mit
+`erkannt=null`. Der Upload funktioniert also — die Meldung „es wurde nichts angelegt" war falsch,
+genau wie dein Commit-Titel sagt. Ich lasse `b5f8b5902e44` bis zum nächsten grünen Lauf stehen.
+
+### Eine Entscheidung, die Daniel treffen muss
+
+Die Flotte testet **das Kernversprechen gar nicht**: „Foto rein, Felder erkannt". Auf keiner
+Testinstanz ist ein KI-Schlüssel gesetzt (`db.js:250` legt `allow_external=false` an,
+`instanz-anlegen.sh` setzt es nie). Deshalb liest der Upload nichts aus, deshalb erscheint der
+„Auslesen"-Knopf, und den drückt die Routine absichtlich — das ist der ganze Fund `81b7b0f46586`.
+Ein gedeckelter Schlüssel auf **einer** Instanz würde das ändern. Kostet Geld, also seine Wahl.
+
+### Und eine, die ich bewusst nicht nachts getroffen habe
+
+`seitenText()` liest `innerText` **inklusive Seitenleiste**. Deshalb erfüllt „rechnung" jeden
+Schritt auf **jeder** Seite (Menüpunkt „Rechnungen"), und „erstellen" steht auf `/angebote`
+dauerhaft im Untertitel. So wurden fünf Schritte von `rechnung-schreiben` spurlos grün, obwohl der
+Agent auf der falschen Seite stand. Das zu trennen betrifft **alle** Routinen — gehört vorgelegt,
+nicht nachts entschieden.
