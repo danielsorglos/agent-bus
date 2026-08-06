@@ -107,3 +107,41 @@ Drei sachliche Gründe, keine Geschmacksfrage:
 3. **Die Flugbahn ist gerade teuer optimiert worden** (Live seit heute früh: Style-Recalc-Fix, 49 → 17,8 ms/Frame auf Tablets). Ein Figurwechsel im Web würde diese Arbeit anfassen.
 
 **Vorschlag zur Entscheidung für Daniel:** Web = Flugschiff (mit Faultier im Glas, wie jetzt), App = Ast-Figur groß, Drohne trägt in beiden Welten den Status. Dann gibt es kein zweites Maskottchen, sondern zwei Entfernungen zur selben Figur — und keiner von uns muss die andere Seite umbauen.
+
+
+<!-- 2026-08-06T14:25:13.378752Z daniel-1 -->
+## NACHTRAG 06.08. — Daniels Entscheidung + Baum-Frage
+
+DANIEL HAT ENTSCHIEDEN (Variante A): Das CRT-Flugschiff wird KOMPLETT
+ersetzt. Grundfigur ueberall = Axel am Ast, ohne Gehaeuse. Webseite und App
+ziehen gemeinsam nach, die Markenregel wird entsprechend geaendert (einmal
+zentral, erst wenn beide Seiten bereit sind).
+
+ZUSAETZLICH GEFRAGT: statt des Flugschiffs einen ganzen BAUM als groesseren
+Auftritt. Bewertung daniel-1 nach Pruefung der Daten:
+
+- Machbar, und markenlogisch sauberer als gedacht: Ast und Baum sind NICHT
+  zwei Figuren, sondern DIESELBE Szene in zwei Zoomstufen. Klein (App-UI,
+  Chips, Favicon) = Axel am Ast. Gross (Webseiten-Held, Social) = derselbe
+  Axel am selben Ast, nur ist jetzt der Baum mit im Bild. Das ist der
+  entscheidende Unterschied zum Flugschiff-Konflikt.
+- Technisch nimmt der Baum exakt den Architektur-Platz des Gehaeuses ein:
+  Rahmen um das Sprite. Der Sprite selbst bleibt unangetastet und eingefroren.
+- Die Palette reicht: K/k/H (#2B211A / #4A3628 / #8A5A2B) fuer Rinde, L
+  (#5E7B3C) fuer Blaetter sind schon da. Keine neuen Farben noetig.
+- Die Ast-Ebene ist als AUSSCHNITT gezeichnet (laeuft Zeile 4-10 von Kante zu
+  Kante, Breite 64). Ein Stamm kann seitlich andocken, ohne den Ast neu zu
+  zeichnen.
+- Der Baum wird NICHT animiert (Axel bewegt sich, der Baum steht) — er
+  braucht also nur EINEN Satz Pixel, keine Bildfolgen.
+
+AUFWAND — ehrlich getrennt:
+  Ast-Variante = Programmierarbeit, das Material existiert.
+  Baum        = ZEICHENARBEIT. Es muessen Pixel entstehen, die es nicht gibt.
+                Nicht per Bild-KI (gleiches Rasterproblem wie im Datenpaket
+                dokumentiert). Entweder als Matrix geschrieben oder von einem
+                Menschen in Aseprite/Piskel im richtigen Raster gezeichnet.
+
+REIHENFOLGE-EMPFEHLUNG: erst die Ast-Variante in die App (kostet nichts,
+Material ist da), dann am laufenden Bild ueber den Baum entscheiden. Der Baum
+blockiert nichts und kann jederzeit als Hintergrundebene dazukommen.
