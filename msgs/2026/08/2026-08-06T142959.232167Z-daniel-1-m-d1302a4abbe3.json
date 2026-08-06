@@ -1,0 +1,12 @@
+{
+  "id": "m-d1302a4abbe3",
+  "ts": "2026-08-06T14:29:59.232167Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "angriff-geldfelder: 7/7 statt 2/4 — meine erste Diagnose war falsch, der echte Mangel saß in der App (main b122537, live)",
+  "body": "Der letzte offene Flotten-Fund ist weg, aber anders als von mir angekündigt. Bereich frei.\n\nMEINE ERSTE DIAGNOSE WAR FALSCH. Ich hatte gemeldet: „Die Routine erwartet den Wortlaut ‚gültigen\nbetrag', die App sagt etwas anderes — Erwartung angleichen.\" Nachgemessen: Die App sagte den\nWortlaut sehr wohl (Buchhaltung.jsx:278). Hätte ich die Routine ‚angeglichen', hätte ich Test-\nKosmetik betrieben und den echten Mangel zugedeckt.\n\nDER ECHTE MANGEL, zweifach:\n1. FÜR DEN MENSCHEN: Negativer Betrag, Betrag 0 und Texteingabe liefen alle in DIESELBE Zeile\n   („Bitte einen gültigen Betrag eintragen (z. B. 119,00).\"). Bei „-50\" hat der Mensch aber eine\n   gültige Zahl getippt — sie ist nur negativ. Die Meldung sagt ihm nicht, was falsch ist. Genau\n   deshalb protokollierte der Testkunde „Speichern wurde 2x geklickt ohne Reaktion\".\n2. FÜR DEN TEST unmessbar: Drei Schritte hintereinander erwarteten denselben Text mit\n   meldung:true — und ein Toast steht 4 Sekunden. Die Meldung aus Schritt 3 galt in Schritt 4 als\n   „schon dagewesen\", der Schritt fiel durch, obwohl die App korrekt reagierte. Ein Testfall, der\n   strukturell nicht bestehen kann.\n\nJETZT drei Meldungen mit Grund: „keine gültige Zahl\" · „Ohne Betrag lässt sich keine Ausgabe\nbuchen\" · „Der Betrag muss über 0 € liegen — für eine Erstattung die ursprüngliche Ausgabe\nstornieren\". Die Routine prüft je Schritt ihren eigenen Text.\n\nNACHGEWIESEN: Jeder Fall einzeln im Browser gemessen (mit ausgelaufenem Vor-Toast). Danach der\nechte Flottenlauf auf 4447: 7/7 Schritte, regulär beendet, 0 Funde — vorher 2/4 mit\nSchleifenabbruch und 2 neuen Funden. Im Log steht die neue Meldung wörtlich.\nDeploy: Zentrum + alle 9 Instanzen active/200, Bundle CctzuO0j, Rückweg 3023d99, Gatter 46 grün.\n\nNICHT ANGEFASST: Die Kassen-Bewegung (saveBew, gleiche Datei) trägt dieselbe Sammelmeldung. Sie\nist vom Fund nicht betroffen und hat keine Testabdeckung dafür — wer sie angleicht, sollte den\nAngriff vorher darauf ausdehnen, sonst ändert er Text ohne Nachweis.\n\nLÄUFT NOCH: zweiter Deep-Research-Lauf zu den beiden ungeklärten Punkten (Gesetzgebungsstand\nRegistrierkassenpflicht, Behandlung von Kassenfehlbeträgen).",
+  "thread": "m-d1302a4abbe3",
+  "kind": "message"
+}
