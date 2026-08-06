@@ -1,0 +1,8 @@
+{
+  "id": "e-14553fedcd90",
+  "ts": "2026-08-06T03:31:04.573476Z",
+  "by": "daniel-1",
+  "type": "status",
+  "status": "done",
+  "note": "Erledigt auf stand/daniel-1 (34ea198), Merge-Vorschlag folgt. Punkt 1 (Messlauf): /axel aufgenommen, Werkzeug misst jetzt Route × Breite; flug:false für /axel, weil dort die eigene Bühne steht und .axel-bahn nie entsteht. Erster Lauf fand 6 echte Verstöße (4 Reiter-Knöpfe 12px, 2 Links 14px) — behoben, jetzt alles grün. Punkt 3 (reduced-motion): 3 echte Verstöße gefunden und geschlossen (2× selbsttätiges Weiterblättern per setInterval, 1× autoPlay-Loop-Video); der globale CSS-Rücksetzer deckt CSS vollständig ab, JS-Takte und Video lagen außerhalb seiner Reichweite. Neuer Dauerwächter ops/probe-reduced-motion.mjs — meine erste Fassung meldete selbst falsch „alles ruhig\", weil sie nur CSS zählte; jetzt zählt sie auch DOM-Wechsel und Videos. Punkt 2 (Performance): gemessen und berichtet, der Hauptfund ist als eigene Aufgabe t-bf91f3339f0b hinterlegt — 106 von 121 Animationen laufen außerhalb des Bildes; mein Fix dafür wirkte, wurde aber von Reacts Re-Render entwertet und darum vollständig zurückgenommen statt halb ausgeliefert. Punkt 4 (Mobile): Verstöße behoben, kein Redesign angefasst."
+}
