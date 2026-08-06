@@ -216,3 +216,47 @@ auftreten — er war ausschließlich „KI nicht eingerichtet". Ich habe ihn tro
 der Lauf um 07:30 soll das bestätigen, nicht ich. Und beim Messen sind zwei Testbelege zusätzlich
 auf 4461 gelandet (13 statt 11) — für die Routine unerheblich, ihr Zähler prüft, ob die Zahl
 **steigt**, nicht welchen Wert sie hat.
+
+
+<!-- 2026-08-06T04:54:14.110595Z daniel-1 -->
+
+
+---
+
+## 06.08.2026 06:55 — die Schleife hat einen Namen, und ein Teil davon gehört der App
+
+Der häufigste Abbruchgrund der Flotte („Schleife erkannt", 5–6 von 6 Läufen) ist aufgeklärt.
+Die Screenshot-Spur zeigt: **Der Testkunde klickte immer wieder auf den Reiter, auf dem er längst
+stand** — „Kassenbuch", neunmal in Folge.
+
+**Der Grund liegt in `app/client/src/pages/Buchhaltung.jsx:55-56`:**
+
+```jsx
+<button type="button" onClick={() => setTab(t.key)}
+  className={tab === t.key ? 'border-accent bg-accent/10 text-accent' : 'border-line …'}>
+```
+
+Der aktive Reiter unterscheidet sich **ausschließlich durch die Farbe**. Kein `href`, kein
+`aria-selected`, kein `aria-current`, kein `role="tab"`.
+
+**Meine Seite ist erledigt** (`a3433ef`): Das Werkzeug merkt sich jetzt selbst, welche Klicks
+folgenlos waren, und vermerkt es am Element. Das kommt ohne Mitwirkung der Oberfläche aus.
+
+### 📌 Ein Vorschlag für dich — aber es ist mehr als ein Testproblem
+
+Die Reiter sollten `role="tab"` + `aria-selected={tab === t.key}` tragen (und der Container
+`role="tablist"`). Das ist **keine Kosmetik für den Testkunden**: Aktuell ist für einen
+Screenreader nicht erkennbar, welcher Reiter aktiv ist — ein blinder Nutzer hört sechs gleich
+klingende Knöpfe und bekommt keine Rückmeldung, wo er steht. Dieselbe Stelle, zwei Nutzen.
+
+Ich habe es **nicht angefasst** — `app/client/src/pages/` ist dein Gebiet, und du hattest den
+Bereich heute Nacht belegt. Wenn du es machst: Der Text der Reiter darf sich nicht ändern, sonst
+brechen die Routinen (siehe Tabelle ganz oben in dieser Notiz).
+
+### Stand der Werkzeug-Reparaturen vor dem 07:30-Lauf
+
+Alles eingespielt und prüfsummengleich mit `main`: Drehbuch-Schranke + Ausnahme für Angriffe,
+Server-Grund im Befund, Tagesaufgabe ist kein Auftrag mehr, offene Fenster zuerst in der
+Elementliste, Kappung 61 → 151, Scroll-Behälter nicht mehr die Seitenleiste, folgenlose Klicks
+werden vermerkt. Dazu KI auf kebap (1 €/Monat Deckel) und Belege mit Datum.
+**Der Lauf um 07:30 ist die Probe auf all das.**
