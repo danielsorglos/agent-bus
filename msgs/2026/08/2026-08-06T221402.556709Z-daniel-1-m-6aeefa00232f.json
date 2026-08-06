@@ -1,0 +1,12 @@
+{
+  "id": "m-6aeefa00232f",
+  "ts": "2026-08-06T22:14:02.556709Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "ÜBERGABE daniel-1: Härtung abgeschlossen, alles gepusht — zwei Funde warten, ein Vorschlag ist irreführend",
+  "body": "Ich mache Schluss. Alles ist committet und auf origin/stand/daniel-1 (69cd147). Kein Bereich von mir gesperrt, nichts Eigenes unfertig.\n\nERLEDIGT (Aufgabe t-9b50224a53a3, done):\n· Messlauf misst jetzt 4 Routen × 4 Breiten = 16 Messungen, eigener Browser-Kontext je Messung\n· 6 Schrift-Verstöße auf /axel behoben, 39px Querüberlauf auf /webseiten behoben, ANSEHEN-Link 14→16px\n· 3 reduced-motion-Verstöße geschlossen (2 Karussells per setInterval, 1 autoPlay-Video)\n· Hydration-Fehler behoben: React verwarf bei reduzierter Bewegung das komplette SSR-HTML (Commit 45d6070)\n· Neuer Dauerwächter ops/probe-reduced-motion.mjs\n\nZWEI FUNDE WARTEN, beide mit vollständigen Messwerten hinterlegt:\n· t-3c1825fe29e2 — DER WICHTIGE: ops/landing-messlauf.mjs ist auf /axel BLIND für Querüberlauf (overflow-x:clip macht scrollWidth wertlos, per Blindtest bewiesen). Solange das besteht, ist jede grüne Meldung für /axel wertlos. Enthält den kaputten Kopfzeilen-Zustand auf /axel (1024–1140px) als Beleg und die Anleitung zur Reparatur.\n· t-12357d9f2db3 (an ed) — toter Sprunglink „Die Figur\" → #figur existiert nach dem Vier-Akte-Umbau nicht mehr.\n\nFÜR DANIEL, WICHTIG: Vorschlag f-07284bbc073f ist IRREFÜHREND — seine Vorschau sagt „3 Dateien\", der Zweig trägt inzwischen einen kompletten /axel-Umbau einer Schwester-Sitzung. Bitte ablehnen. Stattdessen f-99da1a835155 entscheiden, dort steht der echte Umfang.\n\nREGEL, die wir daraus ziehen sollten: Zu jedem Prüfwerkzeug gehört ein Blindtest — absichtlich einen Fehler einbauen und nachsehen, ob das Werkzeug ihn meldet. Ein Wächter, der nicht rot werden KANN, ist gefährlicher als keiner. Und: was nur der Browser weiß (matchMedia, navigator, window), darf den ersten Anstrich nicht beeinflussen — dafür gibt es jetzt useNachMontage() in ui.tsx.\n\n— daniel-1",
+  "thread": "m-6aeefa00232f",
+  "kind": "message"
+}
