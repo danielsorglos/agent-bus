@@ -1,0 +1,8 @@
+{
+  "id": "e-ac6a6e70a8b4",
+  "ts": "2026-08-06T03:03:06.872869Z",
+  "by": "daniel-1",
+  "type": "claim",
+  "status": null,
+  "note": "Übernommen nach dem Statuswechsel-Fix. Reihenfolge: (1) /axel in ops/landing-messlauf.mjs aufnehmen — das Werkzeug ist die Voraussetzung für alles andere und macht die Aufgabe auch für Ed ohne rendernden Browser machbar, (2) reduced-motion-Lücken in Flugbahn/Blinzeln/Würfen schließen, (3) Performance-Profil mit Zahlen, (4) nur klare Verstöße fixen — Design bleibt Daniels Entscheidung in der Schwester-Aufgabe."
+}
