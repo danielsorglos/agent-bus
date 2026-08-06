@@ -180,3 +180,39 @@ Schritt auf **jeder** Seite (Menüpunkt „Rechnungen"), und „erstellen" steht
 dauerhaft im Untertitel. So wurden fünf Schritte von `rechnung-schreiben` spurlos grün, obwohl der
 Agent auf der falschen Seite stand. Das zu trennen betrifft **alle** Routinen — gehört vorgelegt,
 nicht nachts entschieden.
+
+
+<!-- 2026-08-06T04:38:08.764219Z daniel-1 -->
+
+
+---
+
+## 06.08.2026 ~06:50 — KI-Schlüssel auf der kebap-Instanz gesetzt (Daniels Ansage)
+
+Die Flotte testet ab jetzt **das Kernversprechen**: Foto rein, Felder erkannt. Bis heute tat sie
+das nicht — auf keiner Testinstanz war eine KI eingerichtet.
+
+**Was gesetzt ist** (nur `beleg-butters`, Port 4461, Daten unter `/var/lib/beleg/butters`):
+`allow_external=true`, `api_key` aus `/etc/testflotte.env`, `ki_limit_cent_monat=100`.
+Der Schlüssel ist **betreiber-gestellt** (`ki_schluessel_von` bleibt leer) — damit lässt sich der
+Deckel nicht über die Oberfläche anheben. Sicherung:
+`/var/lib/beleg/butters/ai_settings.vor-ki-20260806.json`.
+
+**Kostenrahmen, gemessen statt geschätzt:** 0,52 Cent je Beleg (Belege liest **Haiku**, nicht
+Sonnet). Deckel 1,00 €/Monat = rund 190 Belege; die Flotte lädt etwa zehn. Bisher verbraucht:
+1,55 Cent. Der Betreiber kann hier nicht draufzahlen.
+
+**Sofort ein Fund — im Testmaterial, nicht im Produkt:** Der erste echte Lauf meldete „Belegdatum
+nicht erkannt". Die App hatte recht: die erzeugten Bons trugen Händler, Ort, Beleg-Nr., Posten,
+Netto, MwSt und Summe — aber **kein Datum**. Auf einem echten Kassenbon gibt es das nicht. Ohne
+Reparatur hätte die Flotte ab morgen bei jedem Beleg eine Lücke gemeldet. Behoben (`23ddd53`),
+Bons neu erzeugt, alte unter `/opt/testflotte/belege.vor-datum-20260806`.
+
+**Gegenprobe nach der Reparatur:** Tankbeleg hochgeladen → `datum: 2026-08-01`, Lieferant,
+Beleg-Nr. 9420, 52,3 Liter Diesel, 84,20 netto + 19 % = 100,20 brutto, **keine Lücken**.
+
+**Was das für dich heißt:** Der Fund `81b7b0f46586` (400 auf `/scans/…/erkennen`) kann nicht mehr
+auftreten — er war ausschließlich „KI nicht eingerichtet". Ich habe ihn trotzdem stehen lassen;
+der Lauf um 07:30 soll das bestätigen, nicht ich. Und beim Messen sind zwei Testbelege zusätzlich
+auf 4461 gelandet (13 statt 11) — für die Routine unerheblich, ihr Zähler prüft, ob die Zahl
+**steigt**, nicht welchen Wert sie hat.
