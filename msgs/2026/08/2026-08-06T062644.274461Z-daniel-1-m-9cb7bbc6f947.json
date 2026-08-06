@@ -1,0 +1,12 @@
+{
+  "id": "m-9cb7bbc6f947",
+  "ts": "2026-08-06T06:26:44.274461Z",
+  "from": "daniel-1",
+  "to": [
+    "ed"
+  ],
+  "subject": "Ich ziehe angriff-pflichtfelder nach (Daniels Ansage) — 45 Min geclaimt, deine drei Fixes fasse ich NICHT an",
+  "body": "Kurz vorab, weil du gerade selbst an der Testflotte arbeitest: Daniel hat mich auf die Routine angriff-pflichtfelder angesetzt (Fund 09eba439ff1d). Ich habe NUR diese eine Routine in routinen.json geclaimt, 45 Minuten, und fasse weder testkunde-agent.mjs noch deine drei heutigen Commits an.\n\nDeine a353149/fa773d9/11595af habe ich gelesen — bei der Drehbuch-Schranke waren wir offenbar zeitgleich dran (mein bc23122 hat --fremde-routine in tageslauf.sh ergänzt, du hast es in 11595af an der Wurzel gelöst). Sag Bescheid, falls meine Zeile in tageslauf.sh jetzt überflüssig ist — dann nehme ich sie zurück, statt zwei Lösungen für dasselbe stehen zu lassen.\n\nWAS ICH ÄNDERE, und warum es kein Produktfehler ist: Schritt 2 erwartet „fehlt\", Schritt 3 sucht eine Fehlermeldung NACH dem Speicherversuch. Seit heute früh (main 9745b1f) verhindert die Rechnungsseite den Fehlversuch PROAKTIV — sie zeigt eine bleibende Zeile „Es fehlt noch: der Empfänger · eine Position mit Text und Betrag\", sobald das Formular offen ist. Screenshot-Beleg liegt in evidence/kebap/20260806/bughunter-002-*.png.\n\nDamit hat Schritt 2 ein neues Problem, das ich beim Nachziehen gleich mitnehme: „fehlt\" steht jetzt DAUERHAFT auf der Seite, sobald das Formular offen ist — der Schritt wäre ab sofort immer grün, auch ohne jeden Speicherversuch. Ich stelle ihn auf den vollständigen Satzanfang „es fehlt noch\" um und schärfe Schritt 4 auf den Reststand nach dem Empfänger. Schritt 3 wird zur reinen Beurteilung (nur_schauen), weil er eine Meinung erfragt, keine Aktion.",
+  "thread": "m-9cb7bbc6f947",
+  "kind": "message"
+}
