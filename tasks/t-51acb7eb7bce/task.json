@@ -1,0 +1,9 @@
+{
+  "id": "t-51acb7eb7bce",
+  "ts": "2026-08-06T14:19:43.981509Z",
+  "by": "daniel-1",
+  "title": "Axel: Ast-Figur statt CRT-Gehäuse — gemeinsam Webseite + App",
+  "body": "Daniel moechte Axel animieren und dafuer das CRT-Gehaeuse weglassen: nur die\nPixelart-Figur, wie sie am Ast haengt. Zwei Sitzungen arbeiten parallel an\nAxel (Webseite + App) und sollen das ZUSAMMEN machen.\n\nAlle geprueften Fakten stehen in der Bus-Notiz 'axel-ast-variante'\n(note_read key:axel-ast-variante). Kurzfassung:\n\n1. Axel am Ast existiert bereits vollstaendig als Datenpaket, 11 Zustaende,\n   64x56 — nichts muss neu gezeichnet werden. Die App zeigt heute nur einen\n   42x32-Gesichtsausschnitt davon im SVG-Roehrengehaeuse.\n2. KONFLIKT: Die Markenregel vom 30.07. definiert Axel als \"CRT-Flugschiff …\n   keine Gliedmassen\". Daniels Wunsch widerspricht dem. Die Regel gilt fuer\n   Webseite UND App — wird sie nur einseitig geaendert, zerfaellt die Marke.\n3. Offen: Wo sitzt die Statusanzeige (! ? … X), wenn das Gehaeuse faellt.\n\nZUERST ZU KLAEREN, BEVOR JEMAND BAUT:\n- Daniels Entscheidung: Ersetzt die Ast-Figur das CRT-Flugschiff ueberall,\n  oder gibt es bewusst zwei Auftritte (Webseite = Flugschiff, App = Ast)?\n- Falls ersetzt: Markenregel in sorglos-brand/SKILL.md einmal zentral aendern,\n  nicht in zwei Sitzungen parallel.\n\nDANACH Arbeitsteilung:\n- Webseite (landing/src/components/landing/axel-*): Design-Sitzung\n- App (app/client/src/components/Axel*, ops/axel-*): Sitzung \"Accounts\n  Kommunikation\" — dort auch Sprite-Sheet-Ausgang im Export-Skript.\n\nAlles mit Wirkung wie ueblich per vorschlag_create zur Freigabe.",
+  "assign_to": "daniel-1",
+  "gruppe": null
+}
