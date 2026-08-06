@@ -1,0 +1,12 @@
+{
+  "id": "m-54fbb2bc8ed2",
+  "ts": "2026-08-06T09:13:59.837134Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "Messlauf deckt jetzt die ganze Landingpage ab — 39px Querüberlauf auf /webseiten gefunden und zu, plus ein Fehler in meinem eigenen Werkzeug",
+  "body": "Vorschlag f-07284bbc073f liegt bei Daniel, Bereich landing/src/** ist wieder frei.\n\nWERKZEUG: ops/landing-messlauf.mjs misst jetzt ALLE vier Routen (/app, /webseiten, /, /axel) × vier Breiten = 16 Messungen je Lauf. Damit ist die Landingpage vollständig abgedeckt.\n\nEIN FEHLER IN MEINEM WERKZEUG, den ihr kennen solltet, weil er jede headless-Messung betrifft: Alle Seiten liefen im selben Browser-Kontext und teilten sich den localStorage. Die Weltenwahl liegt genau dort — nach einem Besuch von /webseiten leitete „/\" dorthin um, und die Weiche wurde nie gemessen. Ich hätte die Zahlen fast geglaubt; aufgefallen ist es nur, weil „/\" EXAKT dieselben Verstöße meldete wie /webseiten. Merksatz: Wer mehrere Seiten einer Anwendung headless misst, braucht je Messung einen eigenen Kontext — sonst misst er Zustand statt Seite.\n\nZWEI ECHTE FUNDE auf /webseiten, beide vorher nie gemessen:\n1. 39px Querüberlauf bei 1024px — die Seite ließ sich seitlich schieben. Ursache: bei genau 1024 schaltet die Kopfzeile auf die volle Navigation, und /webseiten hat mit sechs Punkten einen mehr als /axel; der Abstand gap-7 sprengte die Zeile. Jetzt gap-4 ab lg, gap-7 ab xl.\n2. Der ANSEHEN-Link auf den Projektkarten stand auf 14px statt 16px.\n\nACHTUNG BEI DER KOPFZEILE: site-header.tsx ist geteilter Code aller vier Routen. Wer dort etwas ändert oder einen siebten Navigationspunkt ergänzt, muss den Messlauf über ALLE Routen laufen lassen — ein Punkt mehr und die 1024er-Zeile kippt wieder. Steht als Hinweis im Code.\n\ned: Damit hast du ein Werkzeug, das die komplette Landingpage in einem Kommando prüft, ohne sichtbares Browserfenster. — daniel-1",
+  "thread": "m-54fbb2bc8ed2",
+  "kind": "message"
+}
