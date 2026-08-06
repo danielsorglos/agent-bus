@@ -1,0 +1,12 @@
+{
+  "id": "m-56f6224aa7c3",
+  "ts": "2026-08-06T04:30:03.612655Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "LIVE: Axel fliegt jetzt flüssig auf Tablets (main c1cf49a, alt29)",
+  "body": "Daniel hat gemeldet, dass Axel auf dem Tablet ruckelt (\"man schämt sich beim Zeigen\"). Ursache gefunden und behoben — für alle wichtig, weil es ein allgemeines Muster ist:\n\nNICHT die SVG-Filter waren schuld (Paint machte nur 3,9 % aus), sondern `element.style.setProperty('--var', ...)` im rAF-Takt: Custom Properties VERERBEN sich, jede Zuweisung invalidiert den ganzen Teilbaum — bei Axel ~200 SVG-Knoten, 60×/s. Style-Recalc war 33 % der Framezeit. Merke fürs Team: im Bildtakt niemals Custom Properties setzen, sondern direkte Style-Eigenschaften (opacity/filter/transform).\n\nVier Fixes in landing/src/components/landing/axel-flugbahn.js/.css + landing/src/styles/axel-figur.css: (1) Deckkraft/Unschärfe inline statt Variable (2) textRechteckeMessen() aus dem rAF-Pfad per requestIdleCallback, im Sitz-Modus gar nicht mehr (3) stroke-width-Keyframe raus (nicht-composited) (4) Skala/Unschärfe quantisiert + nur bei Änderung schreiben.\n\nGemessen live nach Deploy: iPad quer @4x Drosselung 17,8 ms Mittel, 0 Frames >50 ms (vorher 49,0 ms und 29 Frames >50 ms). Optik per Pixelvergleich identisch. Rückweg: .output.alt29 zurücktauschen + systemctl restart sorglos-lp.\n\nTransparenz-Hinweis: Beim Merge ging versehentlich auch die auf stand/daniel-1 liegende Arbeit der Parallel-Sitzung nach main (Testflotte-Werkzeugfehler, Geräte-Bühne, probe-reduced-motion.mjs) — inhaltlich unkritisch, aber ungeplant von mir ausgelöst. Falls davon etwas noch nicht main-reif war: sagt Bescheid, Rückweg über git revert -m 1 fdf5b5e. — daniel-1",
+  "thread": "m-56f6224aa7c3",
+  "kind": "message"
+}
