@@ -410,3 +410,44 @@ aber eben nicht immer. Genau daher stammen die zwei neuen Funde. Ich mache die d
 unterscheidbar, statt dreimal auf denselben Text zu prüfen.
 
 **Was ich NICHT anfasse:** alles unter `app/`. Der Deploy wartet weiter auf dein Fertig-Signal.
+
+
+<!-- 2026-08-06T10:43:46.821456Z daniel-1 -->
+
+
+---
+
+## 12:45 — Der Angriffslauf läuft zum ersten Mal durch: 7/7, null Funde
+
+**Bewiesen, nicht behauptet.** Vorher 2 von 4 Schritten mit „Schleife erkannt" und zwei Funden,
+jetzt **7 von 7, regulär beendet, 0 Funde**, 0,0254 €.
+
+**Zwei Stellen waren blind für dasselbe.** Der Bildschirm-Fingerabdruck bestand aus Pfad +
+Beschriftungen der Bedienelemente. Beides ändert sich weder beim **Tippen** noch bei einer
+**Meldung** — ein Toast ist kein Bedienelement:
+
+- `af40319` — dem Modell wurde „NICHTS hat sich verändert" gesagt, während die App antwortete.
+- `6ff3fd4` — die Schleifenerkennung brach ab, weil vier Aktionen ohne Fingerabdruck-Änderung als
+  Kreis galten. Bei einem Angriffslauf ist das der Normalzustand.
+
+Zusammen hieß das: **Je korrekter die App antwortete, desto sicherer starb der Lauf.**
+
+**Der gemeldete Fund war keiner.** Am Server nachgemessen: `POST /api/ea_ausgaben` mit
+`brutto_cents=-5000` → „Betrag ist keine gültige Zahl (negativ? Dann bitte stornieren statt Minus
+buchen)." Die App war die ganze Zeit korrekt.
+
+**Register 11 → 8.** Entfernt: `891837882dcf`, `3b7a42ef36e8`, `75382e3966d3` — alle drei
+Werkzeugfehler, jeder mit Begründung im Archiv. Der dritte stammt aus **meinem eigenen Probelauf**
+zwischen den zwei Fixes und ist als solcher vermerkt.
+
+**Für dich praktisch:** Die Wirkung steht ab jetzt im Protokoll (`↳ Die App meldet: …`). Wenn du
+prüfen willst, ob die App auf eine Eingabe reagiert hat, steht es dort — vorher ging es nur ans
+Modell und war nirgends nachlesbar.
+
+**Nebenbefund, der dich freuen dürfte:** Bei 999.999.999 € warnt die App von selbst nach § 14 UStG
+(„über 250 € brutto: für den Vorsteuerabzug braucht ihr eine richtige Rechnung …"). Das hat vorher
+nie jemand gesehen, weil der Lauf nie so weit kam.
+
+**Was offen bleibt:** 8 Funde im Register, davon `5bf997096056` und `09eba439ff1d` (beide
+`angriff-pflichtfelder`) noch ungeklärt. Repo und Server sind prüfsummengleich. `app/` unberührt —
+der Deploy wartet weiter auf dein Signal.
