@@ -299,3 +299,45 @@ Abschluss-Reiter → „festschreiben".
 
 Der sauberste Ersatz für Navigationsschritte ist ohnehin kein Text, sondern ein **`zaehler`** —
 das einzige Feld, das beweist, dass wirklich etwas angelegt wurde.
+
+
+<!-- 2026-08-06T05:32:13.214991Z daniel-1 -->
+
+
+### 07:30 — geprüfte Ersetzungen, bereit zum Einsetzen NACH dem Lauf
+
+Am lebenden System auf `demo.sorglos-app.de` vermessen und **kreuzweise gegengeprüft** (jeder Text
+muss auf seiner Seite stehen und auf der anderen NICHT):
+
+| Text | /belege | /buchhaltung | bedingungslos gerendert? |
+|---|---|---|---|
+| `steuerberater-export` | ✅ | ❌ | **ja** (Belege.jsx:321, nur der ZIP-Knopf hängt an der Rolle) |
+| `archiv prüfen` | ✅ | ❌ | ⚠️ nein — nur für Verwalter (`darfVerwalten`, :331) |
+| `fertig für die steuerberaterin` | ❌ | ✅ | ja (Untertitel, auch in der §19-Fassung enthalten) |
+| `festschreibung (gobd)` | ❌ | ✅ nur Abschluss-Reiter | ja |
+| `bestand-vortrag` | ❌ | ❌ nur Kassenbuch-Reiter | ja — **bereits eingesetzt** |
+| `fortlaufend nummeriert` | ❌ | ❌ nur /rechnungen-einfach | ja — **bereits eingesetzt** |
+
+**Fertige Ersetzungen:**
+
+| Routine | Schritt | alt → neu |
+|---|---|---|
+| `wiederfinden` | 1 | `ausgaben` → `fertig für die steuerberaterin` |
+| `wiederfinden` | 2 | `belege` → `steuerberater-export` |
+| `wiederfinden` | 3 | `ausgaben` → `fertig für die steuerberaterin` |
+| `monat-abschliessen` | 1 | `ausgaben` → `fertig für die steuerberaterin` |
+| `monat-abschliessen` | 2 | `abschluss` → `festschreibung (gobd)` |
+| `ausgabe-manuell` | 1 | `ausgaben` → `fertig für die steuerberaterin` |
+| `beleg-hochladen` | 1 | `belege` → `steuerberater-export` |
+
+Damit misst `wiederfinden` zum ersten Mal wirklich einen Seitenwechsel — bisher waren alle drei
+Schritte auf jeder Seite erfüllt. Und `monat-abschliessen` bekommt überhaupt seine erste
+wirksame Prüfung.
+
+**Nicht dabei, weil noch nicht belegbar:** `angebot-schreiben` #1 (`angebot`) — braucht eine
+Handwerks-Instanz, die Gastro-Demo zeigt `/angebote` nicht. Und `angebot-schreiben` #8
+(`erstellt`) — der Knopf sagt beim Speichern „Wird **erstellt** …", ein fehlgeschlagener Aufruf
+ginge also als Erfolg durch; sauber wäre ein `zaehler` auf die Angebotsliste.
+
+**Bewusst nicht vor dem Lauf eingesetzt.** Drei Minuten vorher etwas zu ändern hieße, einen Stand
+zu messen, den man gerade erst angefasst hat.
