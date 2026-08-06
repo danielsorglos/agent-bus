@@ -306,6 +306,7 @@
 
 <footer>
   <span id="ichbin"></span>
+  <span id="schreibstand" style="color:var(--akzent); font-weight:600"></span>
   <span class="rechts">
     <span id="syncstatus"></span>
     <button class="knopf leise" id="jetztSync" style="padding:4px 12px">Jetzt abgleichen</button>
@@ -342,6 +343,7 @@
     <div>
       <div class="fluestern" style="margin-bottom:7px">Status setzen</div>
       <div class="statuswahl" id="dStatus"></div>
+      <div class="fluestern" id="dFehler" style="color:var(--rot); margin-top:7px"></div>
     </div>
     <label>Notiz an den Verlauf hängen
       <textarea id="dNotiz" rows="2" placeholder="optional"></textarea>
@@ -403,14 +405,31 @@ function tag(ts){
   return d.toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"});
 }
 
+// Jeder Schreibvorgang committet und pusht — ein bis drei Sekunden, in denen die
+// Oberflaeche sonst tot wirkt. Ein zentraler Zaehler macht JEDEN laufenden Schreib-
+// vorgang in der Fussleiste sichtbar, auch bei kuenftigen Knoepfen, die das
+// Sperren vergessen. Lesende Abfragen (kein Koerper) zaehlen nicht mit, sonst
+// blinkt es im Vier-Sekunden-Takt der Aktualisierung.
+let schreibtGerade = 0;
+
+function zeigeSchreibstand(){
+  const el = $("#schreibstand");
+  if(el) el.textContent = schreibtGerade > 0 ? "speichert…" : "";
+}
+
 async function hole(pfad, koerper){
   const opt = koerper
     ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(koerper)}
     : {};
-  const r = await fetch(pfad, opt);
-  const d = await r.json().catch(() => ({fehler:"Antwort unlesbar"}));
-  if(!r.ok) throw new Error(d.fehler || `HTTP ${r.status}`);
-  return d;
+  if(koerper){ schreibtGerade++; zeigeSchreibstand(); }
+  try{
+    const r = await fetch(pfad, opt);
+    const d = await r.json().catch(() => ({fehler:"Antwort unlesbar"}));
+    if(!r.ok) throw new Error(d.fehler || `HTTP ${r.status}`);
+    return d;
+  }finally{
+    if(koerper){ schreibtGerade--; zeigeSchreibstand(); }
+  }
 }
 
 // ------------------------------------------------------------------ Zeichnen
@@ -649,11 +668,36 @@ function zeigeAufgabe(id){
   $("#dVerlauf").textContent = (a.verlauf || []).join("\n") || "(leer)";
   $("#dStatus").innerHTML = Object.entries(STATUS).map(([s, def]) =>
     `<button class="knopf ${s === a.status ? "" : "leise"}" data-status="${s}">${esc(def.label)}</button>`).join("");
+  $("#dFehler").textContent = "";
+  // Jeder Schreibweg hier committet und pusht — das dauert ein bis drei Sekunden.
+  // Ohne Rueckmeldung sieht der Klick aus, als waere er ins Leere gegangen, und man
+  // tippt nochmal: Edgar hat so am 05.08. um 02:36 SECHZEHN Statuswechsel in zwanzig
+  // Sekunden ausgeloest, inklusive eines versehentlichen "blockiert". Darum: sofort
+  // sperren, den laufenden Knopf beschriften, und erst bei Erfolg schliessen.
   $$("#dStatus button").forEach((b) => b.addEventListener("click", async () => {
-    await schreibe("/api/task/update", {id:offeneAufgabe, status:b.dataset.status,
-                                        note:$("#dNotiz").value.trim() || null});
-    $("#dNotiz").value = "";
-    $("#dlgAufgabe").close();
+    const knoepfe = $$("#dStatus button");
+    if(knoepfe.some((x) => x.disabled)) return;   // zweiter Klick waehrend des Fluges
+    if(!$("#dlgAufgabe").open) return;            // Dialog schon zu: nichts mehr schreiben
+    const beschriftung = b.textContent;
+    knoepfe.forEach((x) => x.disabled = true);
+    $("#dNotiz").disabled = true;
+    b.textContent = "speichere…";
+    $("#dFehler").textContent = "";
+    try{
+      await hole("/api/task/update", {id:offeneAufgabe, status:b.dataset.status,
+                                      note:$("#dNotiz").value.trim() || null});
+      $("#dNotiz").value = "";
+      $("#dlgAufgabe").close();
+      await aktualisiere();
+    }catch(e){
+      // Fehler gehoert in den Dialog, nicht in ein alert-Fenster: am Handy verdeckt
+      // das Systemfenster genau die Karte, um die es geht.
+      $("#dFehler").textContent = "Nicht gespeichert: " + e.message + " — nochmal versuchen.";
+    }finally{
+      b.textContent = beschriftung;
+      knoepfe.forEach((x) => x.disabled = false);
+      $("#dNotiz").disabled = false;
+    }
   }));
   $("#dlgAufgabe").showModal();
 }
