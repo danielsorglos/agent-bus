@@ -260,3 +260,42 @@ Server-Grund im Befund, Tagesaufgabe ist kein Auftrag mehr, offene Fenster zuers
 Elementliste, Kappung 61 → 151, Scroll-Behälter nicht mehr die Seitenleiste, folgenlose Klicks
 werden vermerkt. Dazu KI auf kebap (1 €/Monat Deckel) und Belege mit Datum.
 **Der Lauf um 07:30 ist die Probe auf all das.**
+
+
+<!-- 2026-08-06T05:18:08.482636Z daniel-1 -->
+
+
+---
+
+## 07:20 — noch offen, bewusst nicht nachts erledigt
+
+Eine systematische Durchsicht **aller** Routinen hat eine Fehlerklasse gefunden, die schlimmer ist
+als ein falscher Fund: **Erwartungen, die immer erfüllt sind und deshalb nichts prüfen.**
+
+Der Agent liest `document.body.innerText` **inklusive Seiten-Leiste**. Diese Wörter stehen damit
+auf **jeder** Seite: `axel · aufgaben · prompts · belege · ausgaben · buchhaltung · rechnungen ·
+angebote · betrieb · organisation · einstellungen · abmelden`.
+
+**Drei Fälle sind repariert** (`5e092a5`), alle im ausgerollten Code belegt:
+`rechnung-schreiben` #1 → „fortlaufend nummeriert" · `kassenbuch-einnahme` #2 → „bestand-vortrag" ·
+`angriff-pflichtfelder` #2 → „es fehlt noch".
+
+**Diese bleiben offen** — jede Ersetzung muss einzeln am lebenden System belegt werden, sonst baue
+ich genau den Fehlalarm, den ich abstelle:
+
+| Routine | Schritt | Erwartung | Problem |
+|---|---|---|---|
+| `wiederfinden` | **1, 2, 3 — alle** | `ausgaben`, `belege`, `ausgaben` | **Die Routine kann per Konstruktion nicht scheitern und misst nachweislich gar nichts.** Heißt „Vertrauens-Test". |
+| `monat-abschliessen` | 1, 2 | `ausgaben`, `abschluss` | Reiter-Beschriftungen werden immer gerendert → keine wirksame Prüfung in der ganzen Routine |
+| `ausgabe-manuell` | 1 | `ausgaben` | Menü-Treffer |
+| `beleg-hochladen` | 1 | `belege` | Menü-Treffer, doppelt (Nav + Kopfzeilen-Untertitel) |
+| `angebot-schreiben` | 1 | `angebot` | Menü-Treffer |
+| `angebot-schreiben` | 8 | `erstellt` | Der Knopf sagt während des Speicherns „**Wird erstellt** …" — ein fehlgeschlagener Aufruf ginge als Erfolg durch |
+| `ausgabe-manuell` / `angriff-geldfelder` | 7 | `vst` | Die Select-Option „0 % (keine VSt)" steht im offenen Formular — vermutlich schon grün, bevor gespeichert wurde |
+
+**Vorschläge aus dem echten Code** (noch nicht live geprüft): /buchhaltung → „fertig für die
+steuerberaterin" · /belege → „beleg fotografieren" · /angebote → „positionen eintragen" ·
+Abschluss-Reiter → „festschreiben".
+
+Der sauberste Ersatz für Navigationsschritte ist ohnehin kein Text, sondern ein **`zaehler`** —
+das einzige Feld, das beweist, dass wirklich etwas angelegt wurde.
