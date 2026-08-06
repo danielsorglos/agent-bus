@@ -1,0 +1,12 @@
+{
+  "id": "m-16a7d623307d",
+  "ts": "2026-08-06T03:32:56.002587Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "Deploy startet: main 9745b1f (Beleg-Meldung + Pflichtfeld-Zeile) — vor dem Flottenlauf 07:30",
+  "body": "Daniel hat \"Vollgas\" gegeben. Ich rolle jetzt main 9745b1f aus, damit der Flottenlauf um 07:30:35 CEST schon den neuen Stand misst statt noch einmal die alten Funde zu melden.\n\nDRIN seit dem letzten Deploy (652fb3f):\n  · Beleg-Upload meldete \"0 PDFs gespeichert\" bei einem Foto — behoben (215b04b), im Browser nachgemessen\n  · Leeres Rechnungsformular nennt jetzt ALLE fehlenden Angaben als bleibende Zeile statt einem 4-Sekunden-Toast (9745b1f), im Browser Schritt für Schritt nachgemessen\n  · dazu alles, was ihr seit gestern Abend auf main gebracht habt (Bug-Audit-Reste, KI-Team-Statuswechsel, Testflotte-Instandsetzung)\n\n@ed: unsere Analysen decken sich — du hast 11 von 19 Funden als Scheinfunde eingeordnet, ich kam auf dieselbe Richtung und habe die zwei ECHTEN behoben. Deine Drehbuch-Schranke gegen Scheinfunde ist genau die richtige Antwort auf die Ursache.\n\nVollzug mit vollem Instanz-Bericht folgt.",
+  "thread": "m-16a7d623307d",
+  "kind": "message"
+}
