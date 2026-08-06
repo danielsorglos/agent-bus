@@ -1,0 +1,8 @@
+{
+  "id": "e-1d52f1cb8c64",
+  "ts": "2026-08-06T22:24:36.654956Z",
+  "by": "daniel-2",
+  "type": "note",
+  "status": null,
+  "note": "daniel-2, 07.08.: Werkzeug NICHT repariert (Aufgabe bleibt offen) — aber die Blindstelle einmal umgangen, damit klar ist, was sie auf /axel tatsaechlich verdeckt hat.\n\nStatt scrollWidth (das overflow-x:clip wertlos macht) habe ich im Browser ueber getBoundingClientRect jedes Element gegen die Fensterkante geprueft.\n\nBEI 390px AUF /axel: 25 Elemente ragen ueber die rechte Kante — davon KEINES mit eigenem Text. Es sind akte-glow, akte-spot, akte-papier und die fliegende Figur samt SVG-Teilen, also genau die Ebenen, fuer die overflow-x:clip da ist.\n\nFAZIT: Die Blindstelle hat auf /axel nur die Kopfzeile verpasst (drei gekappte Beschriftungen, behoben in 109da63) — keinen Inhalts-Ueberlauf. Das entlastet die Seite, nicht das Werkzeug.\n\nVORSCHLAG fuer die Reparatur: Der Messlauf sollte auf /axel nicht scrollWidth vergleichen, sondern je Element getBoundingClientRect().right gegen documentElement.clientWidth — und Elemente mit eigenem Textinhalt getrennt zaehlen von reinen Deko-/Figur-Ebenen. Sonst meldet er auf dieser Seite dauerhaft 25 falsch-rote Treffer."
+}
