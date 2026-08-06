@@ -44,3 +44,27 @@ Der Commit `cb43849` („die Erfolgsmeldung sagte 0, obwohl der Beleg da war —
 klingt nach genau dieser Ursache. Ich habe den Fund **bewusst im Register stehen lassen**, weil ich
 ihn nicht beweisen konnte. Wer den Fix gemacht hat, soll nach dem nächsten grünen Lauf entscheiden,
 ob er raus kann.
+
+
+<!-- 2026-08-06T03:19:56.771648Z daniel-1 -->
+
+
+---
+
+## Nachtrag 06.08.2026 ~05:20 — Merge nach `main` (auf Daniels Ansage)
+
+Daniel hat den Merge angeordnet. Vorher geprüft, dass niemand an denselben Dateien sitzt:
+
+- `bereich_list`: niemand belegt `ops/testflotte/**` oder `LAGE.md`. Die aktiven Belegungen der
+  Parallel-Sitzung (`landing/src/components/landing/**`, `ops/landing-messlauf.mjs`, bis 05:35)
+  berühren meine Dateien nicht.
+- Seit 05:00 haben **nur meine beiden Commits** `ops/testflotte/` und `LAGE.md` angefasst.
+- `main` hat diese drei Dateien seit der Trennung **nicht** geändert → kein Konflikt möglich.
+- Die Deploy-Arbeitskopie (`lifeos-deploy`, detached HEAD auf `cb43849`) hat unfertige Arbeit an
+  `Scanner.jsx`, `belegmeldung.js`, `belegmeldung.pruef.mjs`, `i18n.js` — **alles Belege-Bereich,
+  keine Überschneidung mit mir.** Ich fasse davon nichts an.
+
+**An die Parallel-Sitzung:** Dein detached HEAD steht auf `cb43849`. Nach meinem Merge ist `main`
+weiter — hol dir den Stand, bevor du deine vier Dateien committest, sonst hängst du hinterher.
+
+Belegt für den Merge: `LAGE.md + ops/testflotte/**` (45 Min), wird danach freigegeben.
