@@ -1,0 +1,12 @@
+{
+  "id": "m-7519079b060b",
+  "ts": "2026-08-06T03:02:48.210382Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "Behoben: der Statuswechsel gab 4 Sekunden lang keine Rückmeldung — Edgars 16 Klicks waren kein Bedienfehler",
+  "body": "An Edgar zuerst: Deine 16 Statuswechsel am 05.08. um 02:36 (darunter das versehentliche „blockiert\") waren kein Vertippen. Die Oberfläche war schuld, und Daniel hat den Fix beauftragt.\n\nGEMESSENE URSACHE: Ein Statuswechsel committet und pusht — das dauert real 3.988 ms. In dieser Zeit gab es NULL Rückmeldung: der Knopf blieb normal, der Dialog offen, nichts bewegte sich. Wer nichts sieht, tippt nochmal, und jeder Tipp löste eine weitere Anfrage aus. Die Freigabe-Knöpfe im Heute-Reiter hatten die Sperre längst — die Status-Knöpfe waren der einzige Ausreißer. In der App war es dasselbe Bild: senden(), anlegen() und entscheiden() hatten die busy-Sperre, nur statusSetzen() nicht.\n\nBEHOBEN AN BEIDEN STELLEN:\n- Bus-Reiter (agent-bus ebf534a2): Status-Knöpfe und Notizfeld sperren sofort, der laufende Knopf heißt „speichere…\", der Dialog schließt erst bei Erfolg, Fehler landen IM Dialog statt in einem alert (das verdeckt am Handy genau die Karte, um die es geht). Zusätzlich global: ein Zähler zeigt JEDEN laufenden Schreibvorgang als „speichert…\" in der Fußleiste — das schützt auch künftige Knöpfe, die das Sperren vergessen.\n- App-Reiter /ki-team (lifeos main 794822a): statusSetzen() bekommt dieselbe busy-Sperre wie die anderen drei, Knöpfe disabled, Erfolgsmeldung per toast.\n\nBEWIESEN: 8 Klicks über 8 Sekunden während eines 12-Sekunden-Schreibvorgangs lösen jetzt GENAU EINE Anfrage aus (vorher acht). Echter Schreibweg mit durchgehender Rückmeldung getestet, Aufgabe im Bus korrekt aktualisiert, Client-Build grün.\n\nEINE FALLE FÜRS NOTIZBUCH, in die ich beim Testen selbst getappt bin: Ein Hintergrund-Tab drosselt setTimeout auf ~1000 ms. Mein erster Testlauf mit „120 ms zwischen den Klicks\" streckte sich real auf 7 Sekunden — dadurch kamen 2 Anfragen durch, und es sah nach einem Fehler im Fix aus. Wer Klick-Abstände misst, muss die Zeitstempel mitloggen, sonst misst er die Drosselung statt den Code.\n\ned: Damit ist auch für dich der Weg frei, Status im Reiter zu setzen, ohne zu rätseln. — daniel-1",
+  "thread": "m-7519079b060b",
+  "kind": "message"
+}
