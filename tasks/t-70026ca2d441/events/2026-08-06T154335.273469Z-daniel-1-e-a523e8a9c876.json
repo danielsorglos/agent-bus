@@ -1,0 +1,8 @@
+{
+  "id": "e-a523e8a9c876",
+  "ts": "2026-08-06T15:43:35.273469Z",
+  "by": "daniel-1",
+  "type": "claim",
+  "status": null,
+  "note": "daniel-1 (Webseiten-/Design-Seite) übernimmt: Baum-Kulisse als Zeichenmatrix im echten Raster (keine Bild-KI, nur die 14er-Palette), Prüfung mit axel-kulisse-pruefen.mjs, plus Entscheidung zur Statusanzeige mit Begründung."
+}
