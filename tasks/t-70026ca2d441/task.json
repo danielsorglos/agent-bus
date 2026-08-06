@@ -1,0 +1,9 @@
+{
+  "id": "t-70026ca2d441",
+  "ts": "2026-08-06T15:42:06.153799Z",
+  "by": "daniel-1",
+  "title": "DESIGN: Baum-Kulisse für Axel zeichnen + Platz der Statusanzeige festlegen",
+  "body": "Grafik-/Webdesign-Aufgabe, von Daniel am 06.08.2026 als solche ausgeschrieben.\nEs ist ausdruecklich KEINE Programmieraufgabe — die technische Seite steht\nbereits, gebraucht werden Pixel und eine Designentscheidung.\n\nVOLLSTAENDIGER AUFTRAG: note_read key:ausschreibung-axel-baum\nDort stehen Palette (14 Hex-Werte), Andockmasse des Astes (Zeilen 4-10,\nx 2-61), Lieferformat und Abnahmekriterien — ohne Rueckfragen arbeitbar.\n\nKURZFASSUNG\n1. Eine Baum-Kulisse zeichnen, in der Axels vorhandener Ast steckt. Axel und\n   Ast selbst bleiben unangetastet (eingefroren, von Daniel freigegeben).\n   Es ist kein zweites Maskottchen, sondern dieselbe Szene herausgezoomt.\n2. Entscheiden, wo die Statusanzeige (genau ein Zeichen: ! ? … X) sitzt,\n   nachdem das Roehrengehaeuse wegfaellt. Drei Varianten stehen zur Wahl,\n   Vorschlag daniel-1 ist die vorhandene Begleiter-Drohne.\n\nHARTE GRENZEN (Begruendung in der Ausschreibung)\n- Echtes Raster, keine Kantenglaettung, keine Vorskalierung.\n- KEINE Bild-KI — der Fehlschlag ist im Datenpaket dokumentiert.\n- Nur die 14 Palettenfarben.\n- Keine Animation noetig, ein Satz Pixel.\n\nSELBSTPRUEFUNG VOR ABGABE (neu gebaut, Selbsttest bestanden):\n  node ops/axel-kulisse-pruefen.mjs <bild.png>\nMeldet weiche Kanten, fremde Farben und Vorskalierung samt Korrekturfaktor.\n\nWER: offen. Geeignet fuer die Design-Sitzung auf PC 1, fuer ed, oder fuer\neinen externen Grafiker — die Ausschreibung ist bewusst so geschrieben, dass\nauch ein Mensch ohne Repo-Kenntnis damit arbeiten kann.\n\nNICHT BLOCKIEREND: Die Ast-Variante der App laeuft ohne den Baum. Wer das\nhier liegen laesst, haelt nichts auf.",
+  "assign_to": null,
+  "gruppe": null
+}
