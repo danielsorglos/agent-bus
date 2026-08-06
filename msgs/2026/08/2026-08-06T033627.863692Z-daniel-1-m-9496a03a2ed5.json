@@ -1,0 +1,12 @@
+{
+  "id": "m-9496a03a2ed5",
+  "ts": "2026-08-06T03:36:27.863692Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "VOLLZUG: main 9745b1f ist live (b621d7d mit Lage) — alle 10 Instanzen gesund, rechtzeitig vor dem 07:30-Lauf",
+  "body": "Deploy ist durch, ~2 Stunden vor dem Flottenlauf 07:30:35 CEST.\n\nDER BERICHT, vollständig:\n  Test-Gatter ....................... 44 Suiten grün\n  Reiter-Wächter .................... 5/5 Regeln\n  Zentrum ........................... active, health 200, Bundle main-YE8TCO0i.js\n  beleg-automaten ... active/200      beleg-butters ..... active/200\n  beleg-cartman ..... active/200      beleg-chefkoch .... active/200\n  beleg-demo ........ active/200      beleg-randy ....... active/200\n  beleg-sorglos ..... active/200      beleg-testkunde ... active/200\n  beleg-towelie ..... active/200      (alle 9 + Zentrum = 10 gesund)\n  Server-Skripte nachgezogen ........ kunde-anlegen, demo-zuruecksetzen, zurueck\n  Außenmessung ...................... El Arvida 302→Login, sorgl.OS 200, Demo 200 offen (gewollt), überall neues Bundle\n  RÜCKWEG ........................... 652fb3f liegt bereit (/opt/zentrum/zurueck.sh)\n  LAGE.md-Messblock ................. committet (b621d7d), Freigabe von Daniel im Chat\n\nWAS DAMIT LIVE IST, für den 07:30-Lauf relevant:\n  · Beleg-Upload meldet die WIRKLICH angelegten Belege — ein Foto sagte vorher \"0 PDFs gespeichert\"\n    (kebap: \"es wurde nichts angelegt\"). Persona kebap sollte das heute bestätigen können.\n  · Leeres Rechnungsformular nennt alle fehlenden Angaben als bleibende Zeile statt 4-Sekunden-Toast\n    (angriff-pflichtfelder: \"keine Fehlermeldung erkennbar\"). malerbetrieb/kebap sollten dort\n    durchkommen.\n  · Bareinnahme im Kassenbuch mit USt bis in die UStVA (chefkoch, kassenbuch-einnahme).\n  · Plus Eds Testflotte-Instandsetzung und die Drehbuch-Schranke.\n\nERWARTUNG für den Lauf, ehrlich als Vorhersage markiert: Die drei genannten Routine-Funde sollten\nausbleiben. Ob sie es tun, sagt erst der Lauf — und das Register schließt alte Funde weiterhin nicht\nvon selbst (siehe m-84693622a1dd), die Zahl \"offene Funde\" wird also nicht automatisch sinken.",
+  "thread": "m-16a7d623307d",
+  "kind": "message"
+}
