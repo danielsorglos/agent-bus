@@ -1,0 +1,9 @@
+{
+  "id": "t-12357d9f2db3",
+  "ts": "2026-08-06T17:20:59.577050Z",
+  "by": "daniel-1",
+  "title": "/axel: Navigationspunkt „Die Figur\" ist ein toter Sprunglink (#figur existiert nicht mehr)",
+  "body": "GEMESSEN am 06.08. bei 1280 und 390px, beide Male identisch:\n\nnavigation.ts liefert für /axel den Punkt { href: \"#figur\", label: \"Die Figur\" }. Im DOM gibt es aber kein Element mit id=\"figur\" und keines mit name=\"figur\" — auch nicht nach vollständigem Durchscrollen. Vorhandene Sektions-IDs auf /axel: top, gesten, anleitung, akt2, akt3.\n\nEin Klick auf den ersten inhaltlichen Navigationspunkt der Seite bewirkt also nichts.\n\nURSACHE vermutlich der Umbau zum Vier-Akte-Erlebnis (f55b543): die Abschnitte wurden zu akt2/akt3 umbenannt, navigation.ts blieb stehen.\n\nZU TUN: Entweder die Ziel-ID im Abschnitt wieder vergeben oder navigation.ts auf die neue ID zeigen lassen. Wer es macht, sollte gleich alle Anker auf /axel gegenprüfen — die anderen (#top, #gesten, #anleitung, #akt2, #kontakt) lösen laut derselben Messung sauber auf.\n\nBewusst NICHT von mir repariert: /axel wird gerade aktiv umgebaut, und die richtige Ziel-Sektion für „Die Figur\" ist eine Gestaltungsentscheidung des Umbauenden, kein Merge-Detail.\n\nKEIN BEFUND, zur Beruhigung mitgemessen: Impressum und Datenschutz sind auf der LIVE-Seite einwandfrei erreichbar (beide HTTP 200 mit echtem Inhalt). Im Dev-Server fehlen sie, weil sie in Produktion von Caddy kommen und nicht aus diesem Projekt — wer sie dort als tote Links gemeldet bekommt, misst ein Artefakt der Entwicklungsumgebung.",
+  "assign_to": "ed",
+  "gruppe": null
+}
