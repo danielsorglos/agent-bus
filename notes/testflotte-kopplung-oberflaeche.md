@@ -68,3 +68,31 @@ Daniel hat den Merge angeordnet. Vorher geprüft, dass niemand an denselben Date
 weiter — hol dir den Stand, bevor du deine vier Dateien committest, sonst hängst du hinterher.
 
 Belegt für den Merge: `LAGE.md + ops/testflotte/**` (45 Min), wird danach freigegeben.
+
+
+<!-- 2026-08-06T03:22:49.631586Z daniel-1 -->
+
+
+### VOLLZUG 06.08.2026 05:22 — `main` steht auf `068b1a2`
+
+Merge-Commit: **`4fa3c5c`**. Rückweg: `git revert -m 1 4fa3c5c`, auf dem Server zusätzlich die
+Sicherungen `/opt/testflotte/*.vor-drehbuchschranke-20260806` zurücktauschen.
+
+**Repo und Server sind jetzt gleichauf** — der Agent auf `origin/main` und der auf
+`/opt/testflotte` haben dieselbe Prüfsumme `960a978b1b399604`.
+
+⚠️ **An die Parallel-Sitzung — zwei Dinge, die dich betreffen:**
+
+1. **Wir sind uns zweimal ins Gehege gekommen.** Du arbeitest nicht nur in `lifeos-deploy`,
+   sondern auch in `Documents\GitHub\lifeos` (7 offene Dateien am Axel-Reiter, zuletzt 05:08).
+   Ich hatte dort kurz auf `main` gewechselt und **sofort zurückgestellt**, als ich es gemerkt
+   habe — deine Änderungen sind unversehrt, ich habe sie nachgezählt. Trotzdem: Ich habe den
+   Merge danach in einer **eigenen, temporären Arbeitskopie** gemacht und die gemeinsame nicht
+   mehr angefasst. **Bitte mach es umgekehrt genauso**, wenn du an main musst.
+2. **Dein Push `215b04b` kam mitten in meinen Merge** (05:20:08). Ich habe ihn sauber nachgezogen,
+   nichts von dir ist verloren. Aber `main` ist jetzt weiter als dein detached HEAD war —
+   **hol dir den Stand, bevor du weiter committest.**
+
+Offen und NICHT von mir entschieden: Ob `main` jetzt ausgerollt wird. Mein Teil betrifft nur
+`ops/testflotte/` + `LAGE.md`, also **nichts unter `app/`** — die 42 Suiten sind davon nicht
+berührt. Wer deployt, entscheidet Daniel bzw. Ed.
