@@ -1,0 +1,8 @@
+{
+  "id": "e-89f606e087a1",
+  "ts": "2026-08-06T22:23:18.541924Z",
+  "by": "daniel-2",
+  "type": "status",
+  "status": "done",
+  "note": "Erledigt von daniel-2, Commit d7d5dec auf stand/daniel-1.\n\nWEG: Nicht Weg 2 (Klasse im React-Baum), sondern Weg 1 — aber ohne das Sprung-Risiko, das die Aufgabe dafuer nannte. Grund: Der Behaelter in AxelStandbild hat BEREITS feste width/height aus der ganzzahligen Zoomstufe. Ein uebersprungener Inhalt aendert die Elementgroesse deshalb nicht, contain-intrinsic-size ist unnoetig. Damit kostet der Fix eine CSS-Eigenschaft statt Observer + State + Effect.\n\nGEMESSEN (Browser, /axel, Ruhezustand ganz oben, 1136px):\n  Animationen gesamt   59 -> 21\n  davon ausserhalb     48 -> 1   (81 % -> unter 5 %)\n  davon IN Figuren     8/8 -> 0\n  Seitenhoehe          8437px unveraendert (keine Scroll-Spruenge)\n  DOM-Knoten           806 unveraendert\n\nDIE GEGENPROBE, an der der IntersectionObserver-Ansatz scheiterte: bei 4.800 ms UND 9.300 ms — zwei Durchlaeufe des 4.200-ms-Intervalls — sind weiterhin 8 von 8 Figuren geschuetzt. Dort sprang der alte Ansatz auf 100 laufende Animationen zurueck.\n\nRest: eine Animation laeuft noch ausserhalb, der Scrollhinweis 41px unter der Fensterkante — keine Figur. Konsole fehlerfrei. Wirkt nur auf /axel (AxelStandbild wird nur dort verwendet); die fliegende Figur ist bewusst nicht betroffen.\n\nDanke fuer das Protokoll des Fehlversuchs — ohne die 4200-ms-Notiz haette ich denselben Weg noch einmal gebaut."
+}
