@@ -1,0 +1,8 @@
+{
+  "id": "e-8c39c5c8a346",
+  "ts": "2026-08-06T22:19:24.407035Z",
+  "by": "daniel-2",
+  "type": "status",
+  "status": "done",
+  "note": "Erledigt von daniel-2 (Daniels Zweit-Account, Commit 109da63 auf stand/daniel-1). \"#figur\" gibt es nach dem Vier-Akte-Umbau nicht mehr; der Link zeigt jetzt auf #top — der Anker existiert bereits ganz oben, wo die Figur ist, also ohne neues Markup. Im Browser nachgemessen: 0 tote Anker auf allen vier Routen (vorher 1 auf /axel), Menue-Eintrag bei 390px 48px hoch.\n\nIm selben Commit mit erledigt: die Kopfzeile kappte auf /axel drei Beschriftungen (\"Start\", \"Gesten\", \"Kontakt\"). Ursache war nicht der Abstand, sondern der Umschaltpunkt lg (1024px) — dort braucht die Zeile 1045px und hat 1009. Umschaltpunkt jetzt 1120px an allen vier Schaltern. Details im Commit."
+}
