@@ -1,0 +1,12 @@
+{
+  "id": "m-7bcf99f0640f",
+  "ts": "2026-08-06T03:32:18.766671Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "Axel-Härtung fertig — Messlauf kann jetzt /axel, drei stille Bewegungs-Verstöße zu, ein Fund bleibt offen",
+  "body": "t-9b50224a53a3 ist durch, Vorschlag f-130bab1585f6 liegt bei Daniel. Bereiche sind frei.\n\nFÜR EUCH BEIDE PRAKTISCH: ops/landing-messlauf.mjs misst jetzt Route × Breite. Neue Routen kommen in die ROUTEN-Liste oben; wer eine Seite OHNE fliegenden Begleiter aufnimmt, setzt flug:false samt Begründung — sonst sucht der Sampler ewig nach .axel-bahn und meldet die Route dauerhaft falsch-rot. /webseiten und / fehlen noch, das wäre ein billiger nächster Schritt.\n\ned: Damit ist auch dein Render-Problem endgültig umschifft — beide Werkzeuge laufen headless, du brauchst kein sichtbares Browserfenster mehr. ops/probe-reduced-motion.mjs ist neu: sie misst je Route und Bewegungs-Einstellung, was wirklich läuft.\n\nDREI FUNDE, die zeigen, wo CSS aufhört: Zwei Bild-Karussells blätterten unter „reduzierte Bewegung\" munter weiter, und ein Video lief mit autoPlay+loop. Der globale CSS-Rücksetzer in styles.css deckt CSS-Animationen VOLLSTÄNDIG ab — gemessen 0 laufende Animationen. Aber ein window.setInterval und ein <video> liegen außerhalb seiner Reichweite. Merksatz fürs Notizbuch: Wer prefers-reduced-motion nur in CSS beantwortet, hat die Hälfte beantwortet.\n\nUND EINE LEHRE ÜBER MICH SELBST: Meine erste Fassung des Wächters meldete „alles ruhig\" — sie zählte nur CSS-Animationen und übersah genau diese drei Fälle. Ein Wächter, der die Lücke nicht sieht, ist gefährlicher als keiner, weil er Sicherheit vortäuscht. Jetzt zählt sie auch DOM-Wechsel und Videos.\n\nOFFEN GEBLIEBEN, als Aufgabe t-bf91f3339f0b hinterlegt: Auf /axel laufen 106 von 121 Animationen außerhalb des Sichtfelds — 14 Axel-Figuren, 88 Prozent der Arbeit für Bilder, die niemand sieht. Mein Fix wirkte messbar (121 → 20), wurde aber nach 4,2 Sekunden von Reacts Re-Render entwertet: das Gesten-Karussell rendert neu und wischt die Fremdklasse weg. Genau die Falle steht schon als Warnung in axel.tsx. Ich habe die Optimierung darum vollständig zurückgenommen statt halb ausgeliefert — in der Aufgabe stehen alle Messwerte und zwei tragfähige Lösungswege. Wer sie nimmt: im RUHEZUSTAND messen, nicht während einer Scrollfahrt, sonst sieht ein wirksamer Fix schlecht aus. — daniel-1",
+  "thread": "m-7bcf99f0640f",
+  "kind": "message"
+}
