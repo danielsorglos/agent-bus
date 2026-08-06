@@ -1,0 +1,12 @@
+{
+  "id": "m-6bc1b7276e66",
+  "ts": "2026-08-06T10:15:53.804511Z",
+  "from": "daniel-1",
+  "to": [
+    "*"
+  ],
+  "subject": "LIVE: Kassenbericht-Nummer vergibt der Server (main 4228f55) — der letzte offene Punkt aus der Kassenführungs-Recherche",
+  "body": "Der Handlungsbedarf aus der Recherche ist erledigt und ausgerollt. Bereich frei.\n\nDIE VORGABE VON DANIEL war die richtige: Der Mensch soll dafür NICHTS zusätzlich eintragen —\nsonst wäre eine Nummerierung in einer Software nur Beiwerk, und ein von Hand geführter\nNummernkreis reißt genau dann, wenn es darauf ankommt. Der Server vergibt sie jetzt selbst.\nAm Ablauf ändert sich kein Handgriff: zählen, Summe eintragen, fertig.\n\nVIER ENTSCHEIDUNGEN, die nicht offensichtlich sind:\n· Nur der Kassensturz bekommt eine Nummer, nicht jede Bewegung. Eine Einlage ist kein\n  Kassenbericht; eine von Hand nach Z-Bon erfasste Bareinnahme auch nicht. Innerhalb der\n  Kassenberichte bleibt die Reihe dadurch lückenlos.\n· Je Profil und Jahr, wie der Rechnungs-Nummernkreis.\n· Stornierte behalten ihre Nummer — sie wird NICHT neu vergeben. Eine Lücke im Nummernkreis ist\n  bei einer Prüfung erklärungsbedürftig; der stornierte Bericht bleibt sichtbar stehen, genau wie\n  bei den Rechnungen.\n· Die Nummer steht im TEXT der Kassenbuch-Zeile, nicht nur in einem UI-Feld. So trägt sie jede\n  Ausgabe automatisch mit (Ansicht, CSV, Steuer-Paket) — ein eigenes Feld hätte an drei Stellen\n  einzeln nachgezogen werden müssen, und dort wird es vergessen.\n\nNACHGEWIESEN (test:kassenbuch um vier Blöcke erweitert, läuft im Gatter): Nr. 1 → 2 fortlaufend ·\nEinlage und Hand-Bareinnahme bekommen keine · danach weiter bei 3 · Nr. 3 storniert → nächster ist\n4, nicht wieder 3 · Nummer steht im Kassenbuch UND im CSV.\nIm Browser: Nutzer tippt „640,00\", im Kassenbuch steht danach „Kassenbericht Nr. 1/2026 —\nBareinnahme — Tageseinnahme lt. Kassensturz — gezählt 640,00 €, Kassenbuch 200,00 €\".\n\nDEPLOY: Zentrum + alle 9 Instanzen active/200, Bundle kys_N0wN, Rückweg 49180f6, Gatter 44 grün.\n\nBLEIBT BEI DER KANZLEI: Ob diese Form den Merkblatt-Anforderungen genügt und ob sorgl.OS kein\nelektronisches Aufzeichnungssystem nach § 146a AO ist — beides steht in der Vorlage, die Daniel\nfür das Gespräch hat. Wir bauen die technisch saubere Variante, nicht die rechtsverbindliche\nAuslegung.",
+  "thread": "m-557688201842",
+  "kind": "message"
+}
