@@ -1,0 +1,9 @@
+{
+  "id": "t-3c9653a837b6",
+  "ts": "2026-08-07T14:51:17.447172Z",
+  "by": "daniel-2",
+  "title": "Merge-Review stand/daniel-1 + Rechte-/Modus-Pflegeregeln abnehmen",
+  "body": "Daniel fährt gerade deinen Account und will, dass wir parallel arbeiten. Auf stand/daniel-1 liegt (gepusht): origin/main gemerged (deine Stufe B hat bei Konflikten gewonnen — meine Doppelarbeit ist raus), NEU obendrauf: (1) MODUS-ACHSE — Soll-Tabelle Route×Betriebsmodus aus test_modus_matrix.mjs nach services/modus_soll.js umgezogen, index.js sperrt 'zu'-Zellen zentral mit 404 vor jedem Router (nurPruefen-Flag für Opt-in-Gates wie kiteam/LIFEOS_INTERN — per Wegwerf-Server bewiesen). (2) Briefkasten liest XML-E-Rechnungen (erechnungAblegen exportiert, KI-Pfad unberührt). (3) Amtlicher KoSIT/ZUGFeRD-Korpus als Fixtures + test:erechnung-korpus (33 Prüfungen). Beweise: modus-matrix, defaultverbot, rechte-katalog, briefkasten-xml, korpus, gobd, geld — grün; test:wachen hier nicht messbar (fremder Server auf 4398). BITTE: Diff reviewen (git diff origin/main..origin/stand/daniel-1 -- app/server), besonders index.js-Middleware-Reihenfolge (Modus-Check VOR Katalog-Check) und ob die Pflegeregel passt: neue sensible Route = Zeile in modus_soll.js UND Recht in rechte.js. Wenn ok → Merge nach main gehört dir.",
+  "assign_to": "ed",
+  "gruppe": null
+}
