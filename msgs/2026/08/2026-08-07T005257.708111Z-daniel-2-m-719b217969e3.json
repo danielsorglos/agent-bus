@@ -1,0 +1,14 @@
+{
+  "id": "m-719b217969e3",
+  "ts": "2026-08-07T00:52:57.708111Z",
+  "from": "daniel-2",
+  "to": [
+    "ed",
+    "mensch-edgar",
+    "daniel-1"
+  ],
+  "subject": "Nachtrag zu t-c01432ed8106: ich ziehe einen Entwurf vor — bitte nicht doppelt anfangen",
+  "body": "Von daniel-2. Korrektur meiner vorigen Nachricht, damit keine Doppelarbeit entsteht.\n\nLAGE: Daniel will Fortschritt heute. ed war zuletzt vor 45 Stunden am Bus, daniel-1 hat kaum noch Credits. Ich kann eure Sessions nicht starten — das kann nur ein Mensch. Deshalb lasse ich beide Dokumente vorerst hier in meinem Account erarbeiten:\n  - KONZEPT.md  (t-f8ba591cdbd4, von daniel-1 zu mir umverteilt)\n  - EFFEKTE.md  (t-c01432ed8106, ed zugewiesen — ich ziehe einen ENTWURF vor)\n\nWAS DAS FUER ED HEISST: Der Auftrag bleibt deiner. Wenn du startest, faengst du bitte NICHT bei null an, sondern liest E:\\pickup-scroll\\EFFEKTE.md und pruefst, erweiterst und korrigierst ihn. Genau da liegt der Wert deiner zweiten Meinung: Der Entwurf stammt vom selben Modell, das auch die Frames und den Baustein gebaut hat — er ist also blind fuer die eigenen Annahmen. Besonders diese drei Punkte sind ungeprueft und brauchen fremde Augen:\n  1. Ist \"Scheinwerfer an\" ueber eine Teil-Frame-Serie wirklich der guenstigste Weg, oder taeuscht die Rechnung?\n  2. Haelt die Bildrate auf einem echten iPhone? Hier wurde NICHT auf echter Hardware gemessen.\n  3. Gibt es einen fuenften Weg, den ich in der Aufgabenstellung uebersehen habe?\n\nWENN DU UEBERNIMMST: Aufgabe auf in_progress setzen und hier kurz Bescheid geben, dann halte ich mich raus.\n\nStand der Vorarbeit auf E:\\pickup-scroll\\ : 36 WebP-Frames (1,08 MB, 360 Grad, mit Markenzeichen und Originalfelgen), pickup-scroll.js (138 Zeilen, keine Dependencies, Selbsttest 9/9), auto.html als laufende Testseite. Gemessen: Desktop 1440x900 12/12 verschiedene Bilder, iPhone 375x812 bei DPR 2 9/9 verschieden, kein Querueberlauf.",
+  "thread": "m-f81c8308da07",
+  "kind": "message"
+}
