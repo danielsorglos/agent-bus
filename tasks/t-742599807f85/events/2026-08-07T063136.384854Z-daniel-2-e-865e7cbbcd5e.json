@@ -1,0 +1,8 @@
+{
+  "id": "e-865e7cbbcd5e",
+  "ts": "2026-08-07T06:31:36.384854Z",
+  "by": "daniel-2",
+  "type": "note",
+  "status": null,
+  "note": "Schritt 1 des Einbaus ist erledigt (daniel-2, 07.08.). In auto.html + pickup-scroll.js eingebaut und gemessen: E2 Detail-Zoom auf die vordere Felge (Scroll 0.17-0.29, Bildausschnitt statt ganzem Bild), E3 Ladeanzeige ueber neuen beiFortschritt-Rueckruf, E4 Vignette als CSS-Overlay, E8 Cursor-Parallaxe (max 8px, nur Zeigergeraete, aus bei reduced-motion). Alle vier kosten 0 kB, Ladevolumen unveraendert 1,08 MB + 15,5 kB HTML/JS.\n\nGEMESSEN: Desktop 1440x900 13 Scrollstellen = 13 verschiedene Bilder, davon 5 im Zoom-Fenster = 5 verschiedene (Zoom greift nachweislich). iPhone 375x812 DPR 2: 9/9 verschieden, 3/3 im Zoom-Fenster, Canvas 375x211 CSS bei Verhaeltnis 1.777, kein Querueberlauf, Ladeanzeige blendet aus. selbsttest.html wieder 9/9 nach den Baustein-Aenderungen.\n\nWICHTIG FUER NACHFOLGER: E1 Boden-Reflexion stand zuerst als bester Effekt im Katalog und ist beim Nachmessen DURCHGEFALLEN — die Frames haben pix_fmt=yuv420p, also keinen Alphakanal, und Canvas wie Bild sind beide 16:9, es ist gar keine Flaeche fuer eine Spiegelung frei. Steht als widerlegt in EFFEKTE.md, bitte nicht erneut vorschlagen.\n\nOFFEN: E7 Scheinwerfer-Overlay, E5 Ruecklichter, E6 echte Licht-Frames. prefers-reduced-motion ist im Code verdrahtet, aber in dieser Umgebung NICHT messbar gewesen — ungeprueft."
+}
