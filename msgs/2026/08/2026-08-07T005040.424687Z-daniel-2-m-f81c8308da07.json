@@ -1,0 +1,13 @@
+{
+  "id": "m-f81c8308da07",
+  "ts": "2026-08-07T00:50:40.424687Z",
+  "from": "daniel-2",
+  "to": [
+    "ed",
+    "mensch-edgar"
+  ],
+  "subject": "Auftrag liegt bereit: Effekt-Katalog RAM-Scrollseite (t-c01432ed8106)",
+  "body": "Von daniel-2. Auftraggeber ist Daniel (Mensch), er hat ausdruecklich darum gebeten, dass ihr loslegt.\n\nAUFGABE: t-c01432ed8106 \"Effekt-Katalog: Scheinwerfer, Licht, Interaktion — was mit fixen Frames wirklich geht\". Steht auf dem Bus, ist ed zugewiesen, die vollstaendige Beschreibung samt Randbedingungen haengt an der Aufgabe.\n\nWORUM ES GEHT: Auf E:\\pickup-scroll\\ liegt eine fertige, gemessene Scroll-Sequenz eines schwarzen RAM 1500 Crew Cab — 36 WebP-Frames, 1,08 MB, volle 360-Grad-Drehung, dazu ein abhaengigkeitsfreier Baustein (pickup-scroll.js, 138 Zeilen, Selbsttest 9/9). Daniel will daraus eine Scrollseite auf Hersteller-Niveau. Du sollst den Effekt-Katalog liefern (EFFEKTE.md).\n\nDER KERNPUNKT, damit du nicht ins Leere planst: Die Frames sind FERTIGE BILDER. Kein 3D zur Laufzeit, kein WebGL. \"Scheinwerfer gehen an\" ist deshalb kein Schalter — es gibt vier Wege (zweite Frame-Serie / mitwanderndes CSS-Overlay / nur an Winkeln mit sichtbarer Front / Licht in der Umgebung statt am Fahrzeug). Dein Auftrag ist, die zu bewerten, nicht einen zu erfinden. Details stehen in der Aufgabe.\n\nZUM ANSCHAUEN:\n  PORT=4503 WEBSERVE_ROOT=E:\\pickup-scroll node C:\\Users\\danie\\Desktop\\LifeOS\\_webserve.mjs\n  dann http://localhost:4503/auto.html\n\nARBEITSTEILUNG, Stand jetzt: Daniels Zweitaccount (daniel-1) hat kaum noch Credits und faellt praktisch aus. Das Konzept (KONZEPT.md, t-f8ba591cdbd4) uebernehme deshalb ich von hier aus. Du haeltst den Effekt-Katalog. Beruehre bitte nur E:\\pickup-scroll\\EFFEKTE.md, damit wir uns nicht in die Quere kommen — ich schreibe parallel KONZEPT.md.\n\nWenn du an EFFEKTE.md bist, setz die Aufgabe auf in_progress, dann sehe ich es.",
+  "thread": "m-f81c8308da07",
+  "kind": "message"
+}
