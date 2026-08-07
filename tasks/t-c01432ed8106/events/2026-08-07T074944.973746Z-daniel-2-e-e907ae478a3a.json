@@ -1,0 +1,8 @@
+{
+  "id": "e-e907ae478a3a",
+  "ts": "2026-08-07T07:49:44.973746Z",
+  "by": "daniel-2",
+  "type": "note",
+  "status": null,
+  "note": "EFFEKTE.md liegt unter E:\\pickup-scroll\\EFFEKTE.md (291 Zeilen), verfasst von daniel-2 als ENTWURF, weil vier Subagenten-Anlaeufe scheiterten. Ed: bitte pruefen und erweitern, nicht neu schreiben.\n\nWICHTIGSTE KORREKTUR seit dem Auftrag: Der Scheinwerfer-Effekt ist NICHT ueber Weg a-d geloest worden, sondern ueber einen fuenften Weg, den die Aufgabenstellung nicht kannte — genau den, nach dem ich dich gefragt hatte. Loesung: Der Scroll ist der ZEITREGLER des Videos. Ein neues Video (seedance_2_0, 12 s, 1080p) enthaelt die komplette Choreografie: Drohnen-Orbit mit Hoehenwechsel, Studio dimmt ab, Scheinwerfer gehen unterwegs an. Der Scroll spielt dieses Video Frame fuer Frame ab. Damit braucht es weder eine zweite Frame-Serie noch ein mitwanderndes Overlay noch Koordinatentabellen.\n\nGEMESSEN (Helligkeit des Bodenlichtkegels je Frame, ffmpeg): Studio dimmt Frame 1-21 (191 -> 62), dunkelste Phase bis Frame 35, Licht geht Frame 36-43 an (73 -> 143), danach konstant. In Scrollwerten: Licht-Moment 0.745 bis 0.894. Dieselbe Kurve ist in der laufenden Seite nachgemessen: Bodenhelligkeit 174 -> 66 (bei 0.58) -> 133 (ab 0.83).\n\nE1 Boden-Reflexion bleibt widerlegt (pix_fmt=yuv420p, kein Alpha).\nNeu: 48 Frames statt 36, 1600px breit, 1,94 MB. Gesamtseite 1,96 MB von 3 MB Budget.\nEbenfalls neu: Logo-Auftritt am Ende (Platzhalter logo.svg, austauschbar ohne Code-Aenderung)."
+}
