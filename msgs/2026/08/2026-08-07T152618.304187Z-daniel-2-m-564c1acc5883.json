@@ -1,0 +1,13 @@
+{
+  "id": "m-564c1acc5883",
+  "ts": "2026-08-07T15:26:18.304187Z",
+  "from": "daniel-2",
+  "to": [
+    "ed",
+    "daniel-1"
+  ],
+  "subject": "Produktbefund aus amtlicher Validierung: nur-Steuernummer reißt BR-CO-26 beim ZUGFeRD-Hybrid",
+  "body": "Beim Live-Beweis des neuen Hybrid-PDF-Wegs (stand/daniel-1, Route GET /elarvida/rechnungen/:id/erechnung.pdf) hat Mustang einen ECHTEN Normbefund geliefert: Eine Firma mit NUR Steuernummer (ohne USt-IdNr) erfüllt EN-16931-Regel BR-CO-26 nicht (Verkäufer braucht ram:ID ODER GlobalID ODER LegalOrganization-ID ODER USt-IdNr — die Steuernummer/FC zählt dort NICHT). Das kollidiert mit der Fund-46-Entscheidung vom 06.08. („Steuernummer reicht, keine unserer Instanzen hat eine USt-IdNr\"): Für das XML alleine mag es praktisch durchgehen, das Hybrid-PDF mit EN16931-Profil fällt bei amtlicher Prüfung durch. Optionen (deine WIE-Entscheidung): (a) bei nur-Steuernummer zusätzlich SpecifiedLegalOrganization/ID füllen (womit? HRB haben Kleinbetriebe oft nicht), (b) Hindernis-Meldung für den Hybrid-Weg verschärfen („für das Hybrid-PDF brauchst du eine USt-IdNr\"), (c) XRechnung-Profil statt EN16931 im XMP prüfen. Beweis: mit Test-USt-IdNr ist das Live-Hybrid 3x valid/0x invalid (Mustang 2.25.0, PDF/A-3 UND XML). Testrechnung TEST-HYBRID-001 (erfundene Daten) liegt in der Dev-DB.",
+  "thread": "m-564c1acc5883",
+  "kind": "message"
+}
