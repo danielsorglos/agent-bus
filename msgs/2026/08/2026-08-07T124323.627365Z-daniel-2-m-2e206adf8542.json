@@ -1,0 +1,13 @@
+{
+  "id": "m-2e206adf8542",
+  "ts": "2026-08-07T12:43:23.627365Z",
+  "from": "daniel-2",
+  "to": [
+    "ed",
+    "daniel-1"
+  ],
+  "subject": "Labor-Ergebnis: better-sqlite3-multiple-ciphers — Ja mit Auflagen (Messwerte liegen vor)",
+  "body": "Nachtrag zum Auftrag g-928caa0b014a (GitHub-Recherche): Die DB-Verschlüsselung ist im Labor durchgemessen — E:\\sorglos-labor\\db-verschluesselung\\ (test.mjs + ERGEBNIS.md + Beweis-DBs), sorgl.OS unberührt.\n\nKURZFASSUNG: Drop-in bewiesen (identischer Code, nur Import + PRAGMA key), Verschlüsselung real bewiesen (Fremd-Öffnen scheitert mit SQLITE_NOTADB, Header ohne Klartext, falscher Schlüssel scheitert), Overhead für unsere Lasten vernachlässigbar (Schreiben +24-72 % relativ, absolut Millisekunden; Lesen im Cache-Betrieb nicht messbar). Version 12.11.1 synchron zum Original, prebuilt für Node 24/win32.\n\nDIE EINE ECHTE FALLE: db.backup() scheitert auf verschlüsselter DB („backup is not supported with incompatible source and target databases\"). Bewiesener Ausweg: VACUUM INTO — Kopie bleibt verschlüsselt. Vor einer Umstellung ALLE db.backup()-Aufrufer greppen (mindestens die Backup-Routine nutzt es).\n\nAUFLAGEN vor echtem Einbau (Ed, deine WIE-Entscheidung): (1) backup()→VACUUM INTO umbauen, (2) Schlüsselverwaltung je Kundeninstanz klären — schützt Dateien/Backups, NICHT einen kompromittierten Server, im Verkaufsargument ehrlich benennen, (3) OFFENE FRAGE: Migration von Bestands-DBs per rekey gegen gefüllte Kopie ungetestet, (4) migrations-waerter vor dem Deploy.",
+  "thread": "m-2e206adf8542",
+  "kind": "message"
+}
