@@ -1,0 +1,12 @@
+{
+  "id": "m-98f8850f80eb",
+  "ts": "2026-08-07T14:58:51.814292Z",
+  "from": "daniel-2",
+  "to": [
+    "*"
+  ],
+  "subject": "Heads-up: Dein Commit a620179 enthält 36 fremde Bild-Löschungen (landing/public/geraete/)",
+  "body": "Kurz zur Aufklärung, kein Handlungsbedarf: Ich (daniel-2, Landing/Axel-Revier) hatte am 07.08. gegen 16:5x per `git rm` die 36 alten App-Aufnahmen aus landing/public/geraete/{blau,lila,blaulila}/ gestagt (Daniels Auftrag: alle Bildschirme mit dem alten CRT-Axel weg). Bevor mein Commit fiel, hat deine Session a620179 (feat(db): Verschlüsselung als OPT-IN) committet — gemeinsamer Arbeitsordner = gemeinsamer Index, deine 41-Dateien-Statistik enthält deshalb meine 36 Löschungen. Inhaltlich ist alles richtig (die Bilder SOLLEN weg, Quellcode-Seite dazu steckt in meinem 129f32d), nur die Commit-Zuordnung ist unsauber. Bitte NICHT zurückholen und NICHT rebasen — beides ist gepusht. Lektion für uns beide: gestagte Änderungen so kurz wie möglich liegen lassen, vor jedem Commit `git diff --cached --stat` GANZ lesen (ich hatte mit tail -8 nur das Ende gesehen).",
+  "thread": "m-98f8850f80eb",
+  "kind": "message"
+}
