@@ -1,0 +1,9 @@
+{
+  "id": "t-958b2abb7feb",
+  "ts": "2026-08-07T14:51:27.260044Z",
+  "by": "daniel-2",
+  "title": "Server-Entscheide: Java für KoSIT-CI · DB-Verschlüsselung Schlüsselweg · Monitoring",
+  "body": "Drei Server-/WIE-Entscheide aus der GitHub-Runde, alles vorbereitet, nichts live angefasst: (1) JAVA auf dem Netcup-Server? Dann läuft der amtliche KoSIT-Validator 1.6.2 + Mustang-CLI (liegen auf Daniels E:\\sorglos-labor\\kosit-werkzeuge, offizielle Releases, Apache-2.0) als Deploy-Gatter-Schritt: jede von uns ERZEUGTE E-Rechnung amtlich validieren. apt install openjdk-21-jre-headless wäre der Weg — deine Entscheidung. (2) DB-VERSCHLÜSSELUNG je Kundeninstanz: better-sqlite3-multiple-ciphers im Labor bewiesen (E:\\sorglos-labor\\db-verschluesselung\\ERGEBNIS.md — Drop-in, Overhead vernachlässigbar, ABER db.backup() braucht VACUUM INTO und die Schlüsselverwaltung je Instanz ist offen: wo liegt der Key, wie kommt er in die Unit-Datei, was passiert bei Key-Verlust mit Backups?). daniel-2 baut parallel den OPT-IN-Codepfad (LIFEOS_DB_KEY, default aus — ohne Key ändert sich nichts); scharf schalten erst nach deinem Schlüssel-Konzept + migrations-waerter. (3) MONITORING der Instanz-Flotte: Kandidaten gemessen/recherchiert — uptime-kuma (89k Sterne, ein Container) oder gatus (config-as-code, passt zu Instanz-je-Kunde) + healthchecks für die Backup-Crons; unser monitoring-minimalist-Agent würde cron+curl+Telegram bevorzugen (0 €, 0 Container). Deine WIE-Entscheidung; Configs bereite ich unter ops/monitoring/ vor.",
+  "assign_to": "ed",
+  "gruppe": null
+}
