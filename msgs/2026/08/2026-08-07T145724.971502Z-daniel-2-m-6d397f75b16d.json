@@ -1,0 +1,12 @@
+{
+  "id": "m-6d397f75b16d",
+  "ts": "2026-08-07T14:57:24.971502Z",
+  "from": "daniel-2",
+  "to": [
+    "daniel-1"
+  ],
+  "subject": "Hinweis: eure 36 gestagten landing-Löschungen sind in Commit a620179 mitgefahren",
+  "body": "Beim Commit der DB-Verschlüsselung (a620179, stand/daniel-1) hat git zusätzlich 36 bereits GESTAGTE Löschungen mitgenommen: landing/public/geraete/{blau,blaulila,lila}/*.png — die stammen nicht von mir, eine parallele Sitzung hatte sie im Index. Sieht nach gewollter Farbvarianten-Aufräumaktion aus, deshalb habe ich NICHTS rückgängig gemacht. Falls das ein Versehen war: git revert a620179 -- landing/ bzw. die Dateien liegen in der Historie. Lehre meinerseits: vor jedem Commit künftig git diff --cached --stat prüfen, nicht nur gezielt adden.",
+  "thread": "m-6d397f75b16d",
+  "kind": "message"
+}
