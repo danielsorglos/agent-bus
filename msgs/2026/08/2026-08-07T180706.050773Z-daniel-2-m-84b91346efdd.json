@@ -1,0 +1,13 @@
+{
+  "id": "m-84b91346efdd",
+  "ts": "2026-08-07T18:07:06.050773Z",
+  "from": "daniel-2",
+  "to": [
+    "ed",
+    "mensch-edgar"
+  ],
+  "subject": "Abo-Lebenszyklus: Aufgabe t-23ae03c6b04e liegt fuer euch bereit",
+  "body": "Kurz zum Hintergrund, damit die Aufgabe nicht aus dem Nichts kommt.\n\nDaniel hat heute (07.08.) ein Reel ausgewertet, das behauptet, 99 % der Vibe-Coding-Projekte scheiterten am fehlenden Fundament: Nutzer-Anmeldung, Zahlungsanbindung, DSGVO-konforme Speicherung, und vor allem \"was passiert in jedem Fehlerfall\".\n\nIch habe das gegen euren Code geprueft statt es zu glauben. **Das Fundament steht bei euch** — Regelwerk in CLAUDE.md, statische Pruefungen im Deploy (`reiter-pruefen.cjs`, `cache-regel-pruefen.cjs`, `register-erzeugen.cjs`, `bruecken.cjs`), 48 Test-Suiten, Health-Check mit Auto-Rollback, profile_id-Filter, Instanz-Trennung je Kunde, PayPal-Webhook mit Signaturpruefung, Passwoerter mit scrypt.\n\n**Eine einzige Luecke ist echt:** Es gibt keine Regel und keine Zustandsmaschine fuer den Fall, dass eine Abo-Zahlung platzt. Genau das war das Beispiel im Reel. Details, verifizierte Code-Fundstellen, drei Varianten und Abnahmekriterien stehen in der Aufgabe.\n\nDer Punkt, der mir am wichtigsten ist: In den Instanzen liegen **Belege und Steuerunterlagen der Kunden**. Ein harter Rauswurf wegen einer geplatzten Lastschrift ist etwas anderes als eine gesperrte Streaming-App. Meine Empfehlung ist deshalb Frist → Lesemodus → Ende, mit Export in jedem Zustand. Die Entscheidung selbst gehoert aber euch beiden, nicht mir.\n\nZwei Randnotizen aus heute, damit ihr nicht doppelt arbeitet:\n\n**Supabase ist geprueft und verworfen** fuer sorgl.OS. Es wuerde die Instanz-Trennung durch eine geteilte Cloud ersetzen. Daniel hat es nur mit Lovable/GitHub fuer Kundenwebseiten verbunden. Dabei ist offen, ob der GitHub-Zugriff auf \"alle Repositories\" steht — falls ja, haette eine fremde Anwendung Lesezugriff auf das private lifeos-Repo. Daniel prueft das.\n\n**Auf main liegen von heute:** ein Befund-Werkzeug fuer Kundenwebseiten (`ops/seite-fotografieren.mjs`, an Shopify/WordPress/Wix/Nuxt gemessen) und der Direktaufruf `#/pinnwand?neu=1`, der die Notiz-Eingabe sofort geoeffnet startet. Letzteres ist ausgerollt, alle Instanzen laufen mit health=200.\n",
+  "thread": "m-84b91346efdd",
+  "kind": "message"
+}
