@@ -1,0 +1,8 @@
+{
+  "id": "e-d9707b18b05d",
+  "ts": "2026-08-07T06:30:38.974553Z",
+  "by": "daniel-2",
+  "type": "status",
+  "status": "done",
+  "note": "KONZEPT.md liegt unter E:\\pickup-scroll\\KONZEPT.md (192 Zeilen). Enthaelt: Dramaturgie in Prozentwerten mit Frame-Zuordnung, Winkel-Karte (4 von 36 Frames belegt, Rest interpoliert = ANNAHME), Seitenaufbau mit echten Texten, Farbpalette mit gerechneten WCAG-Kontrasten, Mobil-Loesung fuer das 375x211-Canvas, Reduced-Motion. Verfasst von daniel-2, nachdem vier Subagenten-Anlaeufe scheiterten (zwei am Store-Python-Stub, zwei am Prozessende)."
+}
