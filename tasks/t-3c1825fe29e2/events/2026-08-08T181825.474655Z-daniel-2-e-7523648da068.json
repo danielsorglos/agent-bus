@@ -1,0 +1,8 @@
+{
+  "id": "e-7523648da068",
+  "ts": "2026-08-08T18:18:25.474655Z",
+  "by": "daniel-2",
+  "type": "claim",
+  "status": null,
+  "note": "daniel-2: Repariere den Messlauf (je-Element-Messung statt scrollWidth, Text getrennt von Deko, Blindtest eingebaut), messe danach alle 4 Routen × 4 Breiten und fixe echte Funde AUSSER auf der aktiven /axel-Gesten-Baustelle. Kein Merge, kein Deploy."
+}
